@@ -1,0 +1,56 @@
+﻿@using Tuto.DataLayer.Enums
+@model Tuto.Web.ViewModels.HelpRequestListDetailsViewModel
+
+@{
+    ViewBag.Title = "Details";
+    ViewBag.Page_Id = "HelpRequest_ListDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Page header -->
+<div class="page-header">
+	<h1><span class="awe-info-sign"></span>@Resources.Resources.ViewHelpRequestDetailsHeader</h1>
+</div>
+<!-- /Page header -->
+<div class="page-container">
+    <fieldset>
+
+        <article class="span6">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th colspan="2">@Resources.Resources.ViewHelpRequestDetailsHeader</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.createdTime)</th>
+                        <td>@Html.DisplayFor(model => model.createdTime)</td>
+                    </tr>
+                        
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.course.courseName)</th>
+                        <td>@Html.DisplayFor(model => model.course.courseName)</td>
+                    </tr>
+                        
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.misunderstoodNotions)</th>
+                        <td>@Html.DisplayFor(model => model.misunderstoodNotions)</td>
+                    </tr>
+            
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.comment)</th>
+                        <td>@Html.DisplayFor(model => model.comment)</td>
+                    </tr>
+                        
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.currentState)</th>
+                        <td><span class="label label-important">@Model.currentState.getString()</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <button class="btn btn-wuxia" onclick="location.href='@Url.Action("list", "HelpRequest")'">@Resources.Resources.ViewHelpRequestDetailsReturnButton</button>
+        </article>
+    </fieldset>
+</div>

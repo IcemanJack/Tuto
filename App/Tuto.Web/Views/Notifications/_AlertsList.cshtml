@@ -1,0 +1,6 @@
+﻿@model List<KeyValuePair<string, object>>
+
+@foreach (KeyValuePair<string, object> toDisplayAlertVP in Model)
+{
+    @Html.Partial(toDisplayAlertVP.Key, toDisplayAlertVP.Value);
+}

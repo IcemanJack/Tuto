@@ -1,0 +1,296 @@
+﻿@model Tuto.Web.ViewModels.GroupSessionScheduleViewModel
+@{
+    ViewBag.Title = "Séances de groupe";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section stylesheets 
+{
+    @Styles.Render("~/Content/weekcalendar/libs/css/smoothness/jquery-ui-1.8.11.custom.css")
+    @Styles.Render("~/Content/weekcalendar/jquery.weekcalendar.css")
+}
+
+@section Scripts 
+{
+    <!-- This will be rendered in the javascript section in the master template -->
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Content/weekcalendar/libs/jquery-1.4.4.min.js")
+    @Scripts.Render("~/Content/weekcalendar/libs/jquery-ui-1.8.11.custom.min.js")
+    @Scripts.Render("~/Content/weekcalendar/libs/moment.min.js")
+    @Scripts.Render("~/Content/weekcalendar/weekcalendar.js")
+    @Scripts.Render("~/Content/weekcalendar/libs/date.js")
+    @Scripts.Render("~/Content/weekcalendar/jquery.weekcalendar.js")
+    @Scripts.Render("~/Content/bPopUp/libs/jquery.bpopup.min.js")
+
+    <script>
+        var groupSessionsArray = new Array();
+        var groupSessionRowTemplate;
+        var lastCalendarElementCreated;
+
+        var loadingData = false;
+        var loadingPlaces = new Array();
+        var currentPlaceIndex = 0;
+
+        $(document).ready(function() {
+
+            // making a template for group session rows
+            var groupSessionRow = $("[groupSession]");
+            groupSessionRowTemplate = groupSessionRow.clone();
+            groupSessionRow.remove();
+            
+            // loading group sessions
+            var groupSessionJson = "@Html.Raw(Model.jsonGroupSessions.Replace("\"", "\\\""))";
+            var initialDateFormat = "DD-MM-YYYY HH";
+            var eventData = new Array();
+
+            var initialData = JSON.parse(groupSessionJson);
+            for (var i = 0; i < initialData.length; i++)
+            {
+                loadingData = true;
+
+                var currentGroupSession = initialData[i];
+                var initialStartDate = "0" + currentGroupSession.day + "-07-2013 " + currentGroupSession.startTime;
+                var initialEndDate = "0" + currentGroupSession.day + "-07-2013 " + (currentGroupSession.startTime + 2);
+                
+                var currentNewEvent = {};
+                currentNewEvent.id = i + 1;
+                currentNewEvent.start = moment(initialStartDate, initialDateFormat).toDate();
+                currentNewEvent.end = moment(initialEndDate, initialDateFormat).toDate();
+
+                eventData.push(currentNewEvent);
+                loadingPlaces.push(currentGroupSession.place);
+            }
+
+            eventsData =
+            {
+                events: eventData
+            };
+
+            
+
+            $("#calendar").weekCalendar("refresh");
+            
+
+            $("#calendar").weekCalendar("setReadonly");
+
+            $("#calendar").weekCalendar("setResizable", function() {
+                return false;
+            });
+
+            $("#calendar").weekCalendar("setResizable", function() {
+                return false;
+            });
+
+            $("#calendar").weekCalendar("setRenderEvent", function (calEvent, element) {
+                if (loadingData)
+                {
+                    var groupSession = {};
+                    groupSession.day = calEvent.start.getDay();
+                    groupSession.startTime = calEvent.start.getHours();
+                    groupSession.endTime = calEvent.end.getHours();
+                    groupSession.place = loadingPlaces[currentPlaceIndex];
+                    currentPlaceIndex++;
+                    
+                    if (currentPlaceIndex >= loadingPlaces.length)
+                    {
+                        loadingData = false;
+                    }
+
+                    groupSessionsArray.push(groupSession);
+
+                    // adding a groupSession row to the table
+                    var newGroupSessionRow = groupSessionRowTemplate.clone();
+                    newGroupSessionRow.find("[day]").text(getDayNameFromDate(calEvent.start));
+                    newGroupSessionRow.find("[from]").text(groupSession.startTime);
+                    newGroupSessionRow.find("[to]").text(groupSession.endTime);
+                    newGroupSessionRow.find("[place]").text(groupSession.place);
+                    newGroupSessionRow.find("[delete]").click(function () {
+                        // remove the group session from the table
+                        newGroupSessionRow.remove();
+                        // remove the group session from the array
+                        groupSessionsArray = $.grep(groupSessionsArray, function (value) {
+                            return value != groupSession;
+                        });
+                        // remove the calendar element
+                        element.remove();
+                    });
+
+                    $("#tableBody").append(newGroupSessionRow);
+                }
+                else
+                {
+                    // making sure the event only lasts 2 hours
+                    var startTime = calEvent.start.getHours();
+                    if (startTime >= 17) {
+                        calEvent.start.setHours(16);
+                        calEvent.end.setHours(18);
+                    } else {
+                        calEvent.end.setHours(calEvent.start.getHours() + 2);
+                    }
+
+                    // changing info in popup
+                    $("#day").val(getDayNameFromDate(calEvent.start));
+                    $("#startTime").val(calEvent.start.getHours());
+                    $("#endTime").val(calEvent.end.getHours());
+
+                    $("#confirmGroupSession").bPopup();
+
+                    lastCalendarElementCreated = element;
+                }
+            });
+
+            $("#btn_popup_confirm").click(function () {
+                var calendarElement = lastCalendarElementCreated;
+                var popupElement = $("#confirmGroupSession");
+
+                // getting dom elements
+                var popup = {};
+                popup.day = popupElement.find("#day");
+                popup.startTime = popupElement.find("#startTime");
+                popup.endTime = popupElement.find("#endTime");
+                popup.place = popupElement.find("#place");
+
+                // creating a groupSession object
+                var groupSession = {};
+                groupSession.day = getDayNumberFromName(popup.day.val());
+                groupSession.startTime = parseInt(popup.startTime.val());
+                groupSession.endTime = parseInt(popup.endTime.val());
+                groupSession.place = popup.place.val();
+
+                groupSessionsArray.push(groupSession);
+
+                // clearing the popup for next uses
+                popup.place.val("");
+
+                // adding a groupSession row to the table
+                var newGroupSessionRow = groupSessionRowTemplate.clone();
+                newGroupSessionRow.find("[day]").text(popup.day.val());
+                newGroupSessionRow.find("[from]").text(groupSession.startTime);
+                newGroupSessionRow.find("[to]").text(groupSession.endTime);
+                newGroupSessionRow.find("[place]").text(groupSession.place);
+                newGroupSessionRow.find("[delete]").click(function() {
+                    // remove the group session from the table
+                    newGroupSessionRow.remove();
+                    // remove the group session from the array
+                    groupSessionsArray = $.grep(groupSessionsArray, function(value) {
+                        return value != groupSession;
+                    });
+                    // remove the calendar element
+                    calendarElement.remove();
+                });
+
+                $("#tableBody").append(newGroupSessionRow);
+
+                popupElement.bPopup().close();
+            });
+
+            $("#btn_popup_cancel").click(function () {
+                $("#confirmGroupSession").bPopup().close();
+                lastCalendarElementCreated.remove();
+            });
+
+            $("#btn_ok").click(function() {
+                var jsonGroupSessions = JSON.stringify(groupSessionsArray);
+                $("#hid_jsonGroupSessions").val(jsonGroupSessions);
+            });
+
+        });
+    </script>
+}
+
+
+<!-- Page header -->
+<div class="page-header">
+	<h1><span class="awe-tasks"></span>@Resources.Resources.ViewEditDefaultScheduleHeader</h1>
+</div>
+<!-- /Page header -->
+<div class="page-container">
+@using (Html.BeginForm("editDefaultSchedule", "GroupSessionMgr", FormMethod.Post, new { @id = "defaultGroupSessionsForm" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.jsonGroupSessions, new { @id = "hid_jsonGroupSessions" })
+    <div class="row-fluid">
+        <article class="span4">
+            <div class="alert alert-info">
+                @Resources.Resources.ViewAlertInfo
+            </div>
+            <div class="control-group">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Jour</th>
+                            <th>De</th>
+                            <th>À</th>
+                            <th>Place</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <tr groupSession>
+                            <td><span day></span></td>
+                            <td><span from></span></td>
+                            <td><span to></span></td>
+                            <td><span place></span></td>
+                            <td><center><div class="btn btn-mini btn-primary" delete>Supprimer</div></center></td>
+                        </tr>  
+                    </tbody>
+                </table>  
+            </div>
+            <div class="control-group">
+                <div class="btn btn-wuxia" onclick="location.href = '@Url.Action("list", "GroupSessionMgr")'">Retour</div>
+                <button id="btn_ok" class="btn btn-wuxia btn-primary">Appliquer</button>
+            </div>
+        </article>
+        
+        <article class="span8">
+            @if (ViewData["success"] != null && ViewData["success"].Equals(true))
+            {
+                <div class="alert alert-success">
+                    <strong>Succès !</strong> @Resources.Resources.ViewScheduleAlertSuccess
+                </div>
+            }
+            <div id="calendar"></div>
+        </article>
+
+    </div>
+}
+    
+     <div id="confirmGroupSession" class="modal" style="display: none;">
+        <div class="modal-header">
+            <h3>@Resources.Resources.ViewScheduleConfirmGroupSessionHeader</h3>
+        </div>
+        <div class="modal-body">
+            <div class="well">
+                <label class="control-label">Période</label>
+                <div class="controls">
+                    <div class="input-prepend">
+                        <span class="add-on">Journée</span>
+                        <input id="day" readonly="readonly" class="input-small disabled" type="text" value="" name="day">
+                    </div>
+                        
+                    <div class="input-prepend">
+                        <span class="add-on">De</span>
+                        <input id="startTime" readonly="readonly" class="input-mini disabled" type="text" value="" name="startTime">
+                    </div>
+                        
+                    <div class="input-prepend">
+                        <span class="add-on">À</span>
+                        <input id="endTime" readonly="readonly" class="input-mini disabled" type="text" value="" name="endTime">
+                    </div>
+                </div>
+                    
+                <label class="control-label">Place</label>
+                <div class="controls">
+                    <input id="place" type="text" value="" name="place">
+                </div>
+
+            </div>
+            
+            <div class="modal-footer" style="text-align: center;">
+                <button id="btn_popup_cancel" class="btn btn-wuxia btn-large">Annuler</button>
+                <button id="btn_popup_confirm" class="btn btn-primary btn-wuxia btn-large">Confirmer</button>
+            </div>
+        </div>
+    </div>
+
+</div>

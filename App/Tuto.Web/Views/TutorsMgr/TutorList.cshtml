@@ -1,0 +1,141 @@
+﻿@using System.Data.Entity.ModelConfiguration.Conventions
+@using System.Globalization
+@using System.Web.UI.WebControls
+@using Tuto.DataLayer.Enums
+@Scripts.Render("~/Content/bPopUp/libs/jquery.bpopup.min.js")
+@model IEnumerable<Tuto.Web.ViewModels.TutorListViewModel>
+
+@{
+    ViewBag.Title = "TutorList";
+    ViewBag.Page_Id = "Manager_Tutor_List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Page header -->
+<div class="page-header">
+	<h1><span class="awe-tasks"></span>@Resources.Resources.ViewTutorListHeader</h1>
+</div>
+<!-- /Page header -->
+<div class="page-container">
+    <div class="row-fluid">
+        <div class="control-group" align="right">
+            <label class="control-label" for="select">@Resources.Resources.ViewFilter</label>
+            <div class="controls">
+                <select id="select" style="width:120px">
+                    <option selected="selected">Tous</option>
+                    <option>À Confirmer</option>
+                    <option>Confirmé</option>
+                </select>
+                <button class="btn" type="button">Go!</button>
+            </div>
+        </div>
+        
+								
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.lastName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.mail)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.tutorAvailableForGroupSession)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.tutorAvailableForIndividualSession)
+                    </th>
+                    <th>
+                        @Resources.Resources.ListEntryActions
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    if (item.tutorState != TutorState.INACTIVE)
+                    {
+                        <tr @(item.tutorState == TutorState.CONFIRMED ? @Html.Raw("class= \"green\"") : @Html.Raw("class= \"red\""))>
+                            <td >
+                                @Html.DisplayFor(modelItem => item.name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.lastName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.mail)
+                            </td>
+        
+                            <td>
+                                @Html.DisplayFor(modelItem => item.tutorAvailableForGroupSession)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.tutorAvailableForIndividualSession)
+                            </td>
+                            <td>
+                                @if (item.tutorState == TutorState.TO_BE_CONFIRMED)
+                                {
+                                    
+                                    <div class="btn-group">
+                                        <button class="btn btn-primary" id="btn_@item.id" type="button" onclick=" location.href = '@Url.Action("setStateConfirmed", "TutorsMgr", new {tutorId = item.id})' ">@Resources.Resources.ViewTutorListConfirmButton</button>
+                                        <button class="btn" id="btn_@item.id" type="button" onclick=" inactivePopup(@item.id) ">@Resources.Resources.ViewTutorListRefuseButton</button>
+                                        <button class="btn"  onclick="location.href = '@Url.Action("tutorDetails", "TutorsMgr", new {id = item.id})'">@Resources.Resources.ViewDetailsButton</button>
+									</div>
+                                }
+                                else if (item.tutorState == TutorState.CONFIRMED)
+                                {
+                                    <font color="green">Confirmé</font>
+                                     <div class="btn-group">
+                                        <button class="btn"  onclick="location.href = '@Url.Action("tutorDetails", "TutorsMgr", new {id = item.id})'">@Resources.Resources.ViewDetailsButton</button>
+									</div>
+                                }                           
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+<div class="modal fade hide" id="inactive_popup">
+    <div class="modal-header">
+	    <h3>@Resources.Resources.ViewInactivePopupTitle</h3>
+    </div>
+    <div class="modal-body">
+        <p>@Resources.Resources.ViewInactivePopupBody</p>
+        <br/>
+        @Resources.Resources.ViewInactivePopupBodyExplication <input type="text" id="explicationsTextbox" value="">
+    </div>
+    <div class="modal-footer">
+        <button id="btn_sendReason" class="btn btn-wuxia btn-small btn-primary" type="button">@Resources.Resources.ViewSendButton</button>
+    </div>
+</div>
+
+<script>
+    function inactivePopup(tutorId) {
+
+        var sendButton = $("#btn_sendReason");
+        sendButton.click(function () {
+            var message = $("#explicationsTextbox").val();
+            $.post("@Url.Action("setStateInactive", "TutorsMgr")", { tutorId: tutorId, message: message }, function (data) {
+                if (data == "error")
+                {
+                    alert(@Resources.Resources.ViewInactivePopupAlert); return;
+                }
+
+                document.location.reload();
+            });
+        });
+
+        $('#inactive_popup').bPopup();
+        //demande a l'autre comment ID
+    }
+</script>
+
+

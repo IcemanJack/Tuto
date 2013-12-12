@@ -1,0 +1,541 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{74D5712C-B79D-4B60-8011-6D22B724ADB5}</ProjectGuid>
+    <ProjectTypeGuids>{E3E379DF-F4C6-4180-9B81-6769533ABE47};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Tuto.Web</RootNamespace>
+    <AssemblyName>Tuto.Web</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <WebGreaseLibPath>..\..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>2</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime">
+      <HintPath>..\..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper">
+      <HintPath>..\..\packages\AutoMapper.3.1.0\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentValidation">
+      <HintPath>..\..\packages\FluentValidation.4.0.0.1\lib\Net40\FluentValidation.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentValidation.Mvc">
+      <HintPath>..\..\packages\FluentValidation.MVC4.4.0.0.1\lib\Net40\FluentValidation.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp">
+      <HintPath>..\..\packages\iTextSharp.4.1.2\lib\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject">
+      <HintPath>..\..\packages\Ninject.3.0.1.10\lib\net45-full\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web.Common">
+      <HintPath>..\..\packages\Ninject.Web.Common.3.0.0.7\lib\net45-full\Ninject.Web.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="RazorPDF">
+      <HintPath>..\..\packages\RazorPDF.1.0.0\lib\net45\RazorPDF.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\packages\Microsoft.AspNet.Mvc.4.0.30506.0\lib\net40\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Microsoft.AspNet.Web.Optimization.1.1.2\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="WebActivatorEx">
+      <HintPath>..\..\packages\WebActivatorEx.2.0.4\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <HintPath>..\..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\NinjectWebCommon.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Config\NotificationsConfiguration.cs" />
+    <Compile Include="Config\WebAppLaunchContext.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Reports\MonthlyWorkedHoursReport.cs" />
+    <Compile Include="Controllers\Manager\ReportsMgrController.cs" />
+    <Compile Include="Controllers\NotificationsController.cs" />
+    <Compile Include="Controllers\CIController.cs" />
+    <Compile Include="Controllers\DefaultController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\GroupSessionController.cs" />
+    <Compile Include="Controllers\HelpRequestController.cs" />
+    <Compile Include="Controllers\Manager\GroupSessionMgrController.cs" />
+    <Compile Include="Controllers\Manager\HelpRequestMgrController.cs" />
+    <Compile Include="Controllers\Manager\TutorsMgrController.cs" />
+    <Compile Include="Controllers\MenuController.cs" />
+    <Compile Include="Controllers\Utilities\AccountEditUtilities.cs" />
+    <Compile Include="Controllers\Utilities\UsersUtilities.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Mappers\AutoMapperConfiguration.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Mappers\DomainToViewModelMappingProfile.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Mappers\ViewModelToDomainMappingProfile.cs" />
+    <Compile Include="Config\WebAppConfiguration.cs" />
+    <Compile Include="Utilities\GroupSessionUtilities.cs" />
+    <Compile Include="Utilities\NotificationUtilities.cs" />
+    <Compile Include="Utilities\UrlUtilities.cs" />
+    <Compile Include="ViewModels\Account\Edit\EditHelpedViewModel.cs" />
+    <Compile Include="ViewModels\Account\Edit\EditManagerViewModel.cs" />
+    <Compile Include="ViewModels\Account\Edit\EditStudentViewModel.cs" />
+    <Compile Include="ViewModels\Account\Edit\EditTutorViewModel.cs" />
+    <Compile Include="ViewModels\Account\Edit\EditUserViewModel.cs" />
+    <Compile Include="ViewModels\Account\Register\HelpedRegisterViewModel.cs" />
+    <Compile Include="ViewModels\Account\Register\TutorRegisterViewModel.cs" />
+    <Compile Include="ViewModels\Account\UserLoginViewModel.cs" />
+    <Compile Include="ViewModels\Notifications\AbstractNotificationViewModel.cs" />
+    <Compile Include="ViewModels\Notifications\AssignedToGroupSessionAlertViewModel.cs" />
+    <Compile Include="ViewModels\Notifications\AssignedToHelpRequestTaskViewModel.cs" />
+    <Compile Include="ViewModels\GroupSessionAssignTutorViewModel.cs" />
+    <Compile Include="ViewModels\GroupSessionListViewModel.cs" />
+    <Compile Include="ViewModels\GroupSessionScheduleViewModel.cs" />
+    <Compile Include="ViewModels\ManagerHelpRequestTutorAssignmentViewModels.cs" />
+    <Compile Include="ViewModels\HelpedHelpRequestListViewModel.cs" />
+    <Compile Include="ViewModels\HelpRequestAddViewModel.cs" />
+    <Compile Include="ViewModels\HelpRequestListDetailsViewModel.cs" />
+    <Compile Include="ViewModels\HomeViewModel.cs" />
+    <Compile Include="ViewModels\IndividualSessionViewModel.cs" />
+    <Compile Include="ViewModels\ManagerHelpRequestsListViewModel.cs" />
+    <Compile Include="ViewModels\Notifications\HelpedHasRegisteredAlertViewModel.cs" />
+    <Compile Include="ViewModels\Notifications\HelpRequestToAssignAlertViewModel.cs" />
+    <Compile Include="ViewModels\Notifications\TutorHasRegisteredTaskViewModel.cs" />
+    <Compile Include="ViewModels\Reports\AbstractReportViewModel.cs" />
+    <Compile Include="ViewModels\Reports\MonthlyWorkedHoursReportViewModel.cs" />
+    <Compile Include="ViewModels\Reports\TableReportViewModel.cs" />
+    <Compile Include="ViewModels\TutorAvailableAtViewModel.cs" />
+    <Compile Include="ViewModels\TutorDetailsViewModel.cs" />
+    <Compile Include="ViewModels\TutorHelpRequestListEntryViewModel.cs" />
+    <Compile Include="ViewModels\TutorListViewModel.cs" />
+    <Compile Include="ViewModels\ReportToDoViewModel.cs" />
+    <Compile Include="ViewsUtilities\MenuExtensions.cs" />
+    <Compile Include="ViewsUtilities\MenuItem.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\bPopUp\libs\jquery.bpopup.min.js" />
+    <Content Include="Content\themes\wuxia\css\bootstrap-responsive.css" />
+    <Content Include="Content\themes\wuxia\css\bootstrap-responsive.min.css" />
+    <Content Include="Content\themes\wuxia\css\bootstrap.css" />
+    <Content Include="Content\themes\wuxia\css\bootstrap.min.css" />
+    <Content Include="Content\themes\wuxia\css\font\Elusive-Icons.svg" />
+    <Content Include="Content\themes\wuxia\css\font\fontawesome-webfont.svg" />
+    <Content Include="Content\themes\wuxia\css\plugins\bootstrap-wysihtml5.css" />
+    <Content Include="Content\themes\wuxia\css\plugins\jquery.datatables.css" />
+    <Content Include="Content\themes\wuxia\css\plugins\jquery.fullcalendar.css" />
+    <Content Include="Content\themes\wuxia\css\plugins\jquery.jgrowl.css" />
+    <Content Include="Content\themes\wuxia\css\plugins\jquery.jwysiwyg.css" />
+    <Content Include="Content\themes\wuxia\css\plugins\jquery.plupload.queue.css" />
+    <Content Include="Content\themes\wuxia\css\plugins\jquery.snippet.css" />
+    <Content Include="Content\themes\wuxia\css\plugins\jquery.tagsinput.css" />
+    <Content Include="Content\themes\wuxia\css\plugins\jquery.ui.plupload.css" />
+    <Content Include="Content\themes\wuxia\css\plugins\jquery.visualize.css" />
+    <Content Include="Content\themes\wuxia\css\wuxia-blue.css" />
+    <Content Include="Content\themes\wuxia\css\wuxia-dark.css" />
+    <Content Include="Content\themes\wuxia\css\wuxia-green.css" />
+    <Content Include="Content\themes\wuxia\css\wuxia-orange.css" />
+    <Content Include="Content\themes\wuxia\css\wuxia-purple.css" />
+    <Content Include="Content\themes\wuxia\css\wuxia-red.css" />
+    <Content Include="Content\themes\wuxia\favicon.ico" />
+    <Content Include="Content\themes\wuxia\img\assets\bg_content.jpg" />
+    <Content Include="Content\themes\wuxia\img\assets\bg_login.png" />
+    <Content Include="Content\themes\wuxia\img\assets\breadcrumbs_divider.png" />
+    <Content Include="Content\themes\wuxia\img\icons\emoticons-icons.png" />
+    <Content Include="Content\themes\wuxia\img\icons\famfamfam-icons.png" />
+    <Content Include="Content\themes\wuxia\img\icons\glyphicons-halflings-white.png" />
+    <Content Include="Content\themes\wuxia\img\icons\glyphicons-halflings.png" />
+    <Content Include="Content\themes\wuxia\img\icons\loading_blue.gif" />
+    <Content Include="Content\themes\wuxia\img\icons\loading_dark.gif" />
+    <Content Include="Content\themes\wuxia\img\icons\loading_green.gif" />
+    <Content Include="Content\themes\wuxia\img\icons\loading_orange.gif" />
+    <Content Include="Content\themes\wuxia\img\icons\loading_purple.gif" />
+    <Content Include="Content\themes\wuxia\img\icons\loading_red.gif" />
+    <Content Include="Content\themes\wuxia\img\plugins\colorpicker\alpha.png" />
+    <Content Include="Content\themes\wuxia\img\plugins\colorpicker\hue.png" />
+    <Content Include="Content\themes\wuxia\img\plugins\colorpicker\saturation.png" />
+    <Content Include="Content\themes\wuxia\img\plugins\dataTables\back_disabled.png" />
+    <Content Include="Content\themes\wuxia\img\plugins\dataTables\back_enabled.png" />
+    <Content Include="Content\themes\wuxia\img\plugins\dataTables\back_enabled_hover.png" />
+    <Content Include="Content\themes\wuxia\img\plugins\dataTables\forward_disabled.png" />
+    <Content Include="Content\themes\wuxia\img\plugins\dataTables\forward_enabled.png" />
+    <Content Include="Content\themes\wuxia\img\plugins\dataTables\forward_enabled_hover.png" />
+    <Content Include="Content\themes\wuxia\img\plugins\dataTables\sort_asc.png" />
+    <Content Include="Content\themes\wuxia\img\plugins\dataTables\sort_asc_disabled.png" />
+    <Content Include="Content\themes\wuxia\img\plugins\dataTables\sort_both.png" />
+    <Content Include="Content\themes\wuxia\img\plugins\dataTables\sort_desc.png" />
+    <Content Include="Content\themes\wuxia\img\plugins\dataTables\sort_desc_disabled.png" />
+    <Content Include="Content\themes\wuxia\img\plugins\jWYSIWYG\ajax-loader.gif" />
+    <Content Include="Content\themes\wuxia\img\plugins\jWYSIWYG\jquery.wysiwyg.bg.png" />
+    <Content Include="Content\themes\wuxia\img\plugins\jWYSIWYG\jquery.wysiwyg.gif" />
+    <Content Include="Content\themes\wuxia\img\plugins\jWYSIWYG\jquery.wysiwyg.no-alpha.gif" />
+    <Content Include="Content\themes\wuxia\img\sample_content\sample-image-250x150.png" />
+    <Content Include="Content\themes\wuxia\img\sample_content\sample-image-350x350.png" />
+    <Content Include="Content\themes\wuxia\img\sample_content\sample-image-50x50.png" />
+    <Content Include="Content\themes\wuxia\img\template_logo.png" />
+    <Content Include="Content\themes\wuxia\img\tuto_logo.jpg" />
+    <Content Include="Content\themes\wuxia\js\bootstrap\bootstrap-affix.js" />
+    <Content Include="Content\themes\wuxia\js\bootstrap\bootstrap-alert.js" />
+    <Content Include="Content\themes\wuxia\js\bootstrap\bootstrap-button.js" />
+    <Content Include="Content\themes\wuxia\js\bootstrap\bootstrap-carousel.js" />
+    <Content Include="Content\themes\wuxia\js\bootstrap\bootstrap-collapse.js" />
+    <Content Include="Content\themes\wuxia\js\bootstrap\bootstrap-dropdown.js" />
+    <Content Include="Content\themes\wuxia\js\bootstrap\bootstrap-modal.js" />
+    <Content Include="Content\themes\wuxia\js\bootstrap\bootstrap-popover.js" />
+    <Content Include="Content\themes\wuxia\js\bootstrap\bootstrap-scrollspy.js" />
+    <Content Include="Content\themes\wuxia\js\bootstrap\bootstrap-tab.js" />
+    <Content Include="Content\themes\wuxia\js\bootstrap\bootstrap-tooltip.js" />
+    <Content Include="Content\themes\wuxia\js\bootstrap\bootstrap-transition.js" />
+    <Content Include="Content\themes\wuxia\js\bootstrap\bootstrap-typeahead.js" />
+    <Content Include="Content\themes\wuxia\js\bootstrap\bootstrap.js" />
+    <Content Include="Content\themes\wuxia\js\bootstrap\bootstrap.min.js" />
+    <Content Include="Content\themes\wuxia\js\libs\jquery.js" />
+    <Content Include="Content\themes\wuxia\js\libs\modernizr.js" />
+    <Content Include="Content\themes\wuxia\js\libs\selectivizr.js" />
+    <Content Include="Content\themes\wuxia\js\navigation.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\colorpicker\bootstrap-colorpicker.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\dataTables\jquery.datatables.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\dataTables\jquery.datatables.min.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\datepicker\bootstrap-datepicker.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\fileupload\bootstrap-fileupload.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\flot\excanvas.min.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\flot\jquery.flot.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\flot\jquery.flot.pie.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\fullCalendar\gcal.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\fullCalendar\jquery.fullcalendar.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\fullCalendar\jquery.fullcalendar.min.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\inputmask\bootstrap-inputmask.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\jGrowl\jquery.jgrowl.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\jWYSIWYG\controls\default.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\jWYSIWYG\controls\wysiwyg.colorpicker.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\jWYSIWYG\controls\wysiwyg.cssWrap.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\jWYSIWYG\controls\wysiwyg.image.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\jWYSIWYG\controls\wysiwyg.link.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\jWYSIWYG\controls\wysiwyg.table.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\jWYSIWYG\dialogs\default.css" />
+    <Content Include="Content\themes\wuxia\js\plugins\jWYSIWYG\dialogs\default.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\jWYSIWYG\jquery.wysiwyg.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\plUpload\i18n\cs.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\plUpload\i18n\da.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\plUpload\i18n\de.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\plUpload\i18n\el.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\plUpload\i18n\es.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\plUpload\i18n\et.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\plUpload\i18n\fa.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\plUpload\i18n\fi.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\plUpload\i18n\fr-ca.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\plUpload\i18n\fr.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\plUpload\i18n\hr.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\plUpload\i18n\hu.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\plUpload\i18n\it.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\plUpload\i18n\ja.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\plUpload\i18n\ko.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\plUpload\i18n\lv.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\plUpload\i18n\nl.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\plUpload\i18n\pl.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\plUpload\i18n\pt-br.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\plUpload\i18n\ro.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\plUpload\i18n\ru.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\plUpload\i18n\sr.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\plUpload\i18n\sv.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\plUpload\jquery.plupload.queue\img\backgrounds.gif" />
+    <Content Include="Content\themes\wuxia\js\plugins\plUpload\jquery.plupload.queue\img\buttons-disabled.png" />
+    <Content Include="Content\themes\wuxia\js\plugins\plUpload\jquery.plupload.queue\img\buttons.png" />
+    <Content Include="Content\themes\wuxia\js\plugins\plUpload\jquery.plupload.queue\img\delete.gif" />
+    <Content Include="Content\themes\wuxia\js\plugins\plUpload\jquery.plupload.queue\img\done.gif" />
+    <Content Include="Content\themes\wuxia\js\plugins\plUpload\jquery.plupload.queue\img\error.gif" />
+    <Content Include="Content\themes\wuxia\js\plugins\plUpload\jquery.plupload.queue\img\throbber.gif" />
+    <Content Include="Content\themes\wuxia\js\plugins\plUpload\jquery.plupload.queue\img\transp50.png" />
+    <Content Include="Content\themes\wuxia\js\plugins\plUpload\jquery.plupload.queue\jquery.plupload.queue.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\plUpload\jquery.ui.plupload\jquery.ui.plupload.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\plUpload\plupload.browserplus.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\plUpload\plupload.flash.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\plUpload\plupload.flash.swf" />
+    <Content Include="Content\themes\wuxia\js\plugins\plUpload\plupload.full.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\plUpload\plupload.gears.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\plUpload\plupload.html4.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\plUpload\plupload.html5.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\plUpload\plupload.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\plUpload\plupload.silverlight.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\plUpload\plupload.silverlight.xap" />
+    <Content Include="Content\themes\wuxia\js\plugins\smartWizard\jquery.smartWizard-2.0.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\smartWizard\jquery.smartWizard-2.0.min.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\snippet\jquery.snippet.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\snippet\jquery.snippet.min.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\snippet\ZeroClipboard.swf" />
+    <Content Include="Content\themes\wuxia\js\plugins\tagsInput\jquery.tagsinput.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\tagsInput\jquery.tagsinput.min.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\visualize\excanvas.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\visualize\jquery.visualize.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\visualize\jquery.visualize.min.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\visualize\jquery.visualize.tooltip.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\visualize\jquery.visualize.tooltip.min.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\wysihtml5\bootstrap-wysihtml5.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\wysihtml5\wysihtml5-0.3.0.js" />
+    <Content Include="Content\themes\wuxia\js\plugins\wysihtml5\wysihtml5-0.3.0.min.js" />
+    <Content Include="Content\weekcalendar\jquery.weekcalendar.css" />
+    <Content Include="Content\weekcalendar\jquery.weekcalendar.js" />
+    <Content Include="Content\weekcalendar\libs\css\smoothness\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\weekcalendar\libs\css\smoothness\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\weekcalendar\libs\css\smoothness\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\weekcalendar\libs\css\smoothness\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\weekcalendar\libs\css\smoothness\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\weekcalendar\libs\css\smoothness\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\weekcalendar\libs\css\smoothness\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\weekcalendar\libs\css\smoothness\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\weekcalendar\libs\css\smoothness\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\weekcalendar\libs\css\smoothness\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\weekcalendar\libs\css\smoothness\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\weekcalendar\libs\css\smoothness\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\weekcalendar\libs\css\smoothness\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\weekcalendar\libs\css\smoothness\jquery-ui-1.8.11.custom.css" />
+    <Content Include="Content\weekcalendar\libs\date.js" />
+    <Content Include="Content\weekcalendar\libs\jquery-1.4.4.min.js" />
+    <Content Include="Content\weekcalendar\libs\jquery-ui-1.8.11.custom.min.js" />
+    <Content Include="Content\weekcalendar\libs\jquery-ui-1.8.4.custom.min.js" />
+    <Content Include="Content\weekcalendar\libs\jquery-ui-i18n.js" />
+    <Content Include="Content\weekcalendar\libs\json2.js" />
+    <Content Include="Content\weekcalendar\libs\moment.min.js" />
+    <Content Include="Content\weekcalendar\weekcalendar.js" />
+    <Content Include="favicon.ico" />
+    <Content Include="Content\themes\wuxia\css\font\Elusive-Icons.eot" />
+    <Content Include="Content\themes\wuxia\css\font\Elusive-Icons.ttf" />
+    <Content Include="Content\themes\wuxia\css\font\Elusive-Icons.woff" />
+    <Content Include="Content\themes\wuxia\css\font\fontawesome-webfont.eot" />
+    <Content Include="Content\themes\wuxia\css\font\fontawesome-webfont.ttf" />
+    <Content Include="Content\themes\wuxia\css\font\fontawesome-webfont.woff" />
+    <Content Include="Content\themes\wuxia\css\font\FontAwesome.otf" />
+    <None Include="Scripts\jquery-1.8.2.intellisense.js" />
+    <Content Include="Global.asax" />
+    <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\jquery-1.8.2.js" />
+    <Content Include="Scripts\jquery-1.8.2.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-ui-1.8.24.js" />
+    <Content Include="Scripts\jquery-ui-1.8.24.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\json2.js" />
+    <Content Include="Scripts\knockout-2.2.0.debug.js" />
+    <Content Include="Scripts\knockout-2.2.0.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Content\Site.css" />
+    <Content Include="Scripts\_references.js" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\HelpRequest\Create.cshtml" />
+    <Content Include="Views\Shared\_LoginMaster.cshtml" />
+    <Content Include="Views\Account\RegisterTutor.cshtml" />
+    <Content Include="Views\HelpRequest\Helped_List.cshtml" />
+    <Content Include="Views\TutorsMgr\TutorList.cshtml" />
+    <Content Include="Views\HelpRequest\Details.cshtml" />
+    <Content Include="Views\HelpRequest\Report.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Account\RegisterHelped.cshtml" />
+    <Content Include="Views\Manager\IndividualSessionList.cshtml" />
+    <Content Include="Views\Manager\Index.cshtml" />
+    <Content Include="Views\GroupSessionMgr\GroupSessionList.cshtml" />
+    <Content Include="Views\HelpRequest\Tutor_List.cshtml" />
+    <Content Include="Views\Shared\_Menu.cshtml" />
+    <Content Include="Views\HelpRequestMgr\HelpRequestList.cshtml" />
+    <Content Include="Views\Account\EditHelped.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Account\EditManager.cshtml" />
+    <Content Include="Views\Account\EditTutor.cshtml" />
+    <Content Include="Views\HelpRequestMgr\HelpRequestAssign.cshtml" />
+    <Content Include="Views\Error\General.cshtml" />
+    <Content Include="Views\Error\Http404.cshtml" />
+    <Content Include="Views\Manager\TutorDetails.cshtml" />
+    <Content Include="Views\Notifications\AssignedToHelpRequestTask\AssignedToHelpRequestTaskHelpedPartial.cshtml" />
+    <Content Include="Views\Notifications\_AlertsList.cshtml" />
+    <Content Include="Views\Notifications\AssignedToHelpRequestTask\AssignedToHelpRequestTaskTutorPartial.cshtml" />
+    <Content Include="Views\GroupSessionMgr\EditCurrentSchedule.cshtml" />
+    <Content Include="Views\GroupSessionMgr\EditDefaultSchedule.cshtml" />
+    <Content Include="Views\TutorsMgr\TutorDetails.cshtml" />
+    <Content Include="Views\GroupSession\Tutor_List.cshtml" />
+    <Content Include="Views\Notifications\_TasksList.cshtml" />
+    <Content Include="Views\Notifications\AssignedToGroupSessionAlert\AssignedToGroupSessionAlertTutorPartial.cshtml" />
+    <Content Include="Views\Notifications\TutorHasRegisteredTask\TutorHasRegisteredTaskManagerPartial.cshtml" />
+    <Content Include="Views\Notifications\HelpRequestToAssignAlert\HelpRequestToAssignAlertManagerPartial.cshtml" />
+    <Content Include="Views\Notifications\Templates\_TaskTemplate.cshtml" />
+    <Content Include="Views\Notifications\Templates\_AlertTemplate.cshtml" />
+    <Content Include="Views\Notifications\HelpedHasRegisteredAlert\HelpedHasRegisteredAlertManagerPartial.cshtml" />
+    <Content Include="Views\ReportsMgr\Show.cshtml" />
+    <Content Include="Views\ReportsMgr\MonthlyHoursReport.cshtml" />
+    <Content Include="Views\Shared\_PdfLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Content\weekpicker\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Tuto.DataLayer\Tuto.DataLayer.csproj">
+      <Project>{ae63812e-93e6-4aa9-bf85-bda0e308319f}</Project>
+      <Name>Tuto.DataLayer</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>1361</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:8173/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

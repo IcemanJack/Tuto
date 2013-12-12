@@ -1,0 +1,416 @@
+﻿@using Tuto.DataLayer.Utilities
+@using Tuto.Web.Utilities
+@using Tuto.Web.ViewModels
+@model Tuto.Web.ViewModels.ManagerHelpRequestTutorAssignmentViewModels.AssignHelpRequestViewModel
+@{
+    ViewBag.Title = "Administration des demandes - Détails de la demande d'aide";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section stylesheets 
+{
+    @Styles.Render("~/Content/weekcalendar/libs/css/smoothness/jquery-ui-1.8.11.custom.css")
+    @Styles.Render("~/Content/weekcalendar/jquery.weekcalendar.css")
+}
+
+@section Scripts {
+    <!-- This will be rendered in the javascript section in the master template -->
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Content/weekcalendar/libs/jquery-1.4.4.min.js")
+    @Scripts.Render("~/Content/weekcalendar/libs/jquery-ui-1.8.11.custom.min.js")
+    @Scripts.Render("~/Content/weekcalendar/libs/moment.min.js")
+    @Scripts.Render("~/Content/weekcalendar/weekcalendar.js")
+    @Scripts.Render("~/Content/weekcalendar/libs/date.js")
+    @Scripts.Render("~/Content/weekcalendar/jquery.weekcalendar.js")
+    @Scripts.Render("~/Content/bPopUp/libs/jquery.bpopup.min.js")
+    
+    <script>
+        function GetTutorAvailableForGivenBlockViewModel() {
+            this.helpRequestId = 0;
+            this.dayOfWeek = 0;
+            this.startHour = 0;
+            this.endHour = 0;
+        }
+
+        $(document).ready(function() {
+            var calendarData = $("#helpRequestScheduleJson").val();
+            if (calendarData != "") {
+                calendarData = $("<div/>").html(calendarData).text().replace(/\\"/g, '"');
+                ;
+
+                console.log(calendarData);
+                loadCalendarData(calendarData);
+
+                $("#calendar").weekCalendar("setReadonly");
+                $("#calendar").weekCalendar("setClickEvent", function(calEvent, $event) {
+                    var getAvailableTutorViewModel = new GetTutorAvailableForGivenBlockViewModel();
+                    getAvailableTutorViewModel.helpRequestId = 3; // TODO edit
+                    getAvailableTutorViewModel.dayOfWeek = parseInt(calEvent.start.getDay());
+                    getAvailableTutorViewModel.startHour = parseInt(calEvent.start.getHours());
+                    getAvailableTutorViewModel.endHour = parseInt(calEvent.end.getHours());
+
+                    $.post("@(UrlUtilities.getRootUrl() + Url.Action("ajax_GetTutorsAvailableAt"))", getAvailableTutorViewModel, function(availableTutors) {
+                        if (availableTutors == "Error") {
+                            alert("Une erreur interne est survenue.");
+                            return;
+                        }
+
+                        if (availableTutors.length == 0) {
+                            $("#noTutorAvailable").slideDown();
+                            return;
+                        }
+
+                        // populate table
+                        $("#availableTutorsSelection #availableTutorsTable tbody").html("");
+
+                        for (var i = 0; i < availableTutors.length; i++) {
+                            var currentTutor = availableTutors[i];
+
+                            var chooseBtn = $("<a />").addClass("btn").addClass("btn-small").addClass("btn-primary").html("@Resources.Resources.Choose").click(function() {
+                                autoSelectTutorFromSuggestedEntry(currentTutor, getAvailableTutorViewModel);
+                                $("#availableTutorsSelection").bPopup().close();
+                            });
+
+                            var tutorTr = $("<tr />");
+                            tutorTr.append($("<td />").html(currentTutor.firstName + " " + currentTutor.lastName));
+                            tutorTr.append($("<td />").html(currentTutor.monthlyWorkingHours));
+                            tutorTr.append($("<td />").html(chooseBtn));
+
+                            tutorTr.find("td").css("text-align", "center");
+
+                            $("#availableTutorsSelection #availableTutorsTable tbody").append(tutorTr);
+                        }
+
+                        $("#availableTutorsSelection #numTutorPhrase").text(availableTutors.length < 2 ? availableTutors.length + "@Html.Raw(Resources.Resources.HelpRequestMgrAssignNumTutorsAvailableAtSingular)" : availableTutors.length + "@Html.Raw(Resources.Resources.HelpRequestMgrAssignNumTutorsAvailableAtPlural)");
+                        $("#noTutorAvailable").slideUp();
+                        $("#availableTutorsSelection").bPopup();
+
+                    });
+                });
+            }
+
+            function autoSelectTutorFromSuggestedEntry(currentTutorViewModel, getAvailableTutorViewModel) {
+                $("select[name=assignTutorId]").val(currentTutorViewModel.tutorUserId).change();
+                $("select[name=assignWeekDay]").val(getAvailableTutorViewModel.dayOfWeek);
+                $("select[name=assignStartHour]").val(getAvailableTutorViewModel.startHour);
+                $("select[name=assignEndHour]").val(getAvailableTutorViewModel.endHour);
+            }
+        });
+
+        // highly inspred from http://jsfiddle.net/manishma/AVZJh/
+        $(function() {
+            var startDate;
+            var endDate;
+
+            var selectCurrentWeek = function() {
+                window.setTimeout(function() {
+                    $('.week-picker').find('.ui-datepicker-current-day a').addClass('ui-state-active');
+                }, 1);
+            }
+
+            $('.week-picker').datepicker({
+                showOtherMonths: true,
+                selectOtherMonths: true,
+                onSelect: function(dateText, inst) {
+                    var date = $(this).datepicker('getDate');
+                    startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay());
+                    endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 5);
+                    var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;
+
+                    $("#weekPickFirst").val($.datepicker.formatDate(dateFormat, startDate, inst.settings));
+                    $("#weekPickEnd").val($.datepicker.formatDate(dateFormat, endDate, inst.settings));
+
+                    selectCurrentWeek();
+                },
+                beforeShowDay: function(date) {
+                    if (date.getDay() == 0 || date.getDay() == 6) {
+                        return [false];
+                    }
+
+                    var cssClass = '';
+                    if (date >= startDate && date <= endDate)
+                        cssClass = 'ui-datepicker-current-day';
+                    return [true, cssClass];
+                },
+                onChangeMonthYear: function(year, month, inst) {
+                    selectCurrentWeek();
+                },
+                beforeShow: function(input, inst) {
+                    $('.ui-datepicker-calendar tr').live('mousemove', function() { $(this).find('td a').addClass('ui-state-hover'); });
+                    $('.ui-datepicker-calendar tr').live('mouseleave', function() { $(this).find('td a').removeClass('ui-state-hover'); });
+                }
+            });
+        });
+
+        $(document).ready(function() {
+
+            $("#manualTutorSelection").change(function() {
+                var selectedOption = $(this).find(":selected");
+                console.log("test");
+                if (selectedOption.val() == "null") {
+                    $("#toFill_courseSkills").html("<em>@Resources.Resources.HelpRequestMgrAssignManualAssignedTutorSelectionDefault</em>");
+                    $("#toFill_monthyHours").html("<em>@Resources.Resources.HelpRequestMgrAssignManualAssignedTutorSelectionDefault</em>");
+                } else {
+                    $("#toFill_courseSkills").html($(selectedOption).data("skilledCourses"));
+                    $("#toFill_monthyHours").html($(selectedOption).data("monthlyWorkingHours"));
+                }
+            });
+
+        });
+
+        function getDateFromWeekDayAndDate(weekDay, randomWeekDate) {
+            // get the week start date
+            var weekStartDate = new Date(randomWeekDate.getTime() - ((3600 * 24 * 1000) * randomWeekDate.getDay()));
+            var firstMonday = new Date(weekStartDate.getTime() + (3600 * 24 * 1000));
+
+            return new Date(firstMonday.getTime() + (weekDay - 1) * (3600 * 24 * 1000));
+
+        }
+
+        $(document).ready(function() {
+
+            function getConfirmationModal() {
+                var confirmModal = $("#confirmAssignment");
+                $(confirmModal.find("#tutorName")).text($("select[name=assignTutorId] option:selected").text());
+                $(confirmModal.find("#helpedName")).text("@Model.helpedFirstName @Model.helpedLastName");
+                $(confirmModal.find("#localName")).text($("input[name=localName]").val());
+
+                var sessionFullDate = getDateFromWeekDayAndDate(parseInt($("select[name=assignWeekDay]").val()), new Date(Date.parse($("input#weekPickStart").val())));
+                $(confirmModal.find("#sessionFullDate")).text(sessionFullDate.getFullYear() + "/" + (sessionFullDate.getMonth() + 1) + "/" + sessionFullDate.getDate());
+                $(confirmModal.find("#sessionHourStart")).text($("select[name=assignStartHour]").val());
+                $(confirmModal.find("#sessionHourEnd")).text($("select[name=assignEndHour]").val());
+
+
+                return confirmModal;
+            }
+
+            $("#btnModalConfirm").click(function() {
+                $("#assignForm").submit();
+            });
+
+            $("#btnOpenConfirmModal").click(function() {
+                //
+                // custom validation function
+                //
+                if ($("#weekPickStart").val() == "") {
+                    alert("Vous avez oublié de sélectionner la semaine où la séance individuelle aura lieu.\n\nAppuyez sur OK pour la sélectionner.");
+                    $("#weekPickStart").focus();
+                } else {
+                    getConfirmationModal().bPopup();
+                }
+            });
+
+        });
+    </script>
+}
+
+<!-- Page header -->
+<div class="page-header">
+	<h1><span class="awe-tasks"></span> @Resources.Resources.HelpRequestMgrPagesTitle</h1>
+</div>
+<!-- /Page header -->
+<div class="page-container">
+@using (Html.BeginForm("assign", "HelpRequestMgr", FormMethod.Post, new { @id = "assignForm" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.helpRequestId)
+    @Html.HiddenFor(m => m.helpRequestScheduleJson, new { @id = "helpRequestScheduleJson" })
+    <fieldset>
+        <legend>@String.Format(Resources.Resources.HelpRequestMgrAssignPageTitle, Model.helpedFirstName, Model.helpedLastName, Model.helpRequestCreatedTime)</legend>
+        
+        @if (ViewData.ModelState.ContainsKey("SessionDateValidationError"))
+        {
+            <p class="alert alert-error">
+                <strong>@Resources.Resources.Error</strong>
+                @String.Format(Resources.Resources.HelpRequestMgrAssignNotAFutureDate)
+            </p>
+        }
+
+        <div class="row-fluid">
+            
+            <article class="span6">
+                <!-- Date -->
+                <div class="control-group">
+                    <label class="control-label">@Resources.Resources.HelpRequestMgrAssignWeekPick</label>
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.weekPickStart, new { @id = "weekPickStart", @class = "date-picker input input-small week-picker" })
+                        au
+                        @Html.TextBoxFor(m => m.weekPickEnd, new { @id = "weekPickEnd", @class = "date-picker input input-small week-picker", @readonly = "readonly" })
+                        <p class="help-block">@Html.ValidationMessageFor(m => m.weekPickStart)</p>
+                    </div>
+                </div>
+
+                <!-- Place -->
+                <div class="control-group">
+                    @Html.LabelFor(x => x.localName, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.localName, new { @class = "input-small" })
+                        <p class="help-block">@Html.ValidationMessageFor(m => m.localName)</p>
+                    </div>
+                </div>
+                    
+                @if (Model.helpRequestComment != "")
+                {
+                    <div class="control-group alert alert-block">
+                        <h4 class="alert-heading">@Resources.Resources.HelpRequestMgrAssignComments</h4>
+                        <p>@Model.helpRequestComment</p>
+                    </div>
+                }
+
+            </article>
+
+            <article class="span6">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th colspan="2">@Resources.Resources.HelpRequestMgrAssignHelpRequestDetails</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>@Html.Label(@Resources.Resources.HelpRequestMgrAssignHelpedName)</th>
+                            <td>@Model.helpedFirstName @Model.helpedLastName</td>
+                        </tr>
+                        
+                        <tr>
+                            <th>@Html.LabelFor(x => x.helpRequestCourseName)</th>
+                            <td>@Model.helpRequestCourseName</td>
+                        </tr>
+                        
+                        <tr>
+                            <th>@Html.LabelFor(x => x.helpRequestMisunderstoodNotions)</th>
+                            <td>@Model.helpRequestMisunderstoodNotions</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </article>
+
+        </div>
+        
+        <!-- Horaire -->
+        <div class="row-fluid">
+            <article class="span8">
+                <fieldset>
+                    <legend>@String.Format(Resources.Resources.HelpRequestMgrAssignUserDisponibilities, Model.helpedFirstName, Model.helpedLastName)</legend>
+                    
+                    <div class="alert alert-info">
+                        <strong>@Resources.Resources.HelpRequestMgrAssignAutomaticSelection</strong>
+                        @Resources.Resources.HelpRequestMgrAssignAutomaticSelectionText
+                    </div>
+
+                    <div class="alert alert-error" id="noTutorAvailable" style="display: none">
+                        <strong>@Resources.Resources.HelpRequestMgrAssignAutomaticNoAvailableTutorsTitle</strong>
+                        @Resources.Resources.HelpRequestMgrAssignAutomaticNoAvailableTutorsText
+                    </div>
+
+                    <div id="calendar"></div>
+                </fieldset>
+            </article>
+            
+            <article class="span4">
+                <fieldset>
+                    <legend>@Resources.Resources.HelpRequestMgrAssignTutorTitle</legend>
+                    <div class="control-group alert alert-info">
+                        <strong>@Resources.Resources.HelpRequestMgrAssignManualSelectionTitle</strong>
+                        @Resources.Resources.HelpRequestMgrAssignManualSelectionText
+                    </div>
+
+                    <div class="control-group">
+                        @Html.LabelFor(x => x.assignTutorId, new { @class = "control-label" })
+                        <div class="controls">
+                            <select id="manualTutorSelection" name="assignTutorId">
+                                <option value="-1">@Resources.Resources.HelpRequestMgrAssignManualAssignedTutorSelectionDefault</option>
+                                @foreach (ManagerHelpRequestTutorAssignmentViewModels.AssignHelpRequestViewModel.TutorListEntryViewModel tutor in Model.availableTutors)
+                                {
+                                    <option value="@tutor.id" data-skilledCourses="@tutor.skilledCourses" data-monthlyWorkingHours="@tutor.monthlyWorkingHours">@tutor.firstName @tutor.lastName</option>
+                                }
+
+                            </select>
+                        </div>
+                        <p class="help-block">@Html.ValidationMessageFor(m => m.assignTutorId)</p>
+                    </div>
+                        
+                    <div>
+                            
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th>@Html.Label(Resources.Resources.HelpRequestMgrAssignMonthlyHours)</th>
+                                    <td id="toFill_monthyHours"><em>@Resources.Resources.HelpRequestMgrAssignManualAssignedTutorSelectionDefault</em></td>
+                                </tr>
+                                <tr>
+                                    <th>Compétences</th>
+                                    <td id="toFill_courseSkills"><em>@Resources.Resources.HelpRequestMgrAssignManualAssignedTutorSelectionDefault</em></td>
+                                </tr>
+                                <tr>
+                                    <th>Assigner le </th>
+                                    <td>
+                                        @Html.DropDownListFor(m => m.assignWeekDay, ManagerHelpRequestTutorAssignmentViewModels.AssignHelpRequestViewModel.dayOfWeekHtmSelectListItems, new { @style = "display: inline; width: auto;" })
+                                                
+                                        de
+                                                
+                                        @Html.DropDownListFor(m => m.assignStartHour, ManagerHelpRequestTutorAssignmentViewModels.AssignHelpRequestViewModel.assignSessionStartHoursList, new { @style = "display: inline; width: auto;", @onchange = "$('select[name=assignEndHour]').val(parseInt($(this).val()) + 2)" })
+                                            
+                                        à
+                                            
+                                        @Html.DropDownListFor(m => m.assignEndHour, ManagerHelpRequestTutorAssignmentViewModels.AssignHelpRequestViewModel.assignSessionEndHoursList, new { @style = "display: inline; width: auto;", @readonly = "readonly" })
+                                        <p class="help-block">@Html.ValidationMessageFor(m => m.assignWeekDay)</p>
+                                        <p class="help-block">@Html.ValidationMessageFor(m => m.assignStartHour)</p>
+                                        <p class="help-block">@Html.ValidationMessageFor(m => m.assignEndHour)</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                        
+                    <div class="control-group" style="text-align: center;">
+                        <input id="btnOpenConfirmModal" type="button" class="btn btn-wuxia btn-primary btn-large" value="@Resources.Resources.HelpRequestMgrAssignBtn" />
+                    </div>
+
+                </fieldset>
+            </article>
+        </div>
+    </fieldset>
+}
+    
+    <div id="confirmAssignment" class="modal" style="display:none; width: 700px;">
+        <div class="modal-header">
+            <h3>@Resources.Resources.HelpRequestMgrAssignConfirmModal</h3>
+        </div>
+        <div class="modal-body">
+            <div class="well confirmModalText" style="text-align: center; font-weight: 700; font-size: 16px;">
+                @Html.Raw(Resources.Resources.HelpRequestMgrAssignConfirmModalText)
+            </div>
+            <p style="text-align: center;">
+                <button class="btn btn-primary btn-large" id="btnModalConfirm">@Resources.Resources.HelpRequestMgrAssignConfirmModalBtnAccept</button>&nbsp;
+                <button onclick="$('#confirmAssignment').bPopup().close()" class="btn btn-large">@Resources.Resources.No</button>
+            </p>
+        </div>
+    </div>
+
+    <div id="availableTutorsSelection" class="modal" style="display:none">
+        <div class="modal-header">
+            <h3><span id="numTutorPhrase"></span></h3>
+        </div>
+        <div class="modal-body">
+            <div class="alert alert-info">
+                <strong>@Html.Raw(Resources.Resources.HelpRequestMgrAssignChooseTutorFromList)</strong>
+            </div>
+            
+            
+            <table class="table table-stripped" id="availableTutorsTable">
+                <thead>
+                    <tr>
+                        <th>@Resources.Resources.TutorName</th>
+                        <th>@Resources.Resources.NumHoursMin</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>

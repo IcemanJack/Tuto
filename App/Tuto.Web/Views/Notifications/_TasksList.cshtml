@@ -1,0 +1,6 @@
+﻿@model List<KeyValuePair<string, object>>
+
+@foreach (KeyValuePair<string, object> toDisplayTaskVP in Model)
+{
+    @Html.Partial(toDisplayTaskVP.Key, toDisplayTaskVP.Value);
+}

@@ -1,0 +1,151 @@
+﻿@model Tuto.Web.ViewModels.Account.Edit.EditHelpedViewModel
+@{
+    ViewBag.Page_Id = "Account_Edit_Helped";
+    ViewBag.Title = "Modifier mon profil";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section stylesheets 
+{
+    @Styles.Render("~/Content/weekcalendar/libs/css/smoothness/jquery-ui-1.8.11.custom.css")
+    @Styles.Render("~/Content/weekcalendar/jquery.weekcalendar.css")
+}
+@section Scripts 
+{
+    <!-- This will be rendered in the javascript section in the master template -->
+    @Scripts.Render("~/Content/weekcalendar/libs/jquery-1.4.4.min.js")
+    @Scripts.Render("~/Content/weekcalendar/libs/jquery-ui-1.8.11.custom.min.js")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Content/weekcalendar/libs/moment.min.js")
+    @Scripts.Render("~/Content/weekcalendar/weekcalendar.js")
+    @Scripts.Render("~/Content/weekcalendar/libs/date.js")
+    @Scripts.Render("~/Content/weekcalendar/jquery.weekcalendar.js")
+    <script>
+        $(document).ready(function() {
+            // Load user informations
+            var calendarData = $("input#jsonSchedule").val();
+            if (calendarData != "") {
+                loadCalendarData(calendarData);
+            }
+
+            // Submit schedule
+            $("form#accountEditForm").submit(function() {
+                var jsonToPost = getCalendarData();
+                $("input#jsonSchedule").val(jsonToPost);
+                return true;
+            });
+
+            $("#newEmail").keyup(function () {
+                var val = $(this).val();
+                $("#confirmNewEmail").val(val);
+            });
+        });
+    </script>
+}
+<!-- Page header -->
+<div class="page-header">
+	<h1><span class="awe-edit"></span>@Resources.Resources.ViewEditHelpedHeader</h1>
+</div>
+<!-- /Page header -->
+<div class="page-container">
+    <div class="row-fluid">
+        <!-- form section -->
+        <article class="span4">
+            @using (Html.BeginForm("editHelped", "Account", FormMethod.Post, new { @id = "accountEditForm" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                @Html.HiddenFor(x => x.jsonSchedule, new { @id = "jsonSchedule" })
+                
+                if (ViewBag.AccountEditSuccessMessage != null)
+                {
+                <div id="div_SuccessMessage" class="alert alert-success">
+                    <strong>Succès!</strong>
+                    @ViewBag.AccountEditSuccessMessage
+                </div>
+                }
+                
+                if (ViewData["CurrentInfoError"] != null)
+                {
+                    <div class="alert alert-error">
+                        <strong>Erreur! </strong>
+                        @ViewData["CurrentInfoError"]
+                    </div>                        
+                 }
+                
+                <div class="control-group">
+                    @Html.Label(Resources.Resources.DisplayAccountEditFullName, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.newName, new { id = "txt_NewName", @style = "width: 45%", @placeholder = Resources.Resources.DisplayAccountEditNewName })
+                        @Html.TextBoxFor(m => m.newLastName, new { id = "txt_NewLastName", @style = "width: 45%", @placeholder = Resources.Resources.DisplayAccountEditNewLastName })
+                    </div>
+                    <p class="help-inline">
+                        @Html.ValidationMessageFor(m => m.newName)
+                        @Html.ValidationMessageFor(m => m.newLastName)
+                    </p>
+                </div>
+                
+                <div class="control-group">
+                    @Html.LabelFor(m => m.newEmail)
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.newEmail, new { id = "txt_NewEmail", @style = "width: 95%", @placeholder = Resources.Resources.DisplayAccountEditNewEmail })
+                        @Html.TextBoxFor(m => m.confirmNewEmail, new { id = "txt_ConfirmNewEmail", @style = "width: 95%", @placeholder = Resources.Resources.DisplayAccountEditNewEmailConfirmHelp })
+                    </div>
+                    <p class="help-inline">
+                        @Html.ValidationMessageFor(m => m.newEmail)
+                        @Html.ValidationMessageFor(m => m.confirmNewEmail)
+                    </p>
+                </div>
+                
+                <div class="control-group">
+                    @Html.LabelFor(m => m.newPassword)
+                    <div class="controls">
+                        @Html.PasswordFor(m => m.newPassword, new { id = "txt_NewPassword", @style = "width: 95%", @placeholder = Resources.Resources.DisplayAccountEditNewPasswordHelp })
+                        @Html.PasswordFor(m => m.confirmNewPassword, new { id = "txt_ConfirmNewPassword", @style = "width: 95%", @placeholder = Resources.Resources.DisplayAccountEditNewPasswordConfirmHelp })
+                    </div>
+                    <p class="help-inline">
+                        @Html.ValidationMessageFor(m => m.newPassword)
+                        @Html.ValidationMessageFor(m => m.confirmNewPassword)
+                    </p>
+                </div>
+                
+                <div class="control-group">
+                    @Html.Label(Resources.Resources.DisplayAccountEditConfirmChanges)
+                    <p class="help-inline">@Resources.Resources.DisplayAccountEditConfirmChangesHelp</p>
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.currentEmail, new { id = "txt_Email", @style = "width: 95%", @placeholder = Resources.Resources.DisplayAccountEditCurrentEmail })
+                        @Html.PasswordFor(m => m.currentPassword, new { id = "txt_Password", @style = "width: 95%", @placeholder = Resources.Resources.DisplayAccountEditCurrentPasswordConfirm })
+                    </div>
+                    <p class="help-inline">
+                        @Html.ValidationMessageFor(m => m.currentEmail)
+                        @Html.ValidationMessageFor(m => m.currentPassword)
+                    </p>
+                </div>
+                
+                <div class="form-actions">
+                    <button id="btn_Save" class="btn btn-wuxia btn-small btn-primary" type="submit">Enregistrer</button>
+                    <button id="btn_Home" class="btn btn-wuxia btn-small btn-primary" type="button"
+                            onclick="location.href='@Url.Action("index", "Home")'">Retour à l'Accueil</button>
+                    
+                    @if (ViewData["CalendarErrorMessage"] != null)
+                    {
+                        <p style='color: red'>@ViewData["CalendarErrorMessage"]</p>
+                    }
+                    @if (ViewData["SuccessMessage"] != null)
+                    {
+                        <p style='color: green'>@ViewData["SuccessMessage"]</p>
+                    }
+                </div>  
+            }
+        </article>
+        <!-- / form section -->
+        <!-- schedule section -->
+       
+        <article class="span8">
+            <h3>@Resources.Resources.ViewScheduleSectionTitle</h3>
+            <p>@Resources.Resources.ViewScheduleSectionText</p>
+            <div id="calendar"></div>
+        </article>
+        <!-- / schedule section -->
+    </div>
+</div>
+<!-- Main data container -->

@@ -1,0 +1,8 @@
+﻿@model Tuto.Web.ViewModels.Notifications.HelpedHasRegisteredAlertViewModel.ManagerViewModel
+@{
+    Layout = "~/Views/Notifications/Templates/_AlertTemplate.cshtml";
+    ViewBag.notificationId = @Model.id;
+}
+
+<strong>Un aidé s'est inscrit au système</strong><br />
+Un aidé dénommé <strong>@Model.helpedFirstName @Model.helpedLastName</strong> s'est inscrit au système le <strong>@Model.createdTime</strong>.

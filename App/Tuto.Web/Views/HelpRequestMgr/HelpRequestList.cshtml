@@ -1,0 +1,164 @@
+﻿@using System.Web.UI.WebControls
+@using Tuto.DataLayer.Models
+@using Tuto.DataLayer.Utilities
+@using Tuto.Web.Utilities
+@using Tuto.Web.ViewModels
+@model Tuto.Web.ViewModels.ManagerHelpRequestsListViewModel
+
+@{
+    ViewBag.Title = "Administration des demandes d'aide";
+    ViewBag.Page_Id = "Manager_HelpRequests_List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int finishedReportRowId = 0;
+}
+
+
+@section Scripts 
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Content/weekcalendar/libs/jquery-1.4.4.min.js")
+    <!-- use to pop message only, DO NOT use with fluent validations-->
+    @Scripts.Render("~/Content/bPopUp/libs/jquery.bpopup.min.js")
+    <script>
+        $(document).ready(function() {
+            $(".consultReport").click(function() {
+                var hrId = $(this).data("helpRequestId");
+                var userType = $(this).data("userType");
+                
+                $.get("@(UrlUtilities.getRootUrl() + Url.Action("ajax_studentReport"))", { helpRequestId: hrId, studentType: userType }, function (data) {
+                    $("#reportToPopUpBody").html("").append($("<p/>").html(data));
+                    $("#reportToPopUp").bPopup();
+                });
+            });
+        });
+    </script>
+}
+
+
+
+<!-- Page header -->
+    <div class="page-header">
+        <h1><span class="awe-tasks"></span>@Resources.Resources.ViewHelpRequestListHeader</h1>
+    </div>
+    <!-- /Page header -->
+    <div class="page-container">
+        <div class="row-fluid">
+            <fieldset>
+                <legend>@Resources.Resources.ViewHelpRequestListLegend1</legend>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Nom de l'aidé</th>
+                            <th>Date de création</th>
+                            <th>Cours</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (ManagerHelpRequestsListViewModel.ToBeConfirmedHelpRequestViewModel hr in Model.toBeConfirmedSystemHelpRequests)
+                        {
+                            <tr>
+                                <td style="text-align: center;">@hr.helpedFirstName @hr.helpedLastName</td>
+                                <td style="text-align: center;">@hr.createdTime.ToString()</td>
+                                <td style="text-align: center;">@hr.courseName</td>
+                                <td class="toolbar" style="text-align: center;">
+                                    <div class="btn-group">
+                                        @Html.ActionLink("Détails", "details", "HelpRequestMgr", new { id = hr.id }, new { @class = "btn" })
+                                        @Html.ActionLink("Assigner", "assign", "HelpRequestMgr", new { id = hr.id }, new { @class = "btn btn-primary" })
+                                    </div>
+                                </td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </fieldset>
+
+            <fieldset>
+                <legend>@Resources.Resources.ViewHelpRequestHelpedListLegend1</legend>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Nom de l'aidé</th>
+                            <th>Nom du tuteur</th>
+                            <th>Date de création</th>
+                            <th>Rendez-vous</th>
+                            <th>Confirmation aidé</th>
+                            <th>Confirmation tuteur</th>
+                            <th>Cours</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (ManagerHelpRequestsListViewModel.ConfirmedHelpRequestViewModel hr in Model.confirmedSystemHelpRequests)
+                        {
+                            <tr>
+                                <td style="text-align: center">@hr.helpedFirstName @hr.helpedLastName</td>
+                                <td style="text-align: center">@hr.tutorFirstName @hr.tutorLastName</td>
+                                <td style="text-align: center">@hr.createdTime.ToString()</td>
+                                <td style="text-align: center"><strong>@hr.individualSessionPlace</strong> le <strong>@hr.individualSessionDate.ToString()</td>
+                                <th style="text-align: center">@Html.Raw(hr.helpedHasConfirmed ? "<span class=\"label label-success\">Présence confirmée<span>" : "<span class=\"label label-important\">Présence non confirmée<span>")</th>
+                                <th style="text-align: center">@Html.Raw(hr.tutorHasConfirmed ? "<span class=\"label label-success\">Présence confirmée<span>" : "<span class=\"label label-important\">Présence non confirmée<span>")</th>
+                                <td style="text-align: center"><em>@hr.courseName</em></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </fieldset>
+                        
+            <fieldset>
+                <legend>@Resources.Resources.ViewHelpRequestListLegend2</legend>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Nom de l'aidé</th>
+                            <th>Nom de tuteur</th>
+                            <th>Date de création</th>
+                            <th>Rendez-vous</th>
+                            <th>Cours</th>
+                            <th>Suivi du Tuteur</th>
+                            <th>Suivi de l'Aidé</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (ManagerHelpRequestsListViewModel.FinishedHelpRequestViewModel hr in Model.finishedSystemHelpRequests)
+                        {
+                            <tr>
+                                <td style="text-align: center">@hr.helpedFirstName @hr.helpedLastName</td>
+                                <td style="text-align: center">@hr.tutorFirstName @hr.tutorLastName</td>
+                                <td style="text-align: center">@hr.createdTime</td>
+                                <td style="text-align: center"><strong>@hr.individualSessionPlace</strong> le <strong>@hr.individualSessionDate.ToString()</strong></td>
+                                <td style="text-align: center">@hr.courseName</td>
+
+                                <td class="toolbar" style="text-align: center;">
+                                    @if (hr.tutorRepportMessage != null)
+                                    {
+                                        <button id="btnTutorReportConsult" class="consultReport btn" data-userType="1" data-helpRequestId="@hr.id" >@Resources.Resources.ManagerHelpRequestConsult</button>
+                                    } else
+                                    {
+                                        <div style="text-align: center;">@Resources.Resources.DisplayNoReportAvailable</div>
+                                    }       
+                                </td>
+                                <td class="toolbar" style="text-align: center;">
+                                    @if (hr.helpedRepportMessage != null)
+                                    {
+                                        <button id="btnHelpedReportConsult" class="consultReport btn" data-userType="0" data-helpRequestId="@hr.id" >@Resources.Resources.ManagerHelpRequestConsult</button>
+                                    } else
+                                    {
+                                        <div style="text-align: center;">@Resources.Resources.DisplayNoReportAvailable</div>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </fieldset>
+            <!-- report_to_pop_up -->
+            <div class="modal fade hide" id="reportToPopUp" style="display: none;">
+                <div class="modal-header" id="reportToPopUpHeader">
+                    <h3>Suivi</h3>
+                </div>
+                <div class="modal-body" id="reportToPopUpBody"></div>
+            </div>
+    </div>
+</div>
+

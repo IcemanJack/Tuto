@@ -1,0 +1,26 @@
+﻿@model Tuto.Web.ViewModels.Reports.MonthlyWorkedHoursReportViewModel
+@{
+    Layout = "~/Views/Shared/_PdfLayout.cshtml";
+}
+
+<paragraph style="font-family:Helvetica;font-size:18;font-style:italic;" align="center">
+        <chunk style="font-weight:bold;">Rapports des heures travaillées par tuteur</chunk>
+</paragraph>
+
+<table width="100%" borderwidth="1" green="0" red="0" blue="0">
+    <row>
+        @foreach (string colTitle in Model.columnsTitle)
+        {
+            <cell width="90%"><chunk style="font-weight: bold">@colTitle</chunk></cell>
+        }
+    </row>
+    @foreach (string[] rowValues in Model.tableData)
+    {
+        <row>
+            @foreach (string fieldValue in rowValues)
+            {
+                <cell><chunk>@fieldValue</chunk></cell>
+            }
+        </row>
+    }
+</table>

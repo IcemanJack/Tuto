@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Tuto.Web.ViewsUtilities.MenuItem>
+
+		<!-- There are 3 navigation styles available.-->
+		<!--    default - fixed on top without any special effect (no extra markup) -->
+		<!--    affix - Bootstrap affix plugin to track page scrolling, you can hide, move or change alpha when scrolled down (navigation.js) -->
+		<!--    arrowed - add class .active-arrow to ul.nav to add arrow for active element -->
+		<header class="navbar navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container">
+
+					<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="awe-user"></span></button>
+					<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="awe-chevron-down"></span></button>
+
+					<div class="brand">Tuto</div>
+
+					<div class="nav-collapse">
+
+						<!-- Main navigation -->
+						<nav class="navigation">
+						    <ul class="nav active-arrows" role="navigation">
+						        @foreach(var menuItem in Model) 
+                                {
+                                    @Html.MenuItem(menuItem.name, menuItem.description, menuItem.icon, menuItem.action, menuItem.controller);
+                                }
+						    </ul>
+						</nav>
+						
+						<!-- User navigation -->
+						<nav class="user">
+						    <div class="user-info pull-right">
+						        <img src="http://placekitten.com/35/35" alt="User avatar">
+						        <div class="btn-group">
+						            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+						                <div><strong>@ViewData["user_name"]</strong> @ViewData["user_role"]</div>
+						                <span class="caret"></span>
+						            </a>
+						            <ul class="dropdown-menu">
+						                <li><a href="@Url.Action("edit", "Account")"><span class="awe-cogs"></span> @Resources.Resources.MenuAccount1</a></li>
+						                <li class="divider"></li>
+						                <li><a href="@Url.Action("disconnect", "Account")"><span class="awe-signout"></span> @Resources.Resources.MenuAccount2</a></li>
+						            </ul>
+						        </div>
+						    </div>
+						</nav>
+
+					</div>
+				</div>
+			</div>
+		</header>

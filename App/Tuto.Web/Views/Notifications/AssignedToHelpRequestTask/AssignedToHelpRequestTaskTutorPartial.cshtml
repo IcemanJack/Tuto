@@ -1,0 +1,16 @@
+﻿@model Tuto.Web.ViewModels.Notifications.AssignedToHelpRequestTaskViewModel.TutorViewModel
+@{
+    Layout = "~/Views/Notifications/Templates/_TaskTemplate.cshtml";
+    ViewBag.notificationId = Model.id;
+}
+
+<strong>Assignation à une séance de tutorat individuelle</strong><br />
+Vous avez été assigné à une séance de tutorat individuelle le <strong>@Model.individualSessionDatetime.ToString("yyyy/MM/dd")</strong> de 
+<strong>@Model.individualSessionDatetime.ToString("HH")h</strong> à <strong>@Model.individualSessionDatetime.AddHours(2).ToString("HH")h</strong> suite à 
+une demande d'aide effectuée par <strong>@Model.helpedFirstname @Model.helpedLastname</strong>.
+<br />
+<em>@Html.ActionLink("Voir les détails de cette demande", "details", "HelpRequest", new { id = Model.helpRequestId }, new {  }) ou confirmer votre présence pour cette séance de tutorat individuelle : </em>
+<div class="btn-group">
+    @Html.ActionLink("Confirmer ma présence", "confirm", "HelpRequest", new { id = Model.helpRequestId }, new { @class = "btn btn-wuxia btn-mini btn-primary" })
+    @Html.ActionLink("Refuser", "refuse", "HelpRequest", new { id = Model.helpRequestId }, new { @class = "btn btn-wuxia btn-mini" })
+</div>

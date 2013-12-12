@@ -1,0 +1,58 @@
+﻿@model Tuto.Web.ViewModels.HomeViewModel
+@{
+    ViewBag.Page_Id = "Home_Index";
+    ViewBag.Title = "Accueil";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Scripts 
+{
+    <!-- This will be rendered in the javascript section in the master template -->
+    @Scripts.Render("~/bundles/jqueryval")
+    <!-- use to pop message only, DO NOT use with fluent validations-->
+    @Scripts.Render("~/Content/bPopUp/libs/jquery.bpopup.min.js")
+    <script>
+    </script>
+}
+<!-- Page header -->
+<div class="page-header">
+	<h1><span class="awe-home"></span>@Resources.Resources.ViewHomeIndexWelcome @Model.userFirstName @Model.userLastName</h1>
+</div>
+<!-- /Page header -->
+<div class="page-container">
+    <article class="row-fluid">
+        <!-- alerts -->
+        <div class="span6">
+            <fieldset>
+                <legend><i class="awe-asterisk"></i> @Resources.Resources.ViewHomeIndexTaskLegend</legend>
+                
+                @{ Html.RenderAction("getLoggedInUserTasks", "Notifications"); }
+
+                <!--<div class="alert">
+                    <button class="close" type="button" data-dismiss="alert">×</button>
+                    <h4 class="alert-heading">@Resources.Resources.ViewHomeIndexTaskTitle</h4>
+                     <p>
+                         @Resources.Resources.ViewHomeIndexTaskBody
+                     </p>
+                     <div class="btn-group">
+                         <button class="btn btn-wuxia btn-mini" data-dismiss="alert">Accepter</button>
+                         <button class="btn btn-wuxia btn-mini" data-dismiss="alert">Refuser</button>
+                     </div>
+                    
+                </div>-->
+            </fieldset>
+        </div>
+        <!-- / alerts -->
+
+        <!-- tasks -->
+        <div class="span6">
+              <fieldset>
+                  <legend><i class="awe-asterisk"></i> Mes alertes</legend>
+                  
+                  @{ Html.RenderAction("getLoggedInUserAlerts", "Notifications"); }
+
+            </fieldset>
+        </div>
+        <!-- / alerts -->
+    </article>
+</div>
+<!-- Main data container -->

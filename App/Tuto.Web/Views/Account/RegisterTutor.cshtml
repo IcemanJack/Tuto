@@ -1,0 +1,247 @@
+﻿@model Tuto.Web.ViewModels.Account.Register.TutorRegisterViewModel
+
+@{
+    ViewBag.Title = "RegisterTutor";
+    ViewBag.Page_Id = "Account_Register_Tutor";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.hideMenuBar = true;
+}
+
+
+
+@section stylesheets 
+{
+    @Styles.Render("~/Content/weekcalendar/libs/css/smoothness/jquery-ui-1.8.11.custom.css")
+    @Styles.Render("~/Content/weekcalendar/jquery.weekcalendar.css")
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/Content/weekcalendar/libs/jquery-1.4.4.min.js")
+    @Scripts.Render("~/Content/weekcalendar/libs/jquery-ui-1.8.11.custom.min.js")
+    @Scripts.Render("~/Content/weekcalendar/libs/moment.min.js")
+    @Scripts.Render("~/Content/weekcalendar/libs/date.js")
+    @Scripts.Render("~/Content/weekcalendar/jquery.weekcalendar.js")
+    @Scripts.Render("~/Content/weekcalendar/weekcalendar.js")
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+
+    <script>
+        $(document).ready(function () {
+            
+
+            // COURSES DATA
+            var departmentsJson = '@Html.Raw(@ViewBag.Departments)';
+            var departments = JSON.parse(departmentsJson);
+
+            var combo_departments = $("#department");
+            var combo_courses = $("#course");
+            var combo_courses_base_option = $("#course [base-option]");
+            
+            for (var departmentName in departments) {
+                combo_departments.append("<option>" + departmentName + "</option>");
+            }
+            
+            // On department selected
+            combo_departments.change(function () {
+                combo_courses.empty();
+                combo_courses.append(combo_courses_base_option);
+                
+                var optionSelected = $("option:selected", this);
+                if (optionSelected.attr("base-option") !== undefined){
+                    combo_courses.empty();
+                    combo_courses.append(combo_courses_base_option);
+                }else {
+                    var optionText = optionSelected.text();
+                    var departmentSelected = departments[optionText];
+                    for (var i = 0; i < departmentSelected.length; i++) {
+                        combo_courses.append("<option>" + departmentSelected[i] + "</option>");
+                    }
+                }
+            });
+
+
+            // Chosen courses/departments array, so we don't add doublons
+            var chosenCoursesArray = new Array();
+
+            // Div containing the courses fields
+            var chosenCourses = $("#chosen_courses");
+
+            // The base course field so we can clone it later
+            var baseCourseField = $("[course-field]");
+            baseCourseField.remove();
+
+            // Setting the add course button click event
+            var addCourseFieldButton = $("#btn_addCourseField");
+            addCourseFieldButton.click(function () {
+                var ddl_department = $("#department");
+                var ddl_course = $("#course");
+
+                var opt_departmentSelected = ddl_department.find(":selected");
+                var opt_courseSelected = ddl_course.find(":selected");
+
+                if ((opt_departmentSelected.attr("base-option") === undefined) && (opt_courseSelected.attr("base-option") === undefined)) {
+                    var selectedDepartment = opt_departmentSelected.text();
+                    var selectedCourse = opt_courseSelected.text();
+
+                    var newCourseObject = {};
+                    newCourseObject.department = selectedDepartment;
+                    newCourseObject.course = selectedCourse;
+
+                    if (!(arrayContainsCourseObject(chosenCoursesArray, newCourseObject))) {
+                        chosenCoursesArray.push(newCourseObject);
+
+                        var newCourseField = baseCourseField.clone();
+                        newCourseField.find("[department]").text(selectedDepartment);
+                        newCourseField.find("[course]").text(selectedCourse);
+                        chosenCourses.append(newCourseField);
+
+                        var btn_close = newCourseField.find(".close");
+                        btn_close.click(function () {
+                            chosenCoursesArray = $.grep(chosenCoursesArray, function (value) {
+                                return value != newCourseObject;
+                            });
+                            newCourseField.remove();
+                        });
+                    }
+                }
+            }); // end add on click
+
+            $("#btn_submit").click(function () {
+                var jsonCourses = JSON.stringify(chosenCoursesArray);
+                $("#hid_coursesSkillsJson").val(jsonCourses);
+                
+                var jsonToPost = getCalendarData();
+                $("#hid_scheduleBlocksJson").val(jsonToPost);
+            });
+
+
+        });
+
+        function arrayContainsCourseObject(array, courseObject) {
+            for (var i = 0; i < array.length; i++) {
+                var currentCourse = array[i];
+                if (currentCourse.department == courseObject.department && currentCourse.course == courseObject.course) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    </script> 
+}
+
+<!-- Page header -->
+<div class="page-header">
+	<h1><span class="awe-edit"></span>@Resources.Resources.ViewRegisterTutorHeader</h1>
+</div>
+<!-- /Page header -->
+<div class="page-container">
+    <div class="row-fluid">
+        
+        <!-- form section -->
+        <article class="span4">
+            @using (Html.BeginForm()) {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+
+                
+                <div class="control-group">
+                    <h4>Informations personnelles</h4>
+                    @Html.LabelFor(model => model.name)
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.name,  new {@placeholder = "Entrez votre prénom...", id = "txt_name"})
+                        <p class="help-block">@Html.ValidationMessageFor(model => model.name)</p>
+                    </div>
+                    
+                    @Html.LabelFor(model => model.lastName)
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.lastName,  new {@placeholder = "Entrez votre nom de famille...", id = "txt_lastName"})
+                        <p class="help-block">@Html.ValidationMessageFor(model => model.lastName)</p>
+                    </div>
+                </div>
+                    
+                <div class="control-group">
+                    <h4>Compte</h4>
+                    @Html.LabelFor(model => model.mail)
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.mail,  new {@placeholder = "Entrez votre adresse courriel...",id = "txt_mail"})
+                        <p class="help-block">@Html.ValidationMessageFor(model => model.mail)</p>
+                    </div>
+                    @Html.LabelFor(model => model.password)
+                    <div class="controls">
+                        @Html.PasswordFor(model => model.password,  new {id = "txt_password"})
+                        <p class="help-block">@Html.ValidationMessageFor(model => model.password)</p>
+                    </div>
+                    @Html.LabelFor(model => model.confirmPassword)
+                    <div class="controls">
+                        @Html.PasswordFor(model => model.confirmPassword,  new {id = "txt_confirmPassword"})
+                        <p class="help-block">@Html.ValidationMessageFor(model => model.confirmPassword)</p>
+                    </div>
+                </div>           
+                
+                <div class="control-group">
+                    <h4>Type de tutorat désiré</h4>
+                    @Html.LabelFor(model => model.tutorAvailableForGroupSession)
+                    <div class="controls">
+                        @Html.EditorFor(model => model.tutorAvailableForGroupSession,  new {id = "chk_availableGroup"})
+                        <p class="help-block">@Html.ValidationMessageFor(model => model.tutorAvailableForGroupSession)</p>
+                    </div>
+                    @Html.LabelFor(model => model.tutorAvailableForIndividualSession)
+                    <div class="controls">
+                        @Html.EditorFor(model => model.tutorAvailableForIndividualSession,  new {id = "chk_availableIndividual"})
+                        <p class="help-block">@Html.ValidationMessageFor(model => model.tutorAvailableForIndividualSession)</p>
+                    </div>
+                </div>
+                
+                <form class="form-inline">
+                    <div class="control-group">
+                        <h4>Aptitudes</h4>
+                        <p class="help-inline">Veuillez entrez les cours dans lesquels vous êtes aptes à donner du tutorat.</p>
+                        <div class="controls">
+                         
+                            <select id="department">
+                                <option value='' base-option>Choisissez un departement...</option>
+                            </select>
+
+                            <select id="course">
+                                <option value='' base-option>Choisissez un cours...</option>
+                            </select>
+
+                            <div id="btn_addCourseField" class="btn btn-wuxia btn-info" style="top: -5px; padding: 2px 14px 6px 14px; position: relative;">Ajouter</div>
+                        </div>
+                        
+                        <div id="chosen_courses" class="well">
+                            <div class="alert alert-info" style="padding: 8px 35px 8px 14px;" course-field>
+                                <span class="label label-success" department>Général</span>
+                                <span class="label label-info" course>Français 1</span>
+                                <button class="close awe-trash" type="button" style="top: -2px; right: -21px;"></button>
+                            </div>
+                        </div>
+                        @Html.HiddenFor(model => model.coursesSkillsJson,  new {id = "hid_coursesSkillsJson"})
+                        <p class="help-block">@Html.ValidationMessageFor(model => model.coursesSkillsJson)</p>
+                        
+                        @Html.HiddenFor(model => model.scheduleBlocksJson,  new {id = "hid_scheduleBlocksJson"})
+                    </div>    
+                    <div class="control-group"> 
+                        <div class="controls">
+                            <input id="btn_submit" class="btn btn-wuxia btn-large btn-primary" type="submit" value="S'inscrire" />
+                        </div>
+                    </div>            
+                </form>    
+            }
+        </article>
+        <!-- / form section -->
+        
+        <!-- schedule section -->
+        <article class="span8">
+            <h3>@Resources.Resources.ViewScheduleSectionTitle</h3>
+            <p>@Resources.Resources.ViewScheduleRdvSectionText</p>
+            <div id="calendar"></div>
+
+            <p class="help-block">@Html.ValidationMessageFor(model => model.scheduleBlocksJson)</p>
+        </article>
+        
+     </div>
+</div>

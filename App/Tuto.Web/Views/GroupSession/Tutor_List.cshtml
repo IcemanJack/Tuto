@@ -1,0 +1,68 @@
+﻿@using Tuto.DataLayer
+@using Tuto.DataLayer.Models
+@model ICollection<Tuto.DataLayer.Models.GroupSessions.AssignedGroupSession>
+@{
+    ViewBag.Title = "Tutor_List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-header">
+    <h1><span class="awe-group"></span> @GroupSessionTutorListResources.Title</h1>
+</div>
+
+<div class="page-container">
+    <div class="row-fluid">
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @GroupSessionTutorListResources.GroupSessionDate
+                    </th>
+                    <th>
+                        @GroupSessionTutorListResources.GroupSessionDay
+                    </th>
+                    <th>
+                        @GroupSessionTutorListResources.GroupSessionFromTime
+                    </th>
+                    <th>
+                        @GroupSessionTutorListResources.GroupSessionToTime
+                    </th>
+                    <th>
+                        @GroupSessionTutorListResources.GroupSessionPlace
+                    </th>
+                    <th>
+                        @GroupSessionTutorListResources.GroupSessionActions
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @item.getDate().ToShortDateString()
+                        </td> 
+                        <td>
+                            @item.startScheduleBlock.weekDay.toString()
+                        </td>
+                        <td>
+                            @item.startScheduleBlock.startTime
+                        </td>
+                        <td>
+                            @(item.startScheduleBlock.startTime + 2)
+                        </td>
+                        <td>
+                            @item.place
+                        </td>
+                        <td style="text-align: center">
+                            <div class="btn-group">
+                                <button class="btn btn-primary" onclick="location.href = '@Url.Action("tutorRefuseGroupSession", new { id = item.id})'">@GroupSessionTutorListResources.GroupSessionRefuse</button>
+                            </div>
+                        </td> 
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

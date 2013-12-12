@@ -1,0 +1,114 @@
+﻿@model Tuto.Web.ViewModels.Account.Register.HelpedRegisterViewModel
+
+@{
+    ViewBag.Title = "RegisterHelped";
+    ViewBag.Page_Id = "Account_Register_Helped";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.hideMenuBar = true;
+}
+
+
+
+@section stylesheets 
+{
+    @Styles.Render("~/Content/weekcalendar/libs/css/smoothness/jquery-ui-1.8.11.custom.css")
+    @Styles.Render("~/Content/weekcalendar/jquery.weekcalendar.css")
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/Content/weekcalendar/libs/jquery-1.4.4.min.js")
+    @Scripts.Render("~/Content/weekcalendar/libs/jquery-ui-1.8.11.custom.min.js")
+    @Scripts.Render("~/Content/weekcalendar/libs/moment.min.js")
+    @Scripts.Render("~/Content/weekcalendar/libs/date.js")
+    @Scripts.Render("~/Content/weekcalendar/jquery.weekcalendar.js")
+    @Scripts.Render("~/Content/weekcalendar/weekcalendar.js")
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+
+    <script>
+        $(document).ready(function () {
+
+            $("#btn_submit").click(function () {
+                
+                var jsonToPost = getCalendarData();
+                $("#hid_scheduleBlocksJson").val(jsonToPost);
+            });
+        });
+    </script> 
+}
+
+<!-- Page header -->
+<div class="page-header">
+	<h1><span class="awe-edit"></span>@Resources.Resources.ViewRegisterHelpedHeader</h1>
+</div>
+<!-- /Page header -->
+<div class="page-container">
+    <div class="row-fluid">
+        
+        <!-- form section -->
+        <article class="span4">
+            @using (Html.BeginForm()) {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+
+                
+                <div class="control-group">
+                    <h4>Informations personnelles</h4>
+                    @Html.LabelFor(model => model.name)
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.name,  new {@placeholder = "Entrez votre prénom...", id = "txt_name"})
+                        <p class="help-block">@Html.ValidationMessageFor(model => model.name)</p>
+                    </div>
+                    
+                    @Html.LabelFor(model => model.lastName)
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.lastName,  new {@placeholder = "Entrez votre nom de famille...", id = "txt_lastName"})
+                        <p class="help-block">@Html.ValidationMessageFor(model => model.lastName)</p>
+                    </div>
+                </div>
+                    
+                <div class="control-group">
+                    <h4>Compte</h4>
+                    @Html.LabelFor(model => model.mail)
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.mail,  new {@placeholder = "Entrez votre adresse courriel...", id = "txt_mail"})
+                        <p class="help-block">@Html.ValidationMessageFor(model => model.mail)</p>
+                    </div>
+                    @Html.LabelFor(model => model.password)
+                    <div class="controls">
+                        @Html.PasswordFor(model => model.password,  new {id = "txt_password"})
+                        <p class="help-block">@Html.ValidationMessageFor(model => model.password)</p>
+                    </div>
+                    @Html.LabelFor(model => model.confirmPassword)
+                    <div class="controls">
+                        @Html.PasswordFor(model => model.confirmPassword,  new {id = "txt_confirmPassword"})
+                        <p class="help-block">@Html.ValidationMessageFor(model => model.confirmPassword)</p>
+                    </div>
+                </div>           
+                
+                <form class="form-inline">
+                    @Html.HiddenFor(model => model.scheduleBlocksJson,  new {id = "hid_scheduleBlocksJson"})  
+                    <div class="control-group"> 
+                        <div class="controls">
+                            <input id="btn_submit" class="btn btn-wuxia btn-large btn-primary" type="submit" value="S'inscrire" />
+                        </div>
+                    </div>            
+                </form>    
+            }
+        </article>
+        <!-- / form section -->
+        
+        <!-- schedule section -->
+        <article class="span8">
+            <h3>@Resources.Resources.ViewScheduleSectionTitle</h3>
+            <p>@Resources.Resources.ViewScheduleRdvSectionText</p>
+            <div id="calendar"></div>
+
+            <p class="help-block">@Html.ValidationMessageFor(model => model.scheduleBlocksJson)</p>
+        </article>
+        
+     </div>
+</div>

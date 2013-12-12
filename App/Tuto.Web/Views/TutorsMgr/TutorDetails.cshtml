@@ -1,0 +1,201 @@
+﻿@using Tuto.DataLayer.Enums
+@model Tuto.Web.ViewModels.TutorDetailsViewModel
+@{
+    ViewBag.Title = "TutorDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section stylesheets 
+{
+    @Styles.Render("~/Content/weekcalendar/libs/css/smoothness/jquery-ui-1.8.11.custom.css")
+    @Styles.Render("~/Content/weekcalendar/jquery.weekcalendar.css")
+}
+
+@section Scripts {
+    @Scripts.Render("~/Content/weekcalendar/libs/jquery-1.4.4.min.js")
+    @Scripts.Render("~/Content/weekcalendar/libs/jquery-ui-1.8.11.custom.min.js")
+    @Scripts.Render("~/Content/weekcalendar/libs/moment.min.js")
+    @Scripts.Render("~/Content/weekcalendar/libs/date.js")
+    @Scripts.Render("~/Content/weekcalendar/jquery.weekcalendar.js")
+    @Scripts.Render("~/Content/weekcalendar/weekcalendar.js")
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(document).ready(function () {
+            loadCalendarData("@Html.Raw(Model.jsonSchedule.Replace("\"", "\\\""))");
+            $("#calendar").weekCalendar("setReadonly");
+        });
+    </script>
+}
+
+<!-- Page header -->
+<div class="page-header">
+	<h1><span class="awe-info-sign"></span>@Resources.Resources.ViewTutorDetailsHeader</h1>
+</div>
+<!-- /Page header -->
+<div class="page-container">
+    <fieldset>
+
+        <article class="span7">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th colspan="2">@Resources.Resources.ViewTutorDetailsTable1Head</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>@Resources.Resources.DisplayUserMail</th>
+                        <td>@Html.DisplayFor(model => model.mail)</td>
+                    </tr>
+                        
+                    <tr>
+                        <th>@Resources.Resources.DisplayUserName</th>
+                        <td>@Html.DisplayFor(model => model.name)</td>
+                    </tr>
+                        
+                    <tr>
+                        <th>@Resources.Resources.DisplayUserLastName</th>
+                        <td>@Html.DisplayFor(model => model.lastName)</td>
+                    </tr>
+            
+                    <tr>
+                        <th>@Resources.Resources.DisplayTutorAvailableForIndividualSession</th>
+                        <td>@(Model.tutorAvailableForIndividualSession ? @Html.Raw("Oui") : @Html.Raw("Non"))</td>
+                    </tr>
+                    
+                    <tr>
+                        <th>@Resources.Resources.DisplayTutorAvailableForGroupSession</th>
+                        <td>@(Model.tutorAvailableForGroupSession ? @Html.Raw("Oui") : @Html.Raw("Non"))</td>
+                    </tr>
+                    
+                    <tr>
+                        <th>@Resources.Resources.DisplayTutorWorkedHours</th>
+                        <td>@Html.DisplayFor(model => model.workedHours)</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th colspan="2">@Resources.Resources.ViewTutorDetailsTable2Head</th>
+                    </tr>
+                    @if (Model.coursesSkills.Any())
+                    {
+                        <tr>
+                            <th>@Resources.Resources.ViewTutorDetailsTable2Column1</th>
+                            <th>@Resources.Resources.ViewTutorDetailsTable2Column2</th>
+                        </tr>
+                    }
+                </thead>
+                <tbody>
+                    @if (!Model.coursesSkills.Any())
+                    {
+                        <tr>
+                            <td><span class="label">@Resources.Resources.ViewTutorDetailsTable2Row</span></td>
+                        </tr>
+                    }
+
+                    @foreach (var course in Model.coursesSkills)
+                    {
+                        <tr>
+                            <td><span class="label label-success">@course.department.name</span></td>
+                            <td><span class="label label-info">@course.courseName</span></td>
+                        </tr>  
+                    }
+                </tbody>
+            </table>
+            
+            @if (Model.tutorAvailableForGroupSession)
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th colspan="3">@Resources.Resources.ViewTutorDetailsTable3Column</th>
+                        </tr>
+                        @if (Model.groupSessions.Any())
+                        {
+                            <tr>
+                                <th>@Resources.Resources.DisplaySessionDate</th>
+                                <th>@Resources.Resources.DisplaySessionTime</th>
+                                <th>@Resources.Resources.DisplaySessionPlace</th>
+                            </tr>
+                        }
+                    </thead>
+                    <tbody>
+                        @if (!Model.groupSessions.Any())
+                        {
+                            <tr>
+                                <td><span class="label">@Resources.Resources.ViewTutorDetailsTable3Row</span></td>
+                            </tr>
+                        }
+
+                        @foreach (var groupSession in Model.groupSessions)
+                        {
+                            <tr>
+                                <td>@groupSession.getDate().ToLongDateString()</td>
+                                <td>@groupSession.startScheduleBlock.startTime</td>
+                                <td>@groupSession.place</td>
+                            </tr>  
+                        }
+                    </tbody>
+                </table> 
+            }
+            
+            @if (Model.tutorAvailableForIndividualSession)
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th colspan="8">@Resources.Resources.ViewTutorDetailsTable4Column1</th>
+                        </tr>
+                        @if (Model.helpRequests.Any())
+                        {
+                            <tr>
+                                <th>@Resources.Resources.ViewTutorDetailsTable4Column1</th>
+                                <th>@Resources.Resources.ViewTutorDetailsTable4Column2</th>
+                                <th>@Resources.Resources.ViewTutorDetailsTable4Column3</th>
+                                <th>@Resources.Resources.DisplaySessionDate</th>
+                                <th>@Resources.Resources.DisplaySessionTime</th>
+                                <th>@Resources.Resources.DisplaySessionPlace</th>
+                                <th>@Resources.Resources.DisplayHelpRequestState</th>
+                                <th>@Resources.Resources.ViewDetailsButton</th>
+                            </tr>
+                        }
+                    </thead>
+                    <tbody>
+                        @if (!Model.helpRequests.Any())
+                        {
+                            <tr>
+                                <td><span class="label">@Resources.Resources.ViewTutorDetailsTable5ColumnTitle</span></td>
+                            </tr>
+                        }
+
+                        @foreach (var helpRequest in Model.helpRequests)
+                        {
+                            <tr>
+                                <td><span class="label label-success">@helpRequest.course.department.name</span></td>
+                                <td><span class="label label-info">@helpRequest.course.courseName</span></td>
+                                <td>@(helpRequest.helped.name + " " + helpRequest.helped.lastName)</td>
+                                <td>@helpRequest.individualSession.date.ToShortDateString()</td>
+                                <td>@helpRequest.individualSession.date.TimeOfDay</td>
+                                <td>@helpRequest.individualSession.place</td>
+                                <td><span class="label label-important">@helpRequest.currentState.getString()</span></td>
+                                <td><button class="btn" onclick="location.href='@Url.Action("details", "HelpRequest", new {id = helpRequest.id})'">@Resources.Resources.ViewDetailsButton</button></td>
+                            </tr>  
+                        }
+                    </tbody>
+                </table>  
+            }
+
+            
+            <button class="btn btn-wuxia" onclick="location.href='@Url.Action("list", "TutorsMgr")'">@Resources.Resources.ViewTutorDetailsButtonReturn</button>
+        </article>
+        
+       <article class="span8">
+            <h3>@Resources.Resources.ViewTutorDetailsArticleTitle</h3>
+            <div id="calendar"></div>
+       </article>
+    </fieldset>
+</div>

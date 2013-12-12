@@ -1,0 +1,895 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ErrorHelpRequestMisunderstoodNotionsRequired" xml:space="preserve">
+    <value>Vous devez spécifier les notions mals comprises.</value>
+  </data>
+  <data name="ErrorHelpRequestSchedule" xml:space="preserve">
+    <value>Vous devez spécifier votre horaire.</value>
+  </data>
+  <data name="ErrorTutorAvailableAtLeastOne" xml:space="preserve">
+    <value>Vous devez choisir au moins un type de tutorat.</value>
+  </data>
+  <data name="ErrorTutorCourseSkillsRequired" xml:space="preserve">
+    <value>Vous devez avoir des aptitudes dans au moins un cours.</value>
+  </data>
+  <data name="ErrorUserLastNameRequired" xml:space="preserve">
+    <value>Vous devez spécifier un nom.</value>
+  </data>
+  <data name="ErrorUserMailRequired" xml:space="preserve">
+    <value>Vous devez spécifier une adresse courriel.</value>
+  </data>
+  <data name="ErrorUserMailUnique" xml:space="preserve">
+    <value>L'adresse courriel spécifiée semble déjà être utilisée, veuillez réessayer.</value>
+  </data>
+  <data name="ErrorUserMailValid" xml:space="preserve">
+    <value>Vous devez spécifier une adresse courriel valide.</value>
+  </data>
+  <data name="ErrorUserNameRequired" xml:space="preserve">
+    <value>Vous devez spécifier un prénom.</value>
+  </data>
+  <data name="ErrorUserPasswordRequired" xml:space="preserve">
+    <value>Vous devez spécifier un mot de passe.</value>
+  </data>
+  <data name="ErrorUserScheduleRequired" xml:space="preserve">
+    <value>Vous devez spécifier votre horaire.</value>
+  </data>
+  <data name="DisplayUserName" xml:space="preserve">
+    <value>Prénom</value>
+  </data>
+  <data name="DisplayUserLastName" xml:space="preserve">
+    <value>Nom</value>
+  </data>
+  <data name="DisplayUserMail" xml:space="preserve">
+    <value>Adresse courriel</value>
+  </data>
+  <data name="DisplayUserPassword" xml:space="preserve">
+    <value>Mot de passe</value>
+  </data>
+  <data name="DisplayUserConfirmPassword" xml:space="preserve">
+    <value>Confirmez votre mot de passe</value>
+  </data>
+  <data name="DisplayTutorAvailableForGroupSession" xml:space="preserve">
+    <value>Disponible pour le tutorat de groupe</value>
+  </data>
+  <data name="DisplayTutorAvailableForIndividualSession" xml:space="preserve">
+    <value>Disponible pour le tutorat individuel</value>
+  </data>
+  <data name="ErrorUserConfirmPassword" xml:space="preserve">
+    <value>Les mots de passe ne concordent pas. Veuillez réessayer.</value>
+  </data>
+  <data name="DisplayHelpRequestComments" xml:space="preserve">
+    <value>Autres commentaires</value>
+  </data>
+  <data name="DisplayHelpRequestCourse" xml:space="preserve">
+    <value>Cours dans lequel vous avez de la difficulté</value>
+  </data>
+  <data name="DisplayHelpRequestMisunderstoodNotions" xml:space="preserve">
+    <value>Notions mal comprises</value>
+  </data>
+  <data name="ErrorUserLoginWrongCredentials" xml:space="preserve">
+    <value>Mauvaise adresse courriel ou mot de passe, veuillez réessayer.</value>
+  </data>
+  <data name="ErrorHelpRequestCourseRequired" xml:space="preserve">
+    <value>Vous devez spécifier un cours dans lequel vous avez de la difficulté.</value>
+  </data>
+  <data name="ErrorUserConfirmEmail" xml:space="preserve">
+    <value>Les courriels ne concordent pas. Veuillez réessayer.</value>
+  </data>
+  <data name="DisplayHelpRequestDateTime" xml:space="preserve">
+    <value>Date/Heure</value>
+  </data>
+  <data name="DisplayHelpRequestState" xml:space="preserve">
+    <value>État</value>
+  </data>
+  <data name="DisplayHelpRequestHelpedName" xml:space="preserve">
+    <value>Nom de l'aidé</value>
+  </data>
+  <data name="DisplayHelpRequestCourseName" xml:space="preserve">
+    <value>Nom du cours</value>
+  </data>
+  <data name="ErrorUserPasswordMinimum" xml:space="preserve">
+    <value>Le mot de passe doit être de 6 caractères ou plus.</value>
+  </data>
+  <data name="ChangesHaveBeenSaved" xml:space="preserve">
+    <value>Vos modifications ont été sauvegardées avec success!</value>
+  </data>
+  <data name="ErrorReportMessageMaxLenght" xml:space="preserve">
+    <value>Le message doit être de 200 caractères au plus.</value>
+  </data>
+  <data name="ErrorReportMessageRequired" xml:space="preserve">
+    <value>Vous devez spécifier un message sur le déroulement de votre séance.</value>
+  </data>
+  <data name="ErrorSessionDateRequired" xml:space="preserve">
+    <value>Vous devez spécifier la date de la séance.</value>
+  </data>
+  <data name="ErrorSessionDateFormat" xml:space="preserve">
+    <value>La date doit être dans le format (AAAA-MM-JJ HH-MM-SS).</value>
+  </data>
+  <data name="ErrorSessionPlaceRequired" xml:space="preserve">
+    <value>Vous devez spécifier un lieux pour la séance.</value>
+  </data>
+  <data name="DisplaySessionDate" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="DisplaySessionPlace" xml:space="preserve">
+    <value>Lieu</value>
+  </data>
+  <data name="ErrorScheduleBlockLength" xml:space="preserve">
+    <value>L'heure d'un bloc d'horaire doit être entre 8h et 17h.</value>
+  </data>
+  <data name="ErrorHelpRequestInvalidFormat" xml:space="preserve">
+    <value>L'horaire entrée est invalide.</value>
+  </data>
+  <data name="DisplayCourseName" xml:space="preserve">
+    <value>Nom du cours</value>
+  </data>
+  <data name="ListEntryActions" xml:space="preserve">
+    <value>Actions</value>
+  </data>
+  <data name="StateStringBilan" xml:space="preserve">
+    <value>Bilan</value>
+  </data>
+  <data name="StateStringConfirmed" xml:space="preserve">
+    <value>Confirmé</value>
+  </data>
+  <data name="StateStringFinished" xml:space="preserve">
+    <value>Terminée</value>
+  </data>
+  <data name="StateStringToBeConfirmed" xml:space="preserve">
+    <value>À confirmer</value>
+  </data>
+  <data name="ErrorUserScheduleBlockRequired" xml:space="preserve">
+    <value>Vous devez avoir au moins un bloc horaire de disponible.</value>
+  </data>
+  <data name="DisplayGroupSessionTutorName" xml:space="preserve">
+    <value>Nom du tuteur</value>
+  </data>
+  <data name="ErrorTutorReportNoHelpRequestsToDo" xml:space="preserve">
+    <value>Il n'y a pas de demande d'aide avec un suivi à remplir.</value>
+  </data>
+  <data name="ErrorTutorReportRequiredId" xml:space="preserve">
+    <value>Il faut choisir une demande d'aide afin de soumettre un suivi.</value>
+  </data>
+  <data name="DisplayTutorHelpRequestCourse" xml:space="preserve">
+    <value>Cours</value>
+  </data>
+  <data name="DisplayTutorHelpRequestEntryHelpedFullName" xml:space="preserve">
+    <value>Nom complet de l'aidé</value>
+  </data>
+  <data name="DisplayTutorHelpRequestEntryPlace" xml:space="preserve">
+    <value>Endroit prévu</value>
+  </data>
+  <data name="DisplayTutorHelpRequestExpectedDate" xml:space="preserve">
+    <value>Date renconte prévue</value>
+  </data>
+  <data name="DisplayTutorLastName" xml:space="preserve">
+    <value>Nom</value>
+  </data>
+  <data name="DisplayTutorName" xml:space="preserve">
+    <value>Prénom</value>
+  </data>
+  <data name="DisplaySessionTemps" xml:space="preserve">
+    <value>Temps</value>
+  </data>
+  <data name="DisplayAccountEditCurrentPassword" xml:space="preserve">
+    <value>Mot de passe actuel</value>
+  </data>
+  <data name="DisplayAccountEditEnterCurrentPassword" xml:space="preserve">
+    <value>Entrez votre mot de passe</value>
+  </data>
+  <data name="DisplayAccountEditNewEmail" xml:space="preserve">
+    <value>Nouvelle addresse courriel</value>
+  </data>
+  <data name="DisplayAccountEditNewEmailConfirm" xml:space="preserve">
+    <value>Confirmez </value>
+  </data>
+  <data name="DisplayAccountEditNewLastName" xml:space="preserve">
+    <value>Nom de famille</value>
+  </data>
+  <data name="DisplayAccountEditNewName" xml:space="preserve">
+    <value>Prénom</value>
+  </data>
+  <data name="DisplayAccountEditNewPassword" xml:space="preserve">
+    <value>Nouveau mot de passe</value>
+  </data>
+  <data name="DisplayAccountNewPasswordConfirm" xml:space="preserve">
+    <value>Confirmez nouveau mot de passe</value>
+  </data>
+  <data name="DisplayAccountEditConfirmChanges" xml:space="preserve">
+    <value>Confirmation des changements</value>
+  </data>
+  <data name="DisplayAccountEditConfirmChangesHelp" xml:space="preserve">
+    <value>Pour confirmer les changements, entrez votre courriel ainsi que votre mot de passe actuel.</value>
+  </data>
+  <data name="DisplayAccountEditCurrentEmailConfirm" xml:space="preserve">
+    <value>Entrez votre addresse</value>
+  </data>
+  <data name="DisplayAccountEditCurrentPasswordConfirm" xml:space="preserve">
+    <value>Entrez votre mot de passe actuel</value>
+  </data>
+  <data name="DisplayAccountEditFullName" xml:space="preserve">
+    <value>Nom complet</value>
+  </data>
+  <data name="DisplayAccountEditHelpBlockNewEmail" xml:space="preserve">
+    <value>Entrez votre adresse courriel ainsi que sa confirmation pour la modifier</value>
+  </data>
+  <data name="DisplayAccountEditNewPasswordConfirmHelp" xml:space="preserve">
+    <value>Confirmez le nouveau mot de passe</value>
+  </data>
+  <data name="DisplayAccountEditNewPasswordHelp" xml:space="preserve">
+    <value>Entrez un nouveau mot de passe</value>
+  </data>
+  <data name="DisplayHelpRequestDescriptionMenuItem" xml:space="preserve">
+    <value>Mes demandes d'aide</value>
+  </data>
+  <data name="DisplayHelpRequestMenuItem" xml:space="preserve">
+    <value>Demandes d'aide</value>
+  </data>
+  <data name="DisplayHomeDescriptionMenuItem" xml:space="preserve">
+    <value>Mon tableau de bord</value>
+  </data>
+  <data name="DisplayHomeMenuItem" xml:space="preserve">
+    <value>Accueil</value>
+  </data>
+  <data name="DisplayIndividualSessionDescriptionMenuItem" xml:space="preserve">
+    <value>Mes séances de tutorat assignées</value>
+  </data>
+  <data name="DisplayIndividualSessionMenuItem" xml:space="preserve">
+    <value>Séances assignées</value>
+  </data>
+  <data name="DisplayHelped" xml:space="preserve">
+    <value>Aidé</value>
+  </data>
+  <data name="DisplayManager" xml:space="preserve">
+    <value>Administrateur</value>
+  </data>
+  <data name="DisplayTutor" xml:space="preserve">
+    <value>Tuteur</value>
+  </data>
+  <data name="DisplayHelpRequestReport" xml:space="preserve">
+    <value>Suivi</value>
+  </data>
+  <data name="HelpRequestRepportFillOut" xml:space="preserve">
+    <value>Faire</value>
+  </data>
+  <data name="HelpRequestRepportFilledOut" xml:space="preserve">
+    <value>Complété</value>
+  </data>
+  <data name="TestDataHelpRequestComment" xml:space="preserve">
+    <value>Un language vraiment compliquer...</value>
+  </data>
+  <data name="TestDataHelpRequestComment2" xml:space="preserve">
+    <value>Il ressemble à un diamand?</value>
+  </data>
+  <data name="TestDataHelpRequestMisunderstoodNotions" xml:space="preserve">
+    <value>C++</value>
+  </data>
+  <data name="TestDataHelpRequestMisunderstoodNotions2" xml:space="preserve">
+    <value>Ruby</value>
+  </data>
+  <data name="TestDataHelpRequestScheduleJson" xml:space="preserve">
+    <value>[{\"start\":\"08:00 am\",\"end\":\"10:00 am\",\"day\":1}]</value>
+  </data>
+  <data name="TestDataHelpRequestScheduleJson2" xml:space="preserve">
+    <value>[{\"start\":\"10:00 am\",\"end\":\"12:00 pm\",\"day\":1}]</value>
+  </data>
+  <data name="DisplayAccountEditNewEmailConfirmHelp" xml:space="preserve">
+    <value>Confirmez la nouvelle adresse courriel</value>
+  </data>
+  <data name="DisplayAccountEditCurrentEmail" xml:space="preserve">
+    <value>Entrez votre adresse courriel actuelle</value>
+  </data>
+  <data name="ErrorEditWrongCurrentInfo" xml:space="preserve">
+    <value>Adresse courriel ou mot de passe courant invalide.</value>
+  </data>
+  <data name="ErrorGroupSessionDateFormat" xml:space="preserve">
+    <value>La date doit être dans le format (aaaa-mm-jj).</value>
+  </data>
+  <data name="DisplayTutorListMenuItem" xml:space="preserve">
+    <value>Liste des tuteurs</value>
+  </data>
+  <data name="DisplayHelpRequestCreatedTime" xml:space="preserve">
+    <value>Date de création</value>
+  </data>
+  <data name="DisplayHelpRequestSessionDate" xml:space="preserve">
+    <value>Date de la séance</value>
+  </data>
+  <data name="DisplayHelpRequestSessionPlace" xml:space="preserve">
+    <value>Endroit de la séance</value>
+  </data>
+  <data name="DisplayHelpRequestTutorName" xml:space="preserve">
+    <value>Nom du tuteur</value>
+  </data>
+  <data name="StateStringNotAssigned" xml:space="preserve">
+    <value>Non assignée</value>
+  </data>
+  <data name="DisplayGroupSessionDescriptionMenuItem" xml:space="preserve">
+    <value>Gérer les séances de tutorat de groupe</value>
+  </data>
+  <data name="DisplayGroupSessionMenuItem" xml:space="preserve">
+    <value>Séances de groupe</value>
+  </data>
+  <data name="DisplayIndividualSessionManagerDescriptionMenuItem" xml:space="preserve">
+    <value>Gérer les demandes d'aide à confirmer, confirmées et terminées</value>
+  </data>
+  <data name="DisplayIndividualSessionManagerMenuItem" xml:space="preserve">
+    <value>Demandes d'aide</value>
+  </data>
+  <data name="DisplayTutorListDescriptionMenuItem" xml:space="preserve">
+    <value>Gérer les tuteurs et leur statut</value>
+  </data>
+  <data name="DisplayNoReportAvailable" xml:space="preserve">
+    <value>Aucun suivi</value>
+  </data>
+  <data name="ManagerHelpRequestConsult" xml:space="preserve">
+    <value>Consulter</value>
+  </data>
+  <data name="DisplaySessionTime" xml:space="preserve">
+    <value>Heure</value>
+  </data>
+  <data name="ErrorGroupSessionTimeFormat" xml:space="preserve">
+    <value>L'heure doit être dans le format (hh:mm).</value>
+  </data>
+  <data name="ErrorSessionTimeRequired" xml:space="preserve">
+    <value>Vous devez spécifier l'heure de la séance de groupe.</value>
+  </data>
+  <data name="TestDataIndividualSessionHelpedMessage" xml:space="preserve">
+    <value>Un suivi super-cool de l'aide.</value>
+  </data>
+  <data name="TestDataIndividualSessionTutorMessage" xml:space="preserve">
+    <value>Un suivi super-cool du tuteur.</value>
+  </data>
+  <data name="DisplayError404Description" xml:space="preserve">
+    <value>Désolé, il semble que la page que vous tentez d'accèder n'existe pas ou a changé d'emplacement. Si le problème persiste, veuillez contacter le support technique.</value>
+  </data>
+  <data name="DisplayError404Title" xml:space="preserve">
+    <value>Whoops!</value>
+  </data>
+  <data name="DisplayError500Description" xml:space="preserve">
+    <value>Désolé, il semble y avoir eu une erreur au niveau du serveur. Veuillez réessayer ou contacter le support technique.</value>
+  </data>
+  <data name="DisplayError500Title" xml:space="preserve">
+    <value>Whoops!</value>
+  </data>
+  <data name="HelpRequestRepportNotAvailable" xml:space="preserve">
+    <value>Non disponible</value>
+  </data>
+  <data name="AvailableAt" xml:space="preserve">
+    <value>Disponible le ...</value>
+  </data>
+  <data name="DisplayTutorWorkedHours" xml:space="preserve">
+    <value>Nombre d'heures travaillées</value>
+  </data>
+  <data name="Choose" xml:space="preserve">
+    <value>Choisir</value>
+  </data>
+  <data name="Friday" xml:space="preserve">
+    <value>Vendredi</value>
+  </data>
+  <data name="HelpRequestMgrAssignAutomaticNoAvailableTutorsText" xml:space="preserve">
+    <value>Veuillez sélectionner d'autre plage horaire pour réessayer.</value>
+  </data>
+  <data name="HelpRequestMgrAssignAutomaticNoAvailableTutorsTitle" xml:space="preserve">
+    <value>Aucun tuteur n'est disponible à cette plage horaire !</value>
+  </data>
+  <data name="HelpRequestMgrAssignAutomaticSelection" xml:space="preserve">
+    <value>Sélection automatique d'un tuteur :</value>
+  </data>
+  <data name="HelpRequestMgrAssignAutomaticSelectionText" xml:space="preserve">
+    <value>Cliquez sur une case horaire pour obtenir la liste des tuteurs disponible à cette même place horaire.</value>
+  </data>
+  <data name="HelpRequestMgrAssignBtn" xml:space="preserve">
+    <value>Assigner le tuteur à la demande d'aide</value>
+  </data>
+  <data name="HelpRequestMgrAssignChooseTutorFromList" xml:space="preserve">
+    <value>Choisir le tuteur à assigner parmis les &lt;span class="numTutor"&gt;&lt;/span&gt; de la liste suivante :</value>
+  </data>
+  <data name="HelpRequestMgrAssignComments" xml:space="preserve">
+    <value>Commentaires additionnels à la demande :</value>
+  </data>
+  <data name="HelpRequestMgrAssignConfirmModal" xml:space="preserve">
+    <value>Confirmez-vous l'assignation suivante ?</value>
+  </data>
+  <data name="HelpRequestMgrAssignConfirmModalBtnAccept" xml:space="preserve">
+    <value>Oui, assigner la demande</value>
+  </data>
+  <data name="HelpRequestMgrAssignConfirmModalText" xml:space="preserve">
+    <value>Confirmez-vous l'assignation du tuteur &lt;span id="tutorName"&gt;&lt;/span&gt; pour la demande d'aide effectuée par &lt;span id="helpedName"&gt;&lt;/span&gt; ?&lt;br /&gt;&lt;br/&gt; 
+Si le tuteur et l'aidé confirment leur présence, la rencontre individuelle aura lieu dans le local &lt;span id="localName"&gt;&lt;/span&gt; le &lt;span id="sessionFullDate"&gt;&lt;/span&gt; de &lt;span id="sessionHourStart"&gt;&lt;/span&gt;h à &lt;span id="sessionHourEnd"&gt;&lt;/span&gt;h.</value>
+  </data>
+  <data name="HelpRequestMgrAssignCourseName" xml:space="preserve">
+    <value>Cours en difficulté</value>
+  </data>
+  <data name="HelpRequestMgrAssignEmptyLocalName" xml:space="preserve">
+    <value>Veuillez spécifier un local où aura lieu la rencontre individuelle</value>
+  </data>
+  <data name="HelpRequestMgrAssignHelpedName" xml:space="preserve">
+    <value>Nom de l'aidé</value>
+  </data>
+  <data name="HelpRequestMgrAssignHelpRequestDetails" xml:space="preserve">
+    <value>Détails de la demande d'aide</value>
+  </data>
+  <data name="HelpRequestMgrAssignInvalidEndHour" xml:space="preserve">
+    <value>Veuillez sélectonner une heure de fin entre 16h et 18h</value>
+  </data>
+  <data name="HelpRequestMgrAssignInvalidHelpRequestId" xml:space="preserve">
+    <value>La demande d'aide spécifiée n'est pas valide... veuillez réessayer</value>
+  </data>
+  <data name="HelpRequestMgrAssignInvalidStartHour" xml:space="preserve">
+    <value>Veuillez sélectionner une heure de début entre 8h et 16h</value>
+  </data>
+  <data name="HelpRequestMgrAssignInvalidTutorId" xml:space="preserve">
+    <value>Le tuteur spécifié n'est pas valide... veuillez réessayer</value>
+  </data>
+  <data name="HelpRequestMgrAssignLocalName" xml:space="preserve">
+    <value>Local assigné</value>
+  </data>
+  <data name="HelpRequestMgrAssignManualAssignedTutor" xml:space="preserve">
+    <value>Tuteur assigné :</value>
+  </data>
+  <data name="HelpRequestMgrAssignManualAssignedTutorSelectionDefault" xml:space="preserve">
+    <value>-- Choisir un tuteur --</value>
+  </data>
+  <data name="HelpRequestMgrAssignManualSelectionText" xml:space="preserve">
+    <value>Vous pouvez à tout moment sélectionner manuellement un tuteur à partir de la liste ci-dessous.</value>
+  </data>
+  <data name="HelpRequestMgrAssignManualSelectionTitle" xml:space="preserve">
+    <value>Sélection manuel d'un tuteur :</value>
+  </data>
+  <data name="HelpRequestMgrAssignMisunderstoodNotions" xml:space="preserve">
+    <value>Notions mal comprises</value>
+  </data>
+  <data name="HelpRequestMgrAssignMonthlyHours" xml:space="preserve">
+    <value>Heures ce mois-ci</value>
+  </data>
+  <data name="HelpRequestMgrAssignNumTutorsAvailableAtPlural" xml:space="preserve">
+    <value> tuteurs sont disponibles à cette plage horaire</value>
+  </data>
+  <data name="HelpRequestMgrAssignNumTutorsAvailableAtSingular" xml:space="preserve">
+    <value> tuteur est disponible à cette plage horaire</value>
+  </data>
+  <data name="HelpRequestMgrAssignPageTitle" xml:space="preserve">
+    <value>Demande d'aide faite par {0} {1} le {2}</value>
+  </data>
+  <data name="HelpRequestMgrAssignTutorTitle" xml:space="preserve">
+    <value>Assignation d'un tuteur</value>
+  </data>
+  <data name="HelpRequestMgrAssignUserDisponibilities" xml:space="preserve">
+    <value>Disponibilitées de {0} {1}</value>
+  </data>
+  <data name="HelpRequestMgrAssignWeekPick" xml:space="preserve">
+    <value>Semaine du ...</value>
+  </data>
+  <data name="HelpRequestMgrAssignWeekPickInvalidFormat" xml:space="preserve">
+    <value>Veuillez choisir des dates valides pour la sélection de la semaine</value>
+  </data>
+  <data name="HelpRequestMgrPagesTitle" xml:space="preserve">
+    <value>Administration des demandes d'aide</value>
+  </data>
+  <data name="Moday" xml:space="preserve">
+    <value>Lundi</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>Non</value>
+  </data>
+  <data name="NumHoursMin" xml:space="preserve">
+    <value>Nbre. heures</value>
+  </data>
+  <data name="Thuesday" xml:space="preserve">
+    <value>Mardi</value>
+  </data>
+  <data name="Thursday" xml:space="preserve">
+    <value>Jeudi</value>
+  </data>
+  <data name="TutorName" xml:space="preserve">
+    <value>Nom du tuteur</value>
+  </data>
+  <data name="Wednesday" xml:space="preserve">
+    <value>Mercredi</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Erreur!</value>
+  </data>
+  <data name="HelpRequestMgrAssignNotAFutureDate" xml:space="preserve">
+    <value>Veuillez vous assurer que la date de la séance selon votre configuration est antérieure à celle d'aujourd'hui.</value>
+  </data>
+  <data name="Test" xml:space="preserve">
+    <value>test</value>
+  </data>
+  <data name="DisplayTutorState" xml:space="preserve">
+    <value>État</value>
+  </data>
+  <data name="ErrorCreateHelpRequest" xml:space="preserve">
+    <value>Le cours que vous avez choisi est invalide !</value>
+  </data>
+  <data name="ErrorLogin" xml:space="preserve">
+    <value>Mauvais nom d'utilisateur / mot de passe</value>
+  </data>
+  <data name="SendConfirmationEmailBody" xml:space="preserve">
+    <value>Votre inscription a bien été reçue. Vous pouvez maintenant utiliser votre identifiant et votre mot de passe. Veuillez ne pas répondre à ce message. Merci.</value>
+  </data>
+  <data name="SendConfirmationEmailSubject" xml:space="preserve">
+    <value>Confirmation de votre inscription à Tuto</value>
+  </data>
+  <data name="SendReasonEmailBody" xml:space="preserve">
+    <value>Le responsable a refusé votre inscription en tant que tuteur. La raison est la suivante : </value>
+  </data>
+  <data name="SendReasonEmailSubject" xml:space="preserve">
+    <value>Refus de votre inscription en tant que Tuteur.</value>
+  </data>
+  <data name="UnauthorizedAccess" xml:space="preserve">
+    <value>Vous devez être connecté pour pouvoir accéder à cette page !</value>
+  </data>
+  <data name="ViewAlertBody1" xml:space="preserve">
+    <value>Vous avez été assigné à une séance de tutorat individuelle le</value>
+  </data>
+  <data name="ViewAlertBody2" xml:space="preserve">
+    <value>suite à une demande d'aide effectuée par</value>
+  </data>
+  <data name="ViewAlertBody3" xml:space="preserve">
+    <value>Rendez-vous dans vos demandes assignées pour confirmer ou non votre présence.</value>
+  </data>
+  <data name="ViewAlertInfo" xml:space="preserve">
+    <value>Choisissez un bloc horaire dans le calendrier pour créer une séance de groupe.</value>
+  </data>
+  <data name="ViewAssignedToHelpRequestHelpedPartialHeader" xml:space="preserve">
+    <value>Assignation à une séance de tutorat individuelle</value>
+  </data>
+  <data name="ViewAssignPopupHeader" xml:space="preserve">
+    <value>Assignation d'un tuteur</value>
+  </data>
+  <data name="ViewAssignPopupLabel" xml:space="preserve">
+    <value>Tuteurs disponibles</value>
+  </data>
+  <data name="ViewDetailsButton" xml:space="preserve">
+    <value>Détails</value>
+  </data>
+  <data name="ViewEditCurrentScheduleHeader" xml:space="preserve">
+    <value>Modification de l'horaire de la semaine prochaine des séances de groupe</value>
+  </data>
+  <data name="ViewEditDefaultScheduleHeader" xml:space="preserve">
+    <value>Modification de l'horaire par défaut des séances de groupe</value>
+  </data>
+  <data name="ViewEditHelpedHeader" xml:space="preserve">
+    <value>Modifier votre profil</value>
+  </data>
+  <data name="ViewEditManagerHeader" xml:space="preserve">
+    <value>Modifier votre profil</value>
+  </data>
+  <data name="ViewEditTutorHeader" xml:space="preserve">
+    <value>Modifier votre profil</value>
+  </data>
+  <data name="ViewFilter" xml:space="preserve">
+    <value>Filtrer la recherche</value>
+  </data>
+  <data name="ViewGeneralHeader" xml:space="preserve">
+    <value>Erreur | Gestion du tutorat Tuto</value>
+  </data>
+  <data name="ViewGeneralReturnHome" xml:space="preserve">
+    <value>Retour à l'accueil</value>
+  </data>
+  <data name="ViewGroupSessionList1" xml:space="preserve">
+    <value>Séances de groupe</value>
+  </data>
+  <data name="ViewGroupSessionList2" xml:space="preserve">
+    <value>Séances de groupe de la semaine prochaine</value>
+  </data>
+  <data name="ViewGroupSessionListButton" xml:space="preserve">
+    <value>Assigner à un tuteur</value>
+  </data>
+  <data name="ViewHelpRequestCreateAlertSuccess" xml:space="preserve">
+    <value>Votre demande à bel et bien été enregistrée !</value>
+  </data>
+  <data name="ViewHelpRequestCreateButton" xml:space="preserve">
+    <value>Créer une demande d'aide</value>
+  </data>
+  <data name="ViewHelpRequestCreateControlGroup1" xml:space="preserve">
+    <value>Important :</value>
+  </data>
+  <data name="ViewHelpRequestCreateControlGroup2" xml:space="preserve">
+    <value>Chaque rencontre est d'une durée fixée à 2 heures.</value>
+  </data>
+  <data name="ViewHelpRequestCreateHeader" xml:space="preserve">
+    <value>Faire une demande d'aide</value>
+  </data>
+  <data name="ViewHelpRequestCreateHelpBlock" xml:space="preserve">
+    <value>Choisissez le cours dans lequel vous désirez obtenir de l'aide</value>
+  </data>
+  <data name="ViewHelpRequestCreatePlaceHolder1" xml:space="preserve">
+    <value>Entrez les notions mal comprises ...</value>
+  </data>
+  <data name="ViewHelpRequestCreatePlaceHolder2" xml:space="preserve">
+    <value>Vous pouvez aussi préciser d'autres informations nécessaires à votre demande</value>
+  </data>
+  <data name="ViewHelpRequestDetailsHeader" xml:space="preserve">
+    <value>Details de la demande d'aide</value>
+  </data>
+  <data name="ViewHelpRequestDetailsReturnButton" xml:space="preserve">
+    <value>Retour à la liste des demandes d'aide</value>
+  </data>
+  <data name="ViewHelpRequestHelpedListHeader" xml:space="preserve">
+    <value>Vos demandes de tutorat</value>
+  </data>
+  <data name="ViewHelpRequestHelpedListLegend1" xml:space="preserve">
+    <value>Demandes d'aide assignées</value>
+  </data>
+  <data name="ViewHelpRequestHelpedListLegend2" xml:space="preserve">
+    <value>Toutes les demandes d'aide</value>
+  </data>
+  <data name="ViewHelpRequestListHeader" xml:space="preserve">
+    <value>Administration des demandes d'aide</value>
+  </data>
+  <data name="ViewHelpRequestListLegend1" xml:space="preserve">
+    <value>Demandes d'aide à confirmer</value>
+  </data>
+  <data name="ViewHelpRequestListLegend2" xml:space="preserve">
+    <value>Demandes d'aide en cours et terminées</value>
+  </data>
+  <data name="ViewHelpRequestReportButton" xml:space="preserve">
+    <value>Soumettre</value>
+  </data>
+  <data name="ViewHelpRequestReportHeader" xml:space="preserve">
+    <value>Faire un suivi</value>
+  </data>
+  <data name="ViewHelpRequestTutorListHeader" xml:space="preserve">
+    <value>Demandes de tutorat assignées</value>
+  </data>
+  <data name="ViewHomeIndexTaskBody" xml:space="preserve">
+    <value>Ceci est le corps de l'alerte, une fois cliquer sur le X, l'alerte sera considérée comme vue.</value>
+  </data>
+  <data name="ViewHomeIndexTaskLegend" xml:space="preserve">
+    <value>Mes tâches</value>
+  </data>
+  <data name="ViewHomeIndexTaskTitle" xml:space="preserve">
+    <value>Titre de la tâche</value>
+  </data>
+  <data name="ViewHomeIndexWelcome" xml:space="preserve">
+    <value>Bienvenue,</value>
+  </data>
+  <data name="ViewLoginRegisterHelped" xml:space="preserve">
+    <value>en tant qu'aidé.</value>
+  </data>
+  <data name="ViewLoginRegisterTutor" xml:space="preserve">
+    <value>en tant que tuteur</value>
+  </data>
+  <data name="ViewRegisterHelpedHeader" xml:space="preserve">
+    <value>Inscription en tant qu'aidé</value>
+  </data>
+  <data name="ViewRegisterTutorHeader" xml:space="preserve">
+    <value>Inscription en tant que tuteur</value>
+  </data>
+  <data name="ViewScheduleAlertBlockBody" xml:space="preserve">
+    <value>Pour pouvoir gérer les séances de groupe, vous devez d'abord créer une horaire par défaut</value>
+  </data>
+  <data name="ViewScheduleAlertBlockHeader" xml:space="preserve">
+    <value>Attention!</value>
+  </data>
+  <data name="ViewScheduleAlertInfo1" xml:space="preserve">
+    <value>Horaire par défaut</value>
+  </data>
+  <data name="ViewScheduleAlertInfo2" xml:space="preserve">
+    <value>Pour modifier l'horaire par défaut,</value>
+  </data>
+  <data name="ViewScheduleAlertInfo3" xml:space="preserve">
+    <value>Horaire de la semaine prochaine</value>
+  </data>
+  <data name="ViewScheduleAlertInfo4" xml:space="preserve">
+    <value>Pour modifier l'horaire de la semaine prochaine seulement,</value>
+  </data>
+  <data name="ViewScheduleAlertSuccess" xml:space="preserve">
+    <value>Vos modifications ont bien été sauvegardées.</value>
+  </data>
+  <data name="ViewScheduleConfirmGroupSessionHeader" xml:space="preserve">
+    <value>Confirmation de la séance de groupe</value>
+  </data>
+  <data name="ViewScheduleRdvSectionText" xml:space="preserve">
+    <value>Vous pouvez modifier vos disponibilités pour ce rendez-vous à l'aide de ce calendrier.</value>
+  </data>
+  <data name="ViewScheduleSectionText" xml:space="preserve">
+    <value>Vous pouvez modifier vos disponibilités à l'aide de ce calendrier.</value>
+  </data>
+  <data name="ViewScheduleSectionTitle" xml:space="preserve">
+    <value>Vos disponibilités</value>
+  </data>
+  <data name="ViewTutorDetailsArticleTitle" xml:space="preserve">
+    <value>Ses disponibilités</value>
+  </data>
+  <data name="ViewTutorDetailsButtonReturn" xml:space="preserve">
+    <value>Retour</value>
+  </data>
+  <data name="ViewTutorDetailsHeader" xml:space="preserve">
+    <value>Détails du tuteur</value>
+  </data>
+  <data name="ViewTutorDetailsTable1Head" xml:space="preserve">
+    <value>Informations personnelles</value>
+  </data>
+  <data name="ViewTutorDetailsTable2Column1" xml:space="preserve">
+    <value>Département</value>
+  </data>
+  <data name="ViewTutorDetailsTable2Column2" xml:space="preserve">
+    <value>Cours</value>
+  </data>
+  <data name="ViewTutorDetailsTable2Head" xml:space="preserve">
+    <value>Aptitudes</value>
+  </data>
+  <data name="ViewTutorDetailsTable2Row" xml:space="preserve">
+    <value>Ce tuteur ne possède aucune aptitude.</value>
+  </data>
+  <data name="ViewTutorDetailsTable3Column" xml:space="preserve">
+    <value>Séances de groupe assignées</value>
+  </data>
+  <data name="ViewTutorDetailsTable3Row" xml:space="preserve">
+    <value>Ce tuteur n'a été assigné à aucune séance de groupe.</value>
+  </data>
+  <data name="ViewTutorDetailsTable4Column1" xml:space="preserve">
+    <value>Département</value>
+  </data>
+  <data name="ViewTutorDetailsTable4Column2" xml:space="preserve">
+    <value>Cours</value>
+  </data>
+  <data name="ViewTutorDetailsTable4Column3" xml:space="preserve">
+    <value>Aidé</value>
+  </data>
+  <data name="ViewTutorDetailsTable4ColumnTitle" xml:space="preserve">
+    <value>Séances individuelles assignées</value>
+  </data>
+  <data name="ViewTutorDetailsTable5ColumnTitle" xml:space="preserve">
+    <value>Ce tuteur n'a été assigné à aucune séance individuelle.</value>
+  </data>
+  <data name="ViewTutorListConfirmButton" xml:space="preserve">
+    <value>Confirmer</value>
+  </data>
+  <data name="ViewTutorListHeader" xml:space="preserve">
+    <value>Liste des tuteurs inscrits</value>
+  </data>
+  <data name="ViewTutorListRefuseButton" xml:space="preserve">
+    <value>Refuser</value>
+  </data>
+  <data name="ErrorRequest" xml:space="preserve">
+    <value>Une erreur s’est produite lors du traitement de la requête.</value>
+  </data>
+  <data name="LoginPartialLine1" xml:space="preserve">
+    <value>S'inscrire</value>
+  </data>
+  <data name="LoginPartialLine2" xml:space="preserve">
+    <value>Se connecter</value>
+  </data>
+  <data name="MenuAccount1" xml:space="preserve">
+    <value>Modifier votre profil</value>
+  </data>
+  <data name="MenuAccount2" xml:space="preserve">
+    <value>Déconnexion</value>
+  </data>
+  <data name="ViewInactivePopupAlert" xml:space="preserve">
+    <value>Une erreur interne est survenue. Le message n'a pas été envoyé.</value>
+  </data>
+  <data name="ViewInactivePopupBody" xml:space="preserve">
+    <value>Pourquoi avez-vous refusé ce tuteur? Un message d'explication lui sera envoyé par courriel.</value>
+  </data>
+  <data name="ViewInactivePopupBodyExplication" xml:space="preserve">
+    <value>Explications:</value>
+  </data>
+  <data name="ViewInactivePopupTitle" xml:space="preserve">
+    <value>Refus du tuteur</value>
+  </data>
+  <data name="ViewSendButton" xml:space="preserve">
+    <value>Envoyer</value>
+  </data>
+</root>

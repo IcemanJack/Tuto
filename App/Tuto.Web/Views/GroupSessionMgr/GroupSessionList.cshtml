@@ -1,0 +1,293 @@
+﻿@using Tuto.DataLayer.Models
+@using Tuto.DataLayer.Utilities
+@using Tuto.Web.Utilities
+@model Tuto.Web.ViewModels.GroupSessionListViewModel
+@{
+    ViewBag.Title = "Séances de groupe";
+    ViewBag.Page_Id = "Manager_Group_Session_List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Scripts
+{
+    @Scripts.Render("~/Content/bPopUp/libs/jquery.bpopup.min.js")
+
+    <script>
+        $(document).ready(function () {
+
+            var assignButtons = $("[btn-assign]");
+            if (assignButtons.length !== 0) {
+
+                assignButtons.click(function () {
+                    var errorAlert = $("#alert-error");
+                    errorAlert.hide();
+
+                    var sessionId = $(this).attr("data-session-id");
+
+                    var row = getRow(sessionId);
+                    var popup = getPopup();
+
+                    fillPopup(popup, row);
+
+                    var tutorAvailableAtViewModel = {};
+                    tutorAvailableAtViewModel.weekday = getDayNumberFromName(popup.day.val());
+                    tutorAvailableAtViewModel.startTime = parseInt(popup.startTime.val());
+                    tutorAvailableAtViewModel.endTime = parseInt(popup.endTime.val());
+
+                    var tableBody = $("#popup-table-body");
+                    tableBody.html("");
+                    
+                    $.post("@(UrlUtilities.getRootUrl() + Url.Action("ajax_GetTutorsAvailableAt"))", tutorAvailableAtViewModel, function (availableTutors) {
+                        if (availableTutors == "Error") {
+                            errorAlert.text("Une erreur interne est survenue.");
+                            errorAlert.slideDown();
+                            return;
+                        }
+
+                        if (availableTutors.length == 0) {
+                            errorAlert.text("Il n'y a aucun tuteur de disponible pour cette date.");
+                            errorAlert.slideDown();
+                            return;
+                        }
+ 
+                        for (var i = 0; i < availableTutors.length; i++) {
+                            var currentTutor = availableTutors[i];
+
+                            var tutorRow = $("<tr />");
+                            tutorRow.append($("<td />").html(currentTutor.name));
+                            tutorRow.append($("<td />").html(currentTutor.workedHours));
+
+                            var assignBtn = $("<div />").addClass("btn").addClass("btn-small").addClass("btn-primary").html("Assigner");
+                            tutorRow.append($("<td />").html(assignBtn));
+                        
+                            assignBtn.click(function () {
+                                
+                               $.post("@Url.Action("ajax_AssignTutor", "GroupSessionMgr")", { sessionId: sessionId, tutorId: currentTutor.id }, function (data) {
+                                    if (data == "Error") {
+                                        errorAlert.text("Une erreur interne est survenue.");
+                                        errorAlert.slideDown();
+                                        return;
+                                    }
+                                    document.location.reload();
+                                });
+                            });
+                        
+                            tableBody.append(tutorRow);
+                        }
+
+                        popup.element.bPopup();
+                    });
+                });
+            }
+
+            $("#btn_popup_cancel").click(function() {
+                $("#assignPopup").bPopup().close();
+            });
+
+        });
+
+        function getPopup() {
+            var popup = {};
+
+            popup.element = $("#assignPopup");
+            popup.day = popup.element.find("#day");
+            popup.startTime = popup.element.find("#startTime");
+            popup.endTime = popup.element.find("#endTime");
+            popup.place = popup.element.find("#place");
+
+            return popup;
+        }
+
+        function getRow(sessionId) {
+            var row = {};
+
+            row.element = $("tr[data-session-id='" + sessionId + "']");
+            row.day = row.element.find("td[week-day]");
+            row.startTime = row.element.find("td[start-time]");
+            row.endTime = row.element.find("td[end-time]");
+            row.place = row.element.find("td[place]");
+
+            return row;
+        }
+
+        function fillPopup(popup, row) {
+            console.log(popup);
+            console.log(row.day.text());
+
+            popup.day.val($.trim(row.day.text()));
+            popup.startTime.val($.trim(row.startTime.text()));
+            popup.endTime.val($.trim(row.endTime.text()));
+            popup.place.val($.trim(row.place.text()));
+        }
+
+        var days = new Array();
+        days.push("Lundi");
+        days.push("Mardi");
+        days.push("Mercredi");
+        days.push("Jeudi");
+        days.push("Vendredi");
+
+        function getDayNumberFromName(name) {
+            for (var i = 0; i < days.length; i++) {
+                if (days[i] == name) {
+                    return i + 1;
+                }
+            }
+            return 1;
+        }
+
+    </script>
+}
+
+
+<!-- Page header -->
+<div class="page-header">
+    @if (Model.assignedGroupSessions.Count == 0)
+    {
+        <h1><span class="awe-group"></span> @Resources.Resources.ViewGroupSessionList1</h1>
+    }
+    else
+    {
+        <h1><span class="awe-group"></span> @Resources.Resources.ViewGroupSessionList2</h1>
+    }
+    
+</div>
+<!-- /Page header -->
+<form class="page-container">
+    <div class="row-fluid">
+        @if (Model.assignedGroupSessions.Count == 0)
+        {
+            <div class="alert alert-block">
+                <h4>@Resources.Resources.ViewScheduleAlertBlockHeader</h4>
+                <p>@Resources.Resources.ViewScheduleAlertBlockBody @Html.ActionLink("en cliquant ici.", "editDefaultSchedule", "GroupSessionMgr")</p>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info">
+                <strong>@Resources.Resources.ViewScheduleAlertInfo1 </strong>@Resources.Resources.ViewScheduleAlertInfo2 @Html.ActionLink("cliquez-ici.", "editDefaultSchedule", "GroupSessionMgr")
+            </div>
+            
+            <div class="alert alert-info">
+                <strong>@Resources.Resources.ViewScheduleAlertInfo3 </strong>@Resources.Resources.ViewScheduleAlertInfo4 @Html.ActionLink("cliquez-ici.", "editCurrentSchedule", "GroupSessionMgr")
+            </div>
+            
+            <div id="alert-error" class="alert alert-error" style="display: none;">
+                
+            </div>
+        
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Tuteur
+                        </th>
+                        <th>
+                            Jour
+                        </th>
+                        <th>
+                            De
+                        </th>
+                        <th>
+                            À
+                        </th>
+                        <th>
+                            Place
+                        </th>
+                        <th>
+                            Actions
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.assignedGroupSessions) {
+                        <tr @(item.tutor == null ? @Html.Raw("class= \"red\"") : @Html.Raw("class= \"green\"")) data-session-id="@item.id">
+                            <td>
+                                @if (item.tutor != null)
+                                {
+                                    @Html.Raw(item.tutor.name + " " + item.tutor.lastName)  
+                                }
+                            </td>
+                            <td week-day>
+                                @Html.Raw(item.getDate().ToLongDateString())
+                            </td>
+                            <td start-time>
+                                @Html.DisplayFor(modelItem => item.startScheduleBlock.startTime)
+                            </td>
+                            <td end-time>
+                                @Html.Raw(item.startScheduleBlock.startTime + 2)
+                            </td>
+                            <td place>
+                                @Html.DisplayFor(modelItem => item.place)
+                            </td>
+                            @if (item.tutor == null)
+                            {
+                                 <td class="toolbar" style="text-align: center;">
+                                    <div class="btn-group">
+										<div class="btn btn-primary" data-session-id="@item.id" btn-assign>@Resources.Resources.ViewGroupSessionListButton</div>                                    </div>
+                                </td>   
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</form>
+
+     <div id="assignPopup" class="modal" style="display: none">
+        <div class="modal-header">
+            <h3>Assignation d'un tuteur</h3>
+        </div>
+         <div class="modal-body">
+             <label class="control-label">Séance</label>
+             <div class="controls">
+                 <div class="input-prepend">
+                     <span class="add-on">Journée</span>
+                     <input id="day" readonly="readonly" class="disabled" type="text" value="" name="day">
+                 </div>
+                        
+                 <div class="input-prepend">
+                     <span class="add-on">De</span>
+                     <input id="startTime" readonly="readonly" class="input-mini disabled" type="text" value="" name="startTime">
+                 </div>
+                        
+                 <div class="input-prepend">
+                     <span class="add-on">À</span>
+                     <input id="endTime" readonly="readonly" class="input-mini disabled" type="text" value="" name="endTime">
+                 </div>
+                
+                 <div class="input-prepend">
+                     <span class="add-on">Place</span>
+                     <input id="place" readonly="readonly" class="input-mini disabled" type="text" value="" name="place">
+                 </div>
+             </div>
+             
+             <label class="control-label">Tuteurs disponibles</label>
+             <div class="controls">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Tuteur
+                            </th>
+                            <th>
+                                Nombre d'heures travaillées
+                            </th>
+                            <th>
+                                Actions
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="popup-table-body">
+                        
+                    </tbody>
+                </table>
+             </div>
+                
+         </div>
+
+         <div class="modal-footer" style="text-align: center;">
+            <button id="btn_popup_cancel" class="btn btn-wuxia btn-large">Annuler</button>
+        </div>
+    </div>

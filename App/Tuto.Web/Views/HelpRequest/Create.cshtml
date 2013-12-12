@@ -1,0 +1,119 @@
+﻿@using Tuto.DataLayer.Models
+@model Tuto.Web.ViewModels.HelpRequestAddViewModel
+
+@{
+    // the default master layout to be used is specified into ~/Views/Shared/_Layout.cshtml
+    ViewBag.Title = "Faire un demande d'aide ";  // title of the current page passed to the master layout (in the <title /> html tag)
+}
+
+@section stylesheets 
+{
+    @Styles.Render("~/Content/weekcalendar/libs/css/smoothness/jquery-ui-1.8.11.custom.css")
+    @Styles.Render("~/Content/weekcalendar/jquery.weekcalendar.css")
+}
+
+@section Scripts {
+    <!-- This will be rendered in the javascript section in the master template -->
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Content/weekcalendar/libs/jquery-1.4.4.min.js")
+    @Scripts.Render("~/Content/weekcalendar/libs/jquery-ui-1.8.11.custom.min.js")
+    @Scripts.Render("~/Content/weekcalendar/libs/moment.min.js")
+    @Scripts.Render("~/Content/weekcalendar/weekcalendar.js")
+    @Scripts.Render("~/Content/weekcalendar/libs/date.js")
+    @Scripts.Render("~/Content/weekcalendar/jquery.weekcalendar.js")
+    <script>
+        $(document).ready(function() {
+            $("form#helpRequestAddForm").submit(function() {
+                var jsonToPost = getCalendarData();
+                $("input#scheduleJson").val(jsonToPost);
+                return true;
+            });
+
+            var calendarData = $("form input#scheduleJson").val();
+            if (calendarData != "") {
+                loadCalendarData(calendarData);
+            }
+        });
+    </script>
+}
+
+<!-- Page header -->
+<div class="page-header">
+	<h1><span class="awe-tasks"></span>@Resources.Resources.ViewHelpRequestCreateHeader</h1>
+</div>
+<!-- /Page header -->
+<div class="page-container">
+    <div class="row-fluid">
+        
+        <!-- form section -->
+        <article class="span4">
+            @using (Html.BeginForm("create", "HelpRequest", FormMethod.Post, new { @id = "helpRequestAddForm" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+
+                @Html.HiddenFor(x => x.scheduleJson, new { @id = "scheduleJson" })
+                
+                if (ViewBag.HelpRequestCreateSuccess != null && ViewBag.HelpRequestCreateSuccess == true)
+                {
+                <div class="alert alert-success">
+                    <strong>Succès!</strong>
+                    @Resources.Resources.ViewHelpRequestCreateAlertSuccess
+                </div>
+                }
+                
+                <div class="control-group">
+                    @Html.LabelFor(m => m.courseId, new { @class = "control-label" })
+                    <div class="controls">
+                        @{
+                var htmlCourseList = new List<SelectListItem>();
+                foreach (Course c in Model.availableCourseList)
+                {
+                    htmlCourseList.Add(new SelectListItem() { Value = c.id.ToString(), Text = c.courseName });
+                }
+                        }
+                        @Html.DropDownListFor(x => x.courseId, htmlCourseList)
+                        <p class="help-block">@Resources.Resources.ViewHelpRequestCreateHelpBlock</p>
+                        <p class="help-block">@Html.ValidationMessageFor(m => m.courseId)</p>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    @Html.LabelFor(m => m.misunderstoodNotions, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextAreaFor(m => m.misunderstoodNotions, new { @placeholder = @Resources.Resources.ViewHelpRequestCreatePlaceHolder1, @style = "width: 95%; min-width: 95%; max-width: 95%; min-height: 80%; max-height: 80%;" })
+                    </div>
+                    <p class="help-block">@Html.ValidationMessageFor(m => m.misunderstoodNotions)</p>
+                </div>
+                
+                <div class="control-group">
+                    @Html.LabelFor(m => m.comment, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextAreaFor(m => m.comment, new { @placeholder = @Resources.Resources.ViewHelpRequestCreatePlaceHolder2, @style = "width: 95%; min-width: 95%; max-width: 95%; min-height: 80%; max-height: 80%;" })
+                    </div>
+                    <p class="help-block">@Html.ValidationMessageFor(m => m.comment)</p>
+                </div>
+                
+                <div class="control-group">
+                    <p><strong>@Resources.Resources.ViewHelpRequestCreateControlGroup1 </strong> @Resources.Resources.ViewHelpRequestCreateControlGroup2</p>
+                    <div class="controls" style="text-align: center;">
+                        <input class="btn btn-wuxia btn-large btn-primary" type="submit" value="Envoyer ma demande" />
+                    </div>
+                </div>
+                
+            }
+        </article>
+        <!-- / form section -->
+        
+        <!-- schedule section -->
+        <article class="span8">
+            <h3>@Resources.Resources.ViewScheduleSectionTitle</h3>
+            <p class="help-block">@Html.ValidationMessageFor(m => m.scheduleJson)</p>
+            <p>@Resources.Resources.ViewScheduleRdvSectionText</p>
+            <div id="calendar"></div>
+        </article>
+        <!-- / schedule section -->
+    </div>
+</div>
+<!-- Main data container -->
+

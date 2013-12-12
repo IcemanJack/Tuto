@@ -1,0 +1,80 @@
+﻿@using Tuto.DataLayer.Models
+@model Tuto.Web.ViewModels.Account.UserLoginViewModel
+
+@{
+    ViewBag.Page_Id = "Account_Login";
+    Layout = "~/Views/Shared/_LoginMaster.cshtml";
+    ViewBag.hideMenuBar = true;
+}
+
+@using (Html.BeginForm("Login", "Account")) {
+    @Html.AntiForgeryToken()
+
+    <article>
+        
+        @if (ViewData.ModelState.ContainsKey("error"))
+        {
+            <div class="alert alert-error">
+				@ViewData.ModelState["error"].Errors[0].ErrorMessage
+			</div>
+        }
+        <fieldset>
+            <div class="control-group">
+                @Html.LabelFor(m => m.mail)
+                @Html.TextBoxFor(m => m.mail, new {id = "txt_mail"})
+                <p class="help-block">@Html.ValidationMessageFor(m => m.mail)</p>
+            </div>
+            
+            <div class="control-group">
+                @Html.LabelFor(m => m.password)
+                @Html.PasswordFor(m => m.password, new {id = "txt_password"})
+                <p class="help-block">@Html.ValidationMessageFor(m => m.password)</p>
+            </div>
+        
+            <div class="form-actions">
+                <input id="btn_login" class="btn btn-wuxia btn-large btn-primary" type="submit" value="Connexion" />
+				<p class="help-block">@Html.ValidationSummary(true)</p>
+                <p>
+                    @Html.ActionLink("S'inscrire", "RegisterHelped", null, new {id = "lnk_register_helped"}) @Resources.Resources.ViewLoginRegisterHelped <br/>
+                    @Html.ActionLink("S'inscrire", "RegisterTutor", null, new {id = "lnk_register_tutor"}) @Resources.Resources.ViewLoginRegisterTutor.
+                </p>
+                <br/>
+                <blockquote>
+                    <div>
+                        Pour se connecter en tant que tuteur:
+                        <br/>
+                        Nom : jeremiepoisson@mail.com
+                        <br/>
+                        Mot de passe : calinours
+                        <br/>
+                        <br/>
+                    </div>
+            
+                    <div>
+                        Pour se connecter en tant qu'aidé:
+                        <br/>
+                        Nom : simonfrenette@mail.com
+                        <br/>
+                        Mot de passe : calinours
+                        <br/>
+                        <br/>
+                    </div>
+                    
+                    <div>
+                        Pour se connecter en tant qu'administrateur:
+                        <br/>
+                        Nom : fbertrand@mail.com
+                        <br/>
+                        Mot de passe : mypassword
+                        <br/>
+                        <br/>
+                    </div>
+                </blockquote>
+            </div>
+        </fieldset>
+    </article>
+}
+
+@section jsScripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
