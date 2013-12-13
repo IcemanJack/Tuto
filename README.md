@@ -1,8 +1,8 @@
 Tuto
 ====
-*Site web de la gestion du tutorat par les pairs.
-*Dévolopper dans le cadre du projet synthèse en agile.
-*Conçu sous MVC4 .NET 2012 avec SQLExpress.
+* Site web de la gestion du tutorat par les pairs.
+* Dévolopper dans le cadre du projet synthèse en agile.
+* Conçu sous MVC4 .NET 2012 avec SQLExpress.
 
 Email/Password
 --------------
