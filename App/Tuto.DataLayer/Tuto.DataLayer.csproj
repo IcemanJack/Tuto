@@ -73,10 +73,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DatabaseInitializer.cs" />
+    <Compile Include="DataLayerConfig.cs" />
     <Compile Include="Enums\NotificationTypes.cs" />
     <Compile Include="Enums\HelpRequestState.cs" />
     <Compile Include="Enums\ReportsType.cs" />
     <Compile Include="Enums\TutorState.cs" />
+    <Compile Include="Exceptions\AbstractModelRuntimeException.cs" />
+    <Compile Include="Exceptions\HelpRequest\HelpRequestNotFoundException.cs" />
+    <Compile Include="Exceptions\HelpRequest\InvalidHelpRequestStateException.cs" />
     <Compile Include="GroupSessionTutorListResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

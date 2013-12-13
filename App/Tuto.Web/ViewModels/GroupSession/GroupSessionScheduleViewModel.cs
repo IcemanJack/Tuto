@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Tuto.Web.ViewModels
+namespace Tuto.Web.ViewModels.GroupSession
 {
     public class GroupSessionScheduleViewModel
     {

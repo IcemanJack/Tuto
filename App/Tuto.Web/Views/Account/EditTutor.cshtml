@@ -1,8 +1,8 @@
 ﻿@model Tuto.Web.ViewModels.Account.Edit.EditTutorViewModel
 @{
-    ViewBag.Page_Id = "Account_Edit_Tutor";
-    ViewBag.Title = "Modifier mon profil";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    this.ViewBag.Page_Id = "Account_Edit_Tutor";
+    this.ViewBag.Title = "Modifier mon profil";
+    this.Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section stylesheets 
 {
@@ -50,90 +50,90 @@
     <div class="row-fluid">
         <!-- form section -->
         <article class="span4">
-            @using (Html.BeginForm("editTutor", "Account", FormMethod.Post, new { @id = "accountEditForm" }))
+            @using (this.Html.BeginForm("editTutor", "Account", FormMethod.Post, new { @id = "accountEditForm" }))
             {
-                @Html.AntiForgeryToken()
-                @Html.ValidationSummary(true)
-                @Html.HiddenFor(x => x.jsonSchedule, new { @id = "jsonSchedule" })
-                
-                if (ViewBag.AccountEditSuccessMessage != null)
+                @(this.Html.AntiForgeryToken())
+                @(this.Html.ValidationSummary(true))
+                @(this.Html.HiddenFor(x => x.jsonSchedule, new { @id = "jsonSchedule" }))
+
+                if (this.ViewBag.AccountEditSuccessMessage != null)
                 {
                 <div id="div_SuccessMessage" class="alert alert-success">
                     <strong>Succès!</strong>
-                    @ViewBag.AccountEditSuccessMessage
+                    @(this.ViewBag.AccountEditSuccessMessage)
                 </div>
                 }
                 
                 
-                if (ViewData["CurrentInfoError"] != null)
+                if (this.ViewData["CurrentInfoError"] != null)
                 {
                     <div class="alert alert-error">
                         <strong>Erreur! </strong>
-                        @ViewData["CurrentInfoError"]
+                        @(this.ViewData["CurrentInfoError"])
                     </div>                        
                  }
                 
                 <div class="control-group">
-                    @Html.Label(Resources.Resources.DisplayAccountEditFullName, new { @class = "control-label" })
+                    @(this.Html.Label(Resources.Resources.DisplayAccountEditFullName, new { @class = "control-label" }))
                     <div class="controls">
-                        @Html.TextBoxFor(m => m.newName, new { id = "txt_NewName",  @style = "width: 45%", @placeholder = Resources.Resources.DisplayAccountEditNewName })
-                        @Html.TextBoxFor(m => m.newLastName, new { id = "txt_NewLastName",  @style = "width: 45%", @placeholder = Resources.Resources.DisplayAccountEditNewLastName })
+                        @(this.Html.TextBoxFor(m => m.newName, new { id = "txt_NewName",  @style = "width: 45%", @placeholder = Resources.Resources.DisplayAccountEditNewName }))
+                        @(this.Html.TextBoxFor(m => m.newLastName, new { id = "txt_NewLastName",  @style = "width: 45%", @placeholder = Resources.Resources.DisplayAccountEditNewLastName }))
                     </div>
                     <p class="help-inline">
-                        @Html.ValidationMessageFor(m => m.newName)
-                        @Html.ValidationMessageFor(m => m.newLastName)
+                        @(this.Html.ValidationMessageFor(m => m.newName))
+                        @(this.Html.ValidationMessageFor(m => m.newLastName))
                     </p>
                 </div>
                 
                 <div class="control-group">
-                    @Html.LabelFor(m => m.newEmail)
+                    @(this.Html.LabelFor(m => m.newEmail))
                     <div class="controls">
-                        @Html.TextBoxFor(m => m.newEmail, new { id = "txt_NewEmail", @style = "width: 95%", @placeholder = Resources.Resources.DisplayAccountEditNewEmail })
-                        @Html.TextBoxFor(m => m.confirmNewEmail, new { id = "txt_ConfirmNewEmail", @style = "width: 95%", @placeholder = Resources.Resources.DisplayAccountEditNewEmailConfirmHelp })
+                        @(this.Html.TextBoxFor(m => m.newEmail, new { id = "txt_NewEmail", @style = "width: 95%", @placeholder = Resources.Resources.DisplayAccountEditNewEmail }))
+                        @(this.Html.TextBoxFor(m => m.confirmNewEmail, new { id = "txt_ConfirmNewEmail", @style = "width: 95%", @placeholder = Resources.Resources.DisplayAccountEditNewEmailConfirmHelp }))
                     </div>
                     <p class="help-inline">
-                        @Html.ValidationMessageFor(m => m.newEmail)
-                        @Html.ValidationMessageFor(m => m.confirmNewEmail)
+                        @(this.Html.ValidationMessageFor(m => m.newEmail))
+                        @(this.Html.ValidationMessageFor(m => m.confirmNewEmail))
                     </p>
                 </div>
                 
                 <div class="control-group">
-                    @Html.LabelFor(m => m.newPassword)
+                    @(this.Html.LabelFor(m => m.newPassword))
                     <div class="controls">
-                        @Html.PasswordFor(m => m.newPassword, new { id = "txt_NewPassword",  @style = "width: 95%", @placeholder = Resources.Resources.DisplayAccountEditNewPasswordHelp })
-                        @Html.PasswordFor(m => m.confirmNewPassword, new { id = "txt_ConfirmNewPassword",  @style = "width: 95%", @placeholder = Resources.Resources.DisplayAccountEditNewPasswordConfirmHelp })
+                        @(this.Html.PasswordFor(m => m.newPassword, new { id = "txt_NewPassword",  @style = "width: 95%", @placeholder = Resources.Resources.DisplayAccountEditNewPasswordHelp }))
+                        @(this.Html.PasswordFor(m => m.confirmNewPassword, new { id = "txt_ConfirmNewPassword",  @style = "width: 95%", @placeholder = Resources.Resources.DisplayAccountEditNewPasswordConfirmHelp }))
                     </div>
                     <p class="help-inline">
-                        @Html.ValidationMessageFor(m => m.newPassword)
-                        @Html.ValidationMessageFor(m => m.confirmNewPassword)
+                        @(this.Html.ValidationMessageFor(m => m.newPassword))
+                        @(this.Html.ValidationMessageFor(m => m.confirmNewPassword))
                     </p>
                 </div>
                 
                 <div class="control-group">
-                    @Html.Label(Resources.Resources.DisplayAccountEditConfirmChanges)
+                    @(this.Html.Label(Resources.Resources.DisplayAccountEditConfirmChanges))
                     <p class="help-inline">@Resources.Resources.DisplayAccountEditConfirmChangesHelp</p>
                     <div class="controls">
-                        @Html.TextBoxFor(m => m.currentEmail, new { id = "txt_Email", @style = "width: 95%", @placeholder = Resources.Resources.DisplayAccountEditCurrentEmail })
-                        @Html.PasswordFor(m => m.currentPassword, new { id = "txt_Password", @style = "width: 95%", @placeholder = Resources.Resources.DisplayAccountEditCurrentPasswordConfirm })
+                        @(this.Html.TextBoxFor(m => m.currentEmail, new { id = "txt_Email", @style = "width: 95%", @placeholder = Resources.Resources.DisplayAccountEditCurrentEmail }))
+                        @(this.Html.PasswordFor(m => m.currentPassword, new { id = "txt_Password", @style = "width: 95%", @placeholder = Resources.Resources.DisplayAccountEditCurrentPasswordConfirm }))
                     </div>
                     <p class="help-inline">
-                        @Html.ValidationMessageFor(m => m.currentEmail)
-                        @Html.ValidationMessageFor(m => m.currentPassword)
+                        @(this.Html.ValidationMessageFor(m => m.currentEmail))
+                        @(this.Html.ValidationMessageFor(m => m.currentPassword))
                     </p>
                 </div>
                 
                 <div class="form-actions">
                     <button id="btn_Save" class="btn btn-wuxia btn-small btn-primary" type="submit">Enregistrer</button>
                     <button id="btn_Home" class="btn btn-wuxia btn-small btn-primary" type="button"
-                            onclick="location.href='@Url.Action("index", "Home")'">Retour à l'Accueil</button>
+                            onclick=" location.href = '@(this.Url.Action("index", "Home"))' ">Retour à l'Accueil</button>
 
-                    @if (ViewData["CalendarErrorMessage"] != null)
+                    @if (this.ViewData["CalendarErrorMessage"] != null)
                     {
-                        <p style='color: red'>@ViewData["CalendarErrorMessage"]</p>
+                        <p style='color: red'>@(this.ViewData["CalendarErrorMessage"])</p>
                     }
-                    @if (ViewData["SuccessMessage"] != null)
+                    @if (this.ViewData["SuccessMessage"] != null)
                     {
-                        <p style='color: green'>@ViewData["SuccessMessage"]</p>
+                        <p style='color: green'>@(this.ViewData["SuccessMessage"])</p>
                     }
                 </div>  
             }

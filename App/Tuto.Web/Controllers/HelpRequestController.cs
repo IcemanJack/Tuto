@@ -8,7 +8,7 @@ using Tuto.DataLayer.Models.Notifications.Manager;
 using Tuto.DataLayer.Models.Users;
 using Tuto.DataLayer.ModelUtilities;
 using Tuto.Web.Config;
-using Tuto.Web.ViewModels;
+using Tuto.Web.ViewModels.HelpRequest;
 
 namespace Tuto.Web.Controllers
 {
@@ -230,7 +230,7 @@ namespace Tuto.Web.Controllers
             helpRequestView = new HelpRequestAddViewModel();
             helpRequestView.availableCourseList = this.appContext.getRepository().getAll<Course>().ToArray();
             
-           return View("Create", helpRequestView); // TODO : redirect to help request list with success messagebox
+           return View("Create", helpRequestView);
         }
 
 

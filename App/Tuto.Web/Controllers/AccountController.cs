@@ -261,36 +261,14 @@ namespace Tuto.Web.Controllers
         [HttpPost]
         public void sendConfirmationEmail(User user)
         {
-            try
+            var toAddress = new MailAddress(user.mail, user.name);
+            var emailToSend = new MailMessage(WebAppConfiguration.SmtpEmailConfiguration.SEND_FROM_ADDRESS, toAddress)
             {
-                var fromAddress = new MailAddress("tutocalinours@gmail.com", "Calinours Administrateur");
-                var toAddress = new MailAddress(user.mail, user.name);
-                const string fromPassword = "calinours123";
-                string subject = Resources.Resources.SendConfirmationEmailSubject;
-                string body = Resources.Resources.SendConfirmationEmailBody;
+                Subject = Resources.Resources.SendConfirmationEmailSubject,
+                Body = Resources.Resources.SendConfirmationEmailBody
+            };
 
-                var smtp = new SmtpClient
-                {
-                    Host = "smtp.gmail.com",
-                    Port = 587,
-                    EnableSsl = true,
-                    DeliveryMethod = SmtpDeliveryMethod.Network,
-                    UseDefaultCredentials = false,
-                    Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
-                };
-                using (var message = new MailMessage(fromAddress, toAddress)
-                {
-                    Subject = subject,
-                    Body = body
-                })
-                {
-                    smtp.Send(message);
-                }
-            }
-            catch (Exception)
-            {
-                // TODO : manage exception
-            }
+            this.appContext.getConfiguration().mailSender.sendMail(emailToSend);
         }
 
         public bool emailVerification(User user)
@@ -305,7 +283,6 @@ namespace Tuto.Web.Controllers
             {
                 return false;
             }
-            //return Regex.IsMatch(adress,@"^([0-9a-zA-Z]([-\.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})$");
         }
     }
 }

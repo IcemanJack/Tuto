@@ -8,12 +8,13 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MvcContrib.TestHelper;
 using NSubstitute;
 using Ploeh.AutoFixture;
+using Tuto.DataLayer.Exceptions.HelpRequest;
 using Tuto.DataLayer.Models;
 using Tuto.DataLayer.Models.Users;
 using Tuto.Web.Controllers.Manager;
-using Tuto.Web.ViewModels;
+using Tuto.Web.ViewModels.HelpRequestMgr;
 
-namespace Tuto.Web.UnitTests.Controllers.ManagerTests.HelpRequestsMgr
+namespace Tuto.Web.UnitTests.Controllers.ManagerTests
 {
     [TestClass]
     public class HelpRequestMgrControllerTests : ManagerComponentsBaseTest
@@ -93,19 +94,18 @@ namespace Tuto.Web.UnitTests.Controllers.ManagerTests.HelpRequestsMgr
         {
             // Arrange
             // Act
-            bool http404Called = false;
+            bool helpRequestNotFoundCatched = false;
             try
             {
                 ActionResult assignResult = this.controller.assign(3434343);
-                http404Called = false;
             }
-            catch (FileNotFoundException)
+            catch (HelpRequestNotFoundException)
             {
-                http404Called = true;
+                helpRequestNotFoundCatched = true;
             }
 
             // Assert
-            Assert.IsTrue(http404Called, "The controller page didn't returned a 404 http error on invalid help request id");
+            Assert.IsTrue(helpRequestNotFoundCatched, "The controller page didn't returned a 404 http error on invalid help request id");
         }
 
         [TestMethod]
@@ -292,6 +292,7 @@ namespace Tuto.Web.UnitTests.Controllers.ManagerTests.HelpRequestsMgr
             // make sure the session is finished
             helpRequest.helpedHasConfirmed = true;
             helpRequest.tutorHasConfirmed = true;
+            helpRequest.tutor = fixture.Create<Tutor>();
             helpRequest.individualSession = this.fixture.Create<IndividualSession>();
             helpRequest.individualSession.date = DateTime.Now.Subtract(TimeSpan.FromDays(10));
 

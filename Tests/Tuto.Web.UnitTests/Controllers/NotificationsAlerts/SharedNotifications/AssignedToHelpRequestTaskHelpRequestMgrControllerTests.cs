@@ -6,7 +6,7 @@ using Tuto.DataLayer.Models;
 using Tuto.DataLayer.Models.Notifications.Shared;
 using Tuto.DataLayer.Models.Users;
 using Tuto.Web.Controllers.Manager;
-using Tuto.Web.ViewModels;
+using Tuto.Web.ViewModels.HelpRequestMgr;
 
 namespace Tuto.Web.UnitTests.Controllers.NotificationsAlerts.SharedNotifications
 {
@@ -30,6 +30,9 @@ namespace Tuto.Web.UnitTests.Controllers.NotificationsAlerts.SharedNotifications
             var fakedHelpRequest = this.fixture.Create<HelpRequest>();
             var fakedTutor = this.fixture.Create<Tutor>();
             var fakedAssignementViewModel = this.fixture.Create<ManagerHelpRequestTutorAssignmentViewModels.AssignHelpRequestViewModel>();
+
+            fakedHelpRequest.tutor = fakedTutor;
+
             var expectedReturnedTask =
                 new AssignedToHelpRequestTask().getBuilder().setConcernedHelpRequest(fakedHelpRequest).getNotification();
 

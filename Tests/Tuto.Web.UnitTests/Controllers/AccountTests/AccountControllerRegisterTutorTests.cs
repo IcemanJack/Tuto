@@ -66,5 +66,19 @@ namespace Tuto.Web.UnitTests.Controllers.AccountTests
                 .ToAction<AccountController>(x => x.login());
         }
 
+        [TestMethod]
+        public void post_create_with_valid_infos_should_send_confirmation_email()
+        {
+            // Arrange   
+            var tutorRegisterViewModel = this.fixture.Create<TutorRegisterViewModel>();
+            tutorRegisterViewModel.coursesSkillsJson = "[{\"department\":\"Général\",\"course\":\"Français 1\"},{\"department\":\"Général\",\"course\":\"Anglais 1\"}]";
+
+            // Action
+            this.controller.registerTutor(tutorRegisterViewModel);
+
+            // Assert
+            this.appContext.getConfiguration().mailSender.ReceivedWithAnyArgs();
+        }
+
     }
 }

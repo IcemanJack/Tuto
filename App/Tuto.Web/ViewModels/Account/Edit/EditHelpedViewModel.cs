@@ -1,5 +1,4 @@
 ﻿
-
 namespace Tuto.Web.ViewModels.Account.Edit
 {
     public class EditHelpedViewModel : EditStudentViewModel

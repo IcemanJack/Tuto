@@ -10,7 +10,7 @@ using Tuto.DataLayer.Models;
 using Tuto.DataLayer.Models.Users;
 using Tuto.DataLayer.Repository;
 
-namespace Tuto.Web.ViewModels
+namespace Tuto.Web.ViewModels.HelpRequestMgr
 {
     public class ManagerHelpRequestTutorAssignmentViewModels
     {
@@ -30,8 +30,7 @@ namespace Tuto.Web.ViewModels
                 this.RuleFor(x => x.helpRequestId).Must(this.beAValidHelpRequestId).WithMessage(Resources.Resources.HelpRequestMgrAssignInvalidHelpRequestId);
                 this.RuleFor(x => x.assignStartHour).InclusiveBetween(8, 16).WithMessage(Resources.Resources.HelpRequestMgrAssignInvalidStartHour);
                 this.RuleFor(x => x.assignEndHour).InclusiveBetween(10, 18).WithMessage(Resources.Resources.HelpRequestMgrAssignInvalidEndHour);
-               
-                ;            }
+            }
 
             private bool beAValidDate(String date)
             {
@@ -51,7 +50,7 @@ namespace Tuto.Web.ViewModels
             {
                 var repo = new EntityRepository();
 
-                var hr = repo.getById<HelpRequest>(id);
+                var hr = repo.getById<DataLayer.Models.HelpRequest>(id);
 
                 return hr != null && hr.getState() == HelpRequestState.NOT_ASSIGNED;
             }
@@ -68,7 +67,7 @@ namespace Tuto.Web.ViewModels
             public static IEnumerable<SelectListItem> dayOfWeekHtmSelectListItems = new List<SelectListItem>
             {
                 new SelectListItem() { Text = Resources.Resources.Moday, Value = ((int)WeekDay.MONDAY).ToString() },
-                new SelectListItem() { Text = Resources.Resources.Thuesday, Value = ((int)WeekDay.TUESDAY).ToString() },
+                new SelectListItem() { Text = Resources.Resources.Tuesday, Value = ((int)WeekDay.TUESDAY).ToString() },
                 new SelectListItem() { Text = Resources.Resources.Wednesday, Value = ((int)WeekDay.WEDNESDAY).ToString() },
                 new SelectListItem() { Text = Resources.Resources.Thursday, Value = ((int)WeekDay.THURSDAY).ToString() },
                 new SelectListItem() { Text = Resources.Resources.Friday, Value = ((int)WeekDay.FRIDAY).ToString() }

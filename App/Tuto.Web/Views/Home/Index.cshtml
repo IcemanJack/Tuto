@@ -1,8 +1,8 @@
-﻿@model Tuto.Web.ViewModels.HomeViewModel
+﻿@model Tuto.Web.ViewModels.HelpRequest.HomeViewModel
 @{
-    ViewBag.Page_Id = "Home_Index";
-    ViewBag.Title = "Accueil";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    this.ViewBag.Page_Id = "Home_Index";
+    this.ViewBag.Title = "Accueil";
+    this.Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section Scripts 
 {
@@ -15,7 +15,7 @@
 }
 <!-- Page header -->
 <div class="page-header">
-	<h1><span class="awe-home"></span>@Resources.Resources.ViewHomeIndexWelcome @Model.userFirstName @Model.userLastName</h1>
+	<h1><span class="awe-home"></span>@Resources.Resources.ViewHomeIndexWelcome @(this.Model.userFirstName) @(this.Model.userLastName)</h1>
 </div>
 <!-- /Page header -->
 <div class="page-container">
@@ -25,7 +25,7 @@
             <fieldset>
                 <legend><i class="awe-asterisk"></i> @Resources.Resources.ViewHomeIndexTaskLegend</legend>
                 
-                @{ Html.RenderAction("getLoggedInUserTasks", "Notifications"); }
+                @{ this.Html.RenderAction("getLoggedInUserTasks", "Notifications"); }
 
                 <!--<div class="alert">
                     <button class="close" type="button" data-dismiss="alert">×</button>
@@ -48,7 +48,7 @@
               <fieldset>
                   <legend><i class="awe-asterisk"></i> Mes alertes</legend>
                   
-                  @{ Html.RenderAction("getLoggedInUserAlerts", "Notifications"); }
+                  @{ this.Html.RenderAction("getLoggedInUserAlerts", "Notifications"); }
 
             </fieldset>
         </div>

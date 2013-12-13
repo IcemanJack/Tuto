@@ -2,7 +2,7 @@
 using AutoMapper;
 using Tuto.DataLayer.Models.Users;
 using Tuto.Web.Config;
-using Tuto.Web.ViewModels;
+using Tuto.Web.ViewModels.HelpRequest;
 
 namespace Tuto.Web.Controllers
 {
@@ -24,24 +24,5 @@ namespace Tuto.Web.Controllers
             var homeView = Mapper.Map<HomeViewModel>(this.getLoggedInUser());
             return View("Index", homeView);
         }
-
-        private void getTasks()
-        {
-            var user = this.getLoggedInUser();
-            if (user.isHelped())
-            {
-                var helped = user as Helped;
-            }
-            else if (user.isTutor())
-            {
-                var tutor = user as Tutor;
-            }
-            else // user is manager
-            {
-                var manager = user as DataLayer.Models.Users.Manager;
-            }
-        }
-
-
     }
 }

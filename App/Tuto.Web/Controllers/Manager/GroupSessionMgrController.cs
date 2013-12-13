@@ -8,7 +8,8 @@ using Tuto.DataLayer.Models.Users;
 using Tuto.Web.Config;
 using Tuto.Web.Controllers.Utilities;
 using Tuto.Web.Utilities;
-using Tuto.Web.ViewModels;
+using Tuto.Web.ViewModels.GroupSession;
+using Tuto.Web.ViewModels.TutorsMgr;
 using WebGrease.Css.Extensions;
 
 namespace Tuto.Web.Controllers.Manager
@@ -29,12 +30,8 @@ namespace Tuto.Web.Controllers.Manager
 
         public virtual ActionResult editDefaultSchedule()
         {
-            if (!this.isUserAllowed())
-            {
-                return this.kickUser();
-            }
-
             var currentManager = this.getLoggedInUser() as DataLayer.Models.Users.Manager;
+            if (currentManager == null) return kickUser();
 
             var groupSessionScheduleViewModel = new GroupSessionScheduleViewModel { jsonGroupSessions = GroupSessionUtilities.getJsonFromDefaultGroupSessions(currentManager.defaultGroupSessions) };
             return View("EditDefaultSchedule", groupSessionScheduleViewModel);
@@ -43,16 +40,12 @@ namespace Tuto.Web.Controllers.Manager
         [HttpPost]
         public virtual ActionResult editDefaultSchedule(GroupSessionScheduleViewModel groupSessionScheduleViewModel)
         {
-            if (!this.isUserAllowed())
-            {
-                return this.kickUser();
-            }
-
-            
             var currentManager = this.getLoggedInUser() as DataLayer.Models.Users.Manager;
+            if (currentManager == null) return this.kickUser();
+
             var repository = this.appContext.getRepository();
 
-            currentManager.defaultGroupSessions.ForEach(x => this.appContext.getRepository().delete<DefaultGroupSession>(x.id));
+            currentManager.defaultGroupSessions.ToArray().ForEach(x => this.appContext.getRepository().delete<DefaultGroupSession>(x.id));
             currentManager.defaultGroupSessions = GroupSessionUtilities.getDefaultGroupSessionsFromJson(groupSessionScheduleViewModel.jsonGroupSessions, repository);
             currentManager.hasDefaultSchedule = true;
 
@@ -65,7 +58,7 @@ namespace Tuto.Web.Controllers.Manager
         public virtual ActionResult editCurrentSchedule()
         {
             var currentManager = this.getLoggedInUser() as DataLayer.Models.Users.Manager;
-            if (!currentManager.hasDefaultSchedule) return this.kickUser();
+            if (currentManager == null || !currentManager.hasDefaultSchedule) return this.kickUser();
 
             var currentGroupSessionScheduleViewModel = new GroupSessionScheduleViewModel { jsonGroupSessions = GroupSessionUtilities.getJsonFromDefaultGroupSessions(currentManager.defaultGroupSessions) };
             return View("EditCurrentSchedule", currentGroupSessionScheduleViewModel);
@@ -75,10 +68,12 @@ namespace Tuto.Web.Controllers.Manager
         public virtual ActionResult editCurrentSchedule(GroupSessionScheduleViewModel groupSessionScheduleViewModel)
         {
             var currentManager = this.getLoggedInUser() as DataLayer.Models.Users.Manager;
+            if (currentManager == null) return this.kickUser();
+
             var currentWeekSchedule = currentManager.getCurrentGroupSessionWeekSchedule();
             var repository = this.appContext.getRepository();
 
-            currentWeekSchedule.groupSessions.ForEach(x =>  repository.delete<AssignedGroupSession>(x.id));
+            currentWeekSchedule.groupSessions.ToArray().ForEach(x =>  repository.delete<AssignedGroupSession>(x.id));
             currentWeekSchedule.groupSessions.Clear();
 
             var defaultGroupSessions = GroupSessionUtilities.getDefaultGroupSessionsFromJson(groupSessionScheduleViewModel.jsonGroupSessions, repository);
@@ -102,10 +97,11 @@ namespace Tuto.Web.Controllers.Manager
         public ActionResult list()
         {
             var currentManager = this.getLoggedInUser() as DataLayer.Models.Users.Manager;
+            if (currentManager == null) return kickUser();
 
             if (!currentManager.hasDefaultSchedule)
             {
-                return this.View("GroupSessionList", new GroupSessionListViewModel { assignedGroupSessions = Enumerable.Empty<AssignedGroupSession>().ToArray() });
+                return this.View("GroupSessionList", Enumerable.Empty<GroupSessionListViewModel.ManagerViewModel>().ToList());
             }
 
             var currentWeekSchedule = currentManager.getCurrentGroupSessionWeekSchedule();
@@ -133,21 +129,19 @@ namespace Tuto.Web.Controllers.Manager
 
                 this.appContext.getRepository().update(currentManager);
 
-                return this.View("GroupSessionList", new GroupSessionListViewModel { assignedGroupSessions = groupSessionWeekSchedule.groupSessions });
+                return this.View("GroupSessionList", Mapper.Map<List<GroupSessionListViewModel.ManagerViewModel>>(groupSessionWeekSchedule.groupSessions.ToList()));
             }
             else
             {
-                return this.View("GroupSessionList", new GroupSessionListViewModel { assignedGroupSessions = currentManager.getCurrentGroupSessionWeekSchedule().groupSessions });   
+                return this.View("GroupSessionList", Mapper.Map<List<GroupSessionListViewModel.ManagerViewModel>>(currentManager.getCurrentGroupSessionWeekSchedule().groupSessions.ToList()));   
             }
         }
 
         [HttpPost]
         public virtual ActionResult ajax_AssignTutor(int sessionId, int tutorId)
         {
-            if (!this.isUserAllowed())
-            {
-                return this.kickUser();
-            }
+            var currentManager = this.getLoggedInUser() as DataLayer.Models.Users.Manager;
+            if (currentManager == null) return kickUser();
 
             var repository = this.appContext.getRepository();
 
@@ -169,10 +163,8 @@ namespace Tuto.Web.Controllers.Manager
         [HttpPost]
         public virtual ActionResult ajax_GetTutorsAvailableAt(TutorAvailableAtViewModel tutorAvailableAtViewModel)
         {
-            if (!this.isUserAllowed())
-            {
-                return this.kickUser();
-            }
+            var currentManager = this.getLoggedInUser() as DataLayer.Models.Users.Manager;
+            if (currentManager == null) return kickUser();
 
             var repository = this.appContext.getRepository();
 

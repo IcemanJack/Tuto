@@ -1,10 +1,10 @@
 ﻿@model Tuto.Web.ViewModels.Notifications.HelpRequestToAssignAlertViewModel.ManagerViewModel
 @{
-    Layout = "~/Views/Notifications/Templates/_AlertTemplate.cshtml";
-    ViewBag.notificationId = Model.id;
+    this.Layout = "~/Views/Notifications/Templates/_AlertTemplate.cshtml";
+    this.ViewBag.notificationId = this.Model.id;
 }
 
 <strong>Une nouvelle demande d'aide à été déposée</strong><br />
-Une nouvelle demande d'aide à été déposé par l'aidé <strong>@Model.helpedFirstName</strong> <strong>@Model.helpedLastName</strong> le 
-<strong>@Model.helpRequestCreatedTime</strong>.<br />
-<em>@Html.ActionLink("Assigner la demande d'aide", "assign", "HelpRequestMgr", new { id = Model.helpRequestId }, new {})</em>
+Une nouvelle demande d'aide à été déposé par l'aidé <strong>@(this.Model.helpedFirstName)</strong> <strong>@(this.Model.helpedLastName)</strong> le 
+<strong>@(this.Model.helpRequestCreatedTime)</strong>.<br />
+<em>@(this.Html.ActionLink("Assigner la demande d'aide", "assign", "HelpRequestMgr", new { id = this.Model.helpRequestId }, new {}))</em>

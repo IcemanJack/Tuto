@@ -1,12 +1,12 @@
-﻿@using Tuto.DataLayer.Utilities
-@using Tuto.Web.Utilities
+﻿@using Tuto.Web.Utilities
+
 <!DOCTYPE html>
 <!--[if IE 8]>    <html class="no-js ie8 ie" lang="en"> <![endif]-->
 <!--[if IE 9]>    <html class="no-js ie9 ie" lang="en"> <![endif]-->
 <!--[if gt IE 9]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
 	<head>
 		<meta charset="utf-8">
-		<title>@ViewBag.Title | Système de gestion de tutorat Tuto</title>
+		<title>@(this.ViewBag.Title) | Système de gestion de tutorat Tuto</title>
 		<meta name="description" content="">
 		<meta name="author" content="Walking Pixels | www.walkingpixels.com">
 		<meta name="robots" content="index, follow">
@@ -15,12 +15,40 @@
 	    <!-- CSS styles -->
         <link rel='stylesheet' type='text/css' href='~/Content/themes/wuxia/css/plugins/jquery.snippet.css'>
 		<link rel='stylesheet' type='text/css' href='~/Content/themes/wuxia/css/wuxia-red.css'>
-		@RenderSection("stylesheets", required: false)
+	    @(this.RenderSection("stylesheets", required: false))
 
 	    <!-- Fav and touch icons -->
 		<link rel="shortcut icon" href="~/Content/themes/wuxia/favicon.ico">
 		
-		<!-- JS Libs -->
+	</head>
+	<body>
+	
+	    <!-- Main navigation bar -->
+       
+        @{ this.Html.RenderAction("buildMenu", "Menu"); }
+        
+		<!-- /Main navigation bar -->
+		
+		<!-- Main content -->
+	    <div class="container-fluid" id="@(this.ViewBag.Page_Id)" role="main">
+	        <div class="content">
+	            @(this.RenderBody())
+	        </div>
+	    </div>
+		<!-- /Main content -->
+		
+		<!-- Main footer -->
+		<footer class="container">
+			<nav>
+				<ul>
+					<li>&copy; Copyright @DateTime.Now.Year Les Calinours. All rights reserved.</li>
+				</ul>
+			</nav>
+		</footer>
+		<!-- /Main footer -->
+		
+	    <!-- Scripts -->
+	    <!-- JS Libs -->
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 		<script>window.jQuery || document.write('<script src="~/Content/themes/wuxia/libs/jquery.js"><\/script>')</script>
 		<script src="~/Content/themes/wuxia/js/libs/modernizr.js"></script>
@@ -44,36 +72,7 @@
 
 		    });
 		</script>
-	</head>
-	<body>
-	
-	    <!-- Main navigation bar -->
-        
-       
-        @{ Html.RenderAction("buildMenu", "Menu"); }
-        
-		<!-- /Main navigation bar -->
-		
-		<!-- Main content -->
-	    <div class="container-fluid" id="@ViewBag.Page_Id" role="main">
-	        <div class="content">
-	        @RenderBody()
-            </div>
-	    </div>
-		<!-- /Main content -->
-		
-		<!-- Main footer -->
-		<footer class="container">
-			<nav>
-				<ul>
-					<li>&copy; Copyright @DateTime.Now.Year Les Calinours. All rights reserved.</li>
-				</ul>
-			</nav>
-		</footer>
-		<!-- /Main footer -->
-		
-		<!-- Scripts -->
-		<script src="~/Content/themes/wuxia/js/navigation.js"></script>
+        <script src="~/Content/themes/wuxia/js/navigation.js"></script>
 
 		<!-- Bootstrap scripts -->
 		<!--
@@ -86,7 +85,7 @@
 		<script src="js/bootstrap/bootstrap-transition.js"></script>
 		-->
 		<script src="~/Content/themes/wuxia/js/bootstrap/bootstrap.js"></script>
-	    @RenderSection("Scripts", required: false)
+	    @(this.RenderSection("Scripts", required: false))
 	    <script>
 	        $(document).ready(function () {
 	            // notifications delete on delete button click
@@ -94,7 +93,7 @@
 	            $(".homeNotification button.close, .homeNotification a").click(function() {
 	                var notifId = $($(this).closest(".homeNotification")).data("notificationid");
 
-	                $.post("@(UrlUtilities.getRootUrl() + Url.Action("deleteNotification", "Notifications"))", { notificationId: notifId }, function (data) {
+	                $.post("@(UrlUtilities.getRootUrl() + this.Url.Action("deleteNotification", "Notifications"))", { notificationId: notifId }, function (data) {
 	                    if (data == "Failed") {
 	                        alert("Une erreur interne s'est produite. Veuillez ré-essayer.");
 	                    }

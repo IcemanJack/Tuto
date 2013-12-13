@@ -105,6 +105,24 @@ namespace Tuto.Web.UnitTests.Controllers
                 this.appContext.getRepository().ReceivedWithAnyArgs().single<Helped>(null);
                 Assert.AreSame(this.getLoggedInUser(), loggedInUser);
             }
+
+            [TestMethod]
+            public void disconnect_action_should_disconnect_user()
+            {
+                // Arrange
+                var fakedLoggedInHelped = DefaultControllerTests.fixture.Create<Helped>();
+                TestsUtilities.bypassAppAuthentification(this.appContext, fakedLoggedInHelped);
+                var beforeSessionCount = this.appContext.getHttpContext().Session.Count;
+
+                // Act
+                var returnedAction = this.disconnectLoggedInUser();
+
+                // Assert
+                Assert.IsNotNull(returnedAction);
+                Assert.AreNotEqual(beforeSessionCount, this.appContext.getHttpContext().Session);
+                this.appContext.getHttpContext().Session.ReceivedWithAnyArgs().RemoveAll();
+                Assert.AreEqual(0, this.appContext.getHttpContext().Session.Count);
+            }
         }
     }
 }

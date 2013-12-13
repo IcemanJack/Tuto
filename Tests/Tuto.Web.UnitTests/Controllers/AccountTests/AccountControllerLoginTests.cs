@@ -1,12 +1,10 @@
 ﻿using System.Web.Mvc;
+using System.Web.UI.WebControls;
 using AutoMapper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MvcContrib.TestHelper;
 using NSubstitute;
-using Tuto.DataLayer.Models;
 using Tuto.DataLayer.Models.Users;
-using Tuto.Web.UnitTests.Generic;
-using Tuto.Web.ViewModels;
 using Ploeh.AutoFixture;
 using Tuto.Web.ViewModels.Account;
 
@@ -15,6 +13,28 @@ namespace Tuto.Web.UnitTests.Controllers.AccountTests
     [TestClass]
     public class AccountControllerLoginTests : AccountControllerBaseTests
     {
+        [TestMethod]
+        public void unauthorized_action_should_return_login_view()
+        {
+            // Act
+            var returnedView = this.controller.unauthorized();
+
+            // Assert
+            Assert.IsNotNull(returnedView);
+            returnedView.AssertViewRendered().ForView("Login");
+        }
+
+        [TestMethod]
+        public void login_action_should_return_login_view()
+        {
+            // Act
+            var returnedView = this.controller.login();
+
+            // Assert
+            Assert.IsNotNull(returnedView);
+            returnedView.AssertViewRendered().ForView("Login");
+        }
+
         [TestMethod]
         public void index_action_should_return_login_view()
         {
@@ -29,7 +49,12 @@ namespace Tuto.Web.UnitTests.Controllers.AccountTests
         [TestMethod]
         public void register_tutor_action_should_return_register_tutor_view()
         {
-            AssertFunctions.assertValidRenderedViewForName(controller.registerTutor(), "RegisterTutor");
+            // Act
+            var returnedResult = this.controller.registerTutor();
+
+            // Assert
+            Assert.IsNotNull(returnedResult);
+            returnedResult.AssertViewRendered().ForView("RegisterTutor");
         }
         
         [TestMethod]
@@ -62,7 +87,37 @@ namespace Tuto.Web.UnitTests.Controllers.AccountTests
             ActionResult viewResult = this.controller.login(validViewModel);
             
             // Assert
-            viewResult.AssertActionRedirect();
+            viewResult.AssertActionRedirect().ToAction("index");
         }
+
+        [TestMethod]
+        public void post_login_should_return_login_view_when_invalid_modelstate()
+        {
+            // Arrange
+            this.controller.ModelState.AddModelError("UnitTests", "");
+
+            // Act
+            var viewResult = this.controller.login();
+
+            // Assert
+            Assert.IsNotNull(viewResult);
+            viewResult.AssertViewRendered().ForView("Login");
+        }
+
+        [TestMethod]
+        public void disconnect_action_should_render_login_view()
+        {
+            // Arrange
+            var fakedLoggedInHelped = this.fixture.Create<Helped>();
+            TestsUtilities.bypassAppAuthentification(this.appContext, fakedLoggedInHelped);
+
+            // Act
+            var returnedAction = this.controller.disconnect();
+
+            // Assert
+            Assert.IsNotNull(returnedAction);
+            returnedAction.AssertActionRedirect().ToAction("login");
+        }
+
     }
 }

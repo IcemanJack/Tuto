@@ -1,13 +1,11 @@
-﻿using System.Web.Mvc;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MvcContrib.TestHelper;
 using NSubstitute;
 using Ploeh.AutoFixture;
 using Tuto.DataLayer.Models;
 using Tuto.DataLayer.Models.Users;
-using Tuto.Web.UnitTests.Generic;
-using Tuto.Web.ViewModels;
+using Tuto.Web.ViewModels.HelpRequest;
 
 namespace Tuto.Web.UnitTests.Controllers.HelpRequestTests
 {
@@ -21,7 +19,12 @@ namespace Tuto.Web.UnitTests.Controllers.HelpRequestTests
             var helped = this.fixture.Create<Helped>();
             TestsUtilities.bypassAppAuthentification(this.appContext, helped);
 
-            AssertFunctions.assertValidRenderedViewForName(controller.create(), "Create");
+            // Act
+            var returnedResult = controller.create();
+            
+            // Assert
+            Assert.IsNotNull(returnedResult);
+            returnedResult.AssertViewRendered().ForView("Create");
         }
 
         [TestMethod]
@@ -34,8 +37,12 @@ namespace Tuto.Web.UnitTests.Controllers.HelpRequestTests
             var invalidViewModel = this.fixture.Create<HelpRequestAddViewModel>();
             invalidViewModel.courseId = -1;
 
-            AssertFunctions.assertValidRenderedViewForName(controller.create(invalidViewModel), "Create");
+            // Act
+            var returnedResult = controller.create(invalidViewModel);
 
+            // Assert
+            Assert.IsNotNull(returnedResult);
+            returnedResult.AssertViewRendered().ForView("Create");
             Assert.IsTrue(this.controller.ModelState.ContainsKey("ErrorInvalidCourseId"), "The modelstate must contain ErrorInvalidCourseId key");
         }
 
@@ -49,8 +56,12 @@ namespace Tuto.Web.UnitTests.Controllers.HelpRequestTests
             var invalidViewModel = this.fixture.Create<HelpRequestAddViewModel>();
             invalidViewModel.scheduleJson = "[{\"start\":\"08:00 am\",";
 
-            AssertFunctions.assertValidRenderedViewForName(controller.create(invalidViewModel), "Create");
+            // Act
+            var returnedResult = controller.create(invalidViewModel);
 
+            // Assert
+            Assert.IsNotNull(returnedResult);
+            returnedResult.AssertViewRendered().ForView("Create");
             Assert.IsTrue(this.controller.ModelState.ContainsKey("InvalidScheduleJson"), "The modelstate must contain InvalidSchedule");
         }
 
@@ -64,7 +75,12 @@ namespace Tuto.Web.UnitTests.Controllers.HelpRequestTests
             var invalidViewModel = this.fixture.Create<HelpRequestAddViewModel>();
             invalidViewModel.scheduleJson = "[{\"invalidformat\":\"08:00 am\",\"end\":\"02:00 pm\",\"day\":1}]";
 
-            AssertFunctions.assertValidRenderedViewForName(controller.create(invalidViewModel), "Create");
+            // Act
+            var returnedResult = controller.create(invalidViewModel);
+
+            // Assert
+            Assert.IsNotNull(returnedResult);
+            returnedResult.AssertViewRendered().ForView("Create");
             Assert.IsTrue(this.controller.ModelState.ContainsKey("InvalidScheduleJson"), "The modelstate must contain InvalidSchedule");
         }
 
@@ -88,8 +104,12 @@ namespace Tuto.Web.UnitTests.Controllers.HelpRequestTests
             expectedCreatedModel.tutor = null;
             expectedCreatedModel.course = expectedCourse;
 
-            AssertFunctions.assertValidRenderedViewForName(controller.create(validViewModel), "Create");
+            // Act
+            var returnedResult = controller.create(validViewModel);
 
+            // Assert
+            Assert.IsNotNull(returnedResult);
+            returnedResult.AssertViewRendered().ForView("Create");
             this.appContext.getRepository().Received().add(Arg.Is<HelpRequest>(x => 
                     x.comment == expectedCreatedModel.comment &&
                     x.course == expectedCourse && 

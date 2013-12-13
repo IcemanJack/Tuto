@@ -133,7 +133,7 @@
     <Compile Include="Config\NotificationsConfiguration.cs" />
     <Compile Include="Config\WebAppLaunchContext.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\Reports\MonthlyWorkedHoursReport.cs" />
+    <Compile Include="Controllers\Manager\Reports\MonthlyWorkedHoursReport.cs" />
     <Compile Include="Controllers\Manager\ReportsMgrController.cs" />
     <Compile Include="Controllers\NotificationsController.cs" />
     <Compile Include="Controllers\CIController.cs" />
@@ -158,6 +158,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Mappers\ViewModelToDomainMappingProfile.cs" />
     <Compile Include="Config\WebAppConfiguration.cs" />
+    <Compile Include="Utilities\EmailSender.cs" />
     <Compile Include="Utilities\GroupSessionUtilities.cs" />
     <Compile Include="Utilities\NotificationUtilities.cs" />
     <Compile Include="Utilities\UrlUtilities.cs" />
@@ -169,30 +170,29 @@
     <Compile Include="ViewModels\Account\Register\HelpedRegisterViewModel.cs" />
     <Compile Include="ViewModels\Account\Register\TutorRegisterViewModel.cs" />
     <Compile Include="ViewModels\Account\UserLoginViewModel.cs" />
+    <Compile Include="ViewModels\GroupSession\GroupSessionAssignTutorViewModel.cs" />
+    <Compile Include="ViewModels\GroupSession\GroupSessionListViewModel.cs" />
+    <Compile Include="ViewModels\GroupSession\GroupSessionScheduleViewModel.cs" />
+    <Compile Include="ViewModels\HelpRequest\HelpedHelpRequestListViewModel.cs" />
+    <Compile Include="ViewModels\HelpRequest\HelpRequestAddViewModel.cs" />
+    <Compile Include="ViewModels\HelpRequest\HelpRequestListDetailsViewModel.cs" />
+    <Compile Include="ViewModels\HelpRequest\TutorHelpRequestListEntryViewModel.cs" />
+    <Compile Include="ViewModels\HelpRequestMgr\ManagerHelpRequestsListViewModel.cs" />
+    <Compile Include="ViewModels\HelpRequestMgr\ManagerHelpRequestTutorAssignmentViewModels.cs" />
     <Compile Include="ViewModels\Notifications\AbstractNotificationViewModel.cs" />
     <Compile Include="ViewModels\Notifications\AssignedToGroupSessionAlertViewModel.cs" />
     <Compile Include="ViewModels\Notifications\AssignedToHelpRequestTaskViewModel.cs" />
-    <Compile Include="ViewModels\GroupSessionAssignTutorViewModel.cs" />
-    <Compile Include="ViewModels\GroupSessionListViewModel.cs" />
-    <Compile Include="ViewModels\GroupSessionScheduleViewModel.cs" />
-    <Compile Include="ViewModels\ManagerHelpRequestTutorAssignmentViewModels.cs" />
-    <Compile Include="ViewModels\HelpedHelpRequestListViewModel.cs" />
-    <Compile Include="ViewModels\HelpRequestAddViewModel.cs" />
-    <Compile Include="ViewModels\HelpRequestListDetailsViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
-    <Compile Include="ViewModels\IndividualSessionViewModel.cs" />
-    <Compile Include="ViewModels\ManagerHelpRequestsListViewModel.cs" />
+    <Compile Include="ViewModels\HelpRequest\IndividualSessionViewModel.cs" />
     <Compile Include="ViewModels\Notifications\HelpedHasRegisteredAlertViewModel.cs" />
     <Compile Include="ViewModels\Notifications\HelpRequestToAssignAlertViewModel.cs" />
     <Compile Include="ViewModels\Notifications\TutorHasRegisteredTaskViewModel.cs" />
     <Compile Include="ViewModels\Reports\AbstractReportViewModel.cs" />
     <Compile Include="ViewModels\Reports\MonthlyWorkedHoursReportViewModel.cs" />
-    <Compile Include="ViewModels\Reports\TableReportViewModel.cs" />
-    <Compile Include="ViewModels\TutorAvailableAtViewModel.cs" />
-    <Compile Include="ViewModels\TutorDetailsViewModel.cs" />
-    <Compile Include="ViewModels\TutorHelpRequestListEntryViewModel.cs" />
-    <Compile Include="ViewModels\TutorListViewModel.cs" />
-    <Compile Include="ViewModels\ReportToDoViewModel.cs" />
+    <Compile Include="ViewModels\HelpRequest\ReportToDoViewModel.cs" />
+    <Compile Include="ViewModels\TutorsMgr\TutorAvailableAtViewModel.cs" />
+    <Compile Include="ViewModels\TutorsMgr\TutorDetailsViewModel.cs" />
+    <Compile Include="ViewModels\TutorsMgr\TutorListViewModel.cs" />
     <Compile Include="ViewsUtilities\MenuExtensions.cs" />
     <Compile Include="ViewsUtilities\MenuItem.cs" />
   </ItemGroup>
@@ -434,8 +434,6 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="Views\Account\RegisterHelped.cshtml" />
-    <Content Include="Views\Manager\IndividualSessionList.cshtml" />
-    <Content Include="Views\Manager\Index.cshtml" />
     <Content Include="Views\GroupSessionMgr\GroupSessionList.cshtml" />
     <Content Include="Views\HelpRequest\Tutor_List.cshtml" />
     <Content Include="Views\Shared\_Menu.cshtml" />
@@ -448,7 +446,6 @@
     <Content Include="Views\HelpRequestMgr\HelpRequestAssign.cshtml" />
     <Content Include="Views\Error\General.cshtml" />
     <Content Include="Views\Error\Http404.cshtml" />
-    <Content Include="Views\Manager\TutorDetails.cshtml" />
     <Content Include="Views\Notifications\AssignedToHelpRequestTask\AssignedToHelpRequestTaskHelpedPartial.cshtml" />
     <Content Include="Views\Notifications\_AlertsList.cshtml" />
     <Content Include="Views\Notifications\AssignedToHelpRequestTask\AssignedToHelpRequestTaskTutorPartial.cshtml" />
@@ -466,6 +463,7 @@
     <Content Include="Views\ReportsMgr\Show.cshtml" />
     <Content Include="Views\ReportsMgr\MonthlyHoursReport.cshtml" />
     <Content Include="Views\Shared\_PdfLayout.cshtml" />
+    <Content Include="Views\Shared\_NotLoggedLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -8,7 +8,7 @@ using Tuto.DataLayer.Repository;
 
 namespace Tuto.DataLayer
 {
-    public class DatabaseInitializer : DropCreateDatabaseIfModelChanges<TutoContext>
+    public class DatabaseInitializer : DropCreateDatabaseAlways<TutoContext>
     {
         protected override void Seed(TutoContext context)
         {
@@ -31,7 +31,7 @@ namespace Tuto.DataLayer
             var weekDays = (WeekDay[])Enum.GetValues(typeof(WeekDay));
             foreach (var weekDay in weekDays)
             {
-                for (var i = ScheduleBlock.MINIMUM_TIME; i < ScheduleBlock.MAXIMUM_TIME; i++)
+                for (var i = DataLayerConfig.SCHEDULE_MINIMUM_TIME; i < DataLayerConfig.SCHEDULE_MAXIMUM_TIME; i++)
                 {
                     var newScheduleBlock = new ScheduleBlock()
                     {
@@ -248,7 +248,6 @@ namespace Tuto.DataLayer
             // HelpRequests
             var helpRequest1 = new HelpRequest()
             {
-                id = 1,
                 course = programmation,
                 helped = helpedUser,
                 tutor = tutorUser,
@@ -258,7 +257,6 @@ namespace Tuto.DataLayer
             };
             var helpRequest2 = new HelpRequest()
             {
-                id = 2,
                 course = programmation,
                 helped = helpedUser,
                 tutor = tutorUser,
@@ -268,7 +266,6 @@ namespace Tuto.DataLayer
             };
             var helpRequest3 = new HelpRequest()
             {
-                id = 3,
                 course = programmation,
                 helped = helpedUser,
                 tutor = null,
@@ -278,7 +275,6 @@ namespace Tuto.DataLayer
             };
             var helpRequestFinished = new HelpRequest()
             {
-                id = 4,
                 course = programmation,
                 helped = helpedUser,
                 tutor = tutorUser,
@@ -291,7 +287,6 @@ namespace Tuto.DataLayer
             };
             var helpRequestFinished2 = new HelpRequest()
             {
-                id = 4,
                 course = programmation,
                 helped = helpedUser,
                 tutor = tutorUser,
@@ -304,7 +299,6 @@ namespace Tuto.DataLayer
             };
             var helpRequestFinished3 = new HelpRequest()
             {
-                id = 4,
                 course = programmation,
                 helped = helpedUser,
                 tutor = tutorUser,

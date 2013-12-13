@@ -4,7 +4,7 @@ using Ploeh.AutoFixture;
 using Tuto.DataLayer.Models.Notifications.Manager;
 using Tuto.DataLayer.Models.Users;
 using Tuto.Web.Controllers;
-using Tuto.Web.ViewModels;
+using Tuto.Web.ViewModels.HelpRequest;
 
 namespace Tuto.Web.UnitTests.Controllers.NotificationsAlerts.ManagerNotifications
 {

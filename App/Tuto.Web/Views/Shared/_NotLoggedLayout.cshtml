@@ -1,0 +1,99 @@
+﻿@using Tuto.Web.Utilities
+
+<!DOCTYPE html>
+<!--[if IE 8]>    <html class="no-js ie8 ie" lang="en"> <![endif]-->
+<!--[if IE 9]>    <html class="no-js ie9 ie" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+	<head>
+		<meta charset="utf-8">
+		<title>@(this.ViewBag.Title) | Système de gestion de tutorat Tuto</title>
+		<meta name="description" content="">
+		<meta name="author" content="Walking Pixels | www.walkingpixels.com">
+		<meta name="robots" content="index, follow">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	    <!-- CSS styles -->
+        <link rel='stylesheet' type='text/css' href='~/Content/themes/wuxia/css/plugins/jquery.snippet.css'>
+		<link rel='stylesheet' type='text/css' href='~/Content/themes/wuxia/css/wuxia-red.css'>
+	    @(this.RenderSection("stylesheets", required: false))
+
+	    <!-- Fav and touch icons -->
+		<link rel="shortcut icon" href="~/Content/themes/wuxia/favicon.ico">
+		
+	</head>
+	<body>
+	
+		<!-- Main content -->
+	    <div class="container-fluid" id="@(this.ViewBag.Page_Id)" role="main">
+	        <div class="content">
+	            @(this.RenderBody())
+	        </div>
+	    </div>
+		<!-- /Main content -->
+		
+		<!-- Main footer -->
+		<footer class="container">
+			<nav>
+				<ul>
+					<li>&copy; Copyright @DateTime.Now.Year Les Calinours. All rights reserved.</li>
+				</ul>
+			</nav>
+		</footer>
+		<!-- /Main footer -->
+		
+	    <!-- Scripts -->
+	    <!-- JS Libs -->
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		<script>window.jQuery || document.write('<script src="~/Content/themes/wuxia/libs/jquery.js"><\/script>')</script>
+		<script src="~/Content/themes/wuxia/js/libs/modernizr.js"></script>
+		<script src="~/Content/themes/wuxia/js/libs/selectivizr.js"></script>
+
+		<script>
+		    $(document).ready(function () {
+
+		        // Navbar tooltips
+		        $('.navbar [title]').tooltip({
+		            placement: 'bottom'
+		        });
+
+		        // Content tooltips
+		        $('[role=main] [title]').tooltip({
+		            placement: 'top'
+		        });
+
+		        // Dropdowns
+		        $('.dropdown-toggle').dropdown();
+
+		    });
+		</script>
+        <script src="~/Content/themes/wuxia/js/navigation.js"></script>
+
+		<!-- Bootstrap scripts -->
+		<!--
+		<script src="js/bootstrap/bootstrap-tooltip.js"></script>
+		<script src="js/bootstrap/bootstrap-dropdown.js"></script>
+		<script src="js/bootstrap/bootstrap-button.js"></script>
+		<script src="js/bootstrap/bootstrap-alert.js"></script>
+		<script src="js/bootstrap/bootstrap-popover.js"></script>
+		<script src="js/bootstrap/bootstrap-collapse.js"></script>
+		<script src="js/bootstrap/bootstrap-transition.js"></script>
+		-->
+		<script src="~/Content/themes/wuxia/js/bootstrap/bootstrap.js"></script>
+	    @(this.RenderSection("Scripts", required: false))
+	    <script>
+	        $(document).ready(function () {
+	            // notifications delete on delete button click
+	            // once a link has been clicked, we can delete the notification from user's dashboard
+	            $(".homeNotification button.close, .homeNotification a").click(function() {
+	                var notifId = $($(this).closest(".homeNotification")).data("notificationid");
+
+	                $.post("@(UrlUtilities.getRootUrl() + this.Url.Action("deleteNotification", "Notifications"))", { notificationId: notifId }, function (data) {
+	                    if (data == "Failed") {
+	                        alert("Une erreur interne s'est produite. Veuillez ré-essayer.");
+	                    }
+	                });
+	            });
+	        });
+    	</script>
+	</body>
+</html>

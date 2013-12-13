@@ -1,8 +1,7 @@
-﻿@using Tuto.DataLayer.Enums
-@model IEnumerable<Tuto.Web.ViewModels.TutorHelpRequestListEntryViewModel>
+﻿@model IEnumerable<Tuto.Web.ViewModels.HelpRequest.TutorHelpRequestListEntryViewModel>
 
 @{
-    ViewBag.Title = "Demandes de tutorat assignées";
+    this.ViewBag.Title = "Demandes de tutorat assignées";
 }
 
 <!-- Page header -->
@@ -30,44 +29,44 @@
             <thead>
                 <tr>
                     <th>@Resources.Resources.DisplayHelpRequestState</th>
-                    <th>@Html.DisplayNameFor(x => x.createdTime)</th>
-                    <th>@Html.DisplayNameFor(x => x.expectedDate)</th>
-                    <th>@Html.DisplayNameFor(x => x.course)</th>
-                    <th>@Html.DisplayNameFor(x => x.place)</th>
-                    <th>@Html.DisplayNameFor(x => x.helpedFullname)</th>
+                    <th>@(this.Html.DisplayNameFor(x => x.createdTime))</th>
+                    <th>@(this.Html.DisplayNameFor(x => x.expectedDate))</th>
+                    <th>@(this.Html.DisplayNameFor(x => x.course))</th>
+                    <th>@(this.Html.DisplayNameFor(x => x.place))</th>
+                    <th>@(this.Html.DisplayNameFor(x => x.helpedFullname))</th>
                     <th>@Resources.Resources.ListEntryActions</th>
-                    <th>@Html.DisplayNameFor(x => x.reportIsEmpty)</th>
+                    <th>@(this.Html.DisplayNameFor(x => x.reportIsEmpty))</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model)
+                @foreach (var item in this.Model)
                 {
-                    <tr @(item.tutorHasConfirmed ? @Html.Raw("class= \"green\"") : @Html.Raw("class= \"red\""))>
+                    <tr @(item.tutorHasConfirmed ? this.Html.Raw("class= \"green\"") : this.Html.Raw("class= \"red\""))>
                     
                         <td>@item.getStateString()</td>
-                        <td>@Html.DisplayFor(modelItem => item.createdTime)</td>
-                        <td>@Html.DisplayFor(modelItem => item.expectedDate)</td>
-                        <td>@Html.DisplayFor(modelItem => item.course)</td>
-                        <td>@Html.DisplayFor(modelItem => item.place)</td>
-                        <td>@Html.DisplayFor(modelItem => item.helpedFullname)</td>
+                        <td>@(this.Html.DisplayFor(modelItem => item.createdTime))</td>
+                        <td>@(this.Html.DisplayFor(modelItem => item.expectedDate))</td>
+                        <td>@(this.Html.DisplayFor(modelItem => item.course))</td>
+                        <td>@(this.Html.DisplayFor(modelItem => item.place))</td>
+                        <td>@(this.Html.DisplayFor(modelItem => item.helpedFullname))</td>
                         <td class="toolbar" style="text-align: center;">
                             <div class="btn-group">
                                 @if (!item.tutorHasConfirmed)
                                 {
-                                    <button class="btn btn-primary" onclick="location.href='@Url.Action("confirm", "HelpRequest", new { id=item.id })'">Confirmer</button>
-                                    <button class="btn" onclick="location.href='@Url.Action("refuse", "HelpRequest", new { id=item.id })'">Refuser</button>
+                                    <button class="btn btn-primary" onclick=" location.href = '@(this.Url.Action("confirm", "HelpRequest", new { id=item.id }))' ">Confirmer</button>
+                                    <button class="btn" onclick=" location.href = '@(this.Url.Action("refuse", "HelpRequest", new { id=item.id }))' ">Refuser</button>
                                 }
-                                <button class="btn" onclick="location.href='@Url.Action("details", "HelpRequest", new { id=item.id })'">Détails</button>
+                                <button class="btn" onclick=" location.href = '@(this.Url.Action("details", "HelpRequest", new { id=item.id }))' ">Détails</button>
                             </div>
                         </td>
                         <td class="toolbar" style="text-align: center;">
                             @if (item.getStateString().Equals(Resources.Resources.StateStringFinished))
                             {
-                                @(item.reportIsEmpty ? Html.ActionLink(@Resources.Resources.HelpRequestRepportFillOut, "report", new {id = item.id}) : Html.Raw(@Resources.Resources.HelpRequestRepportFilledOut))
+                                @(item.reportIsEmpty ? this.Html.ActionLink(@Resources.Resources.HelpRequestRepportFillOut, "report", new {id = item.id}) : this.Html.Raw(@Resources.Resources.HelpRequestRepportFilledOut))
                             }
                             else
                             {
-                                @Html.Raw(@Resources.Resources.HelpRequestRepportNotAvailable)
+                                @(this.Html.Raw(@Resources.Resources.HelpRequestRepportNotAvailable))
                             }
                         </td>
                     </tr>

@@ -2,8 +2,8 @@
 {
     public enum HelpRequestState : int
     {
-        NOT_ASSIGNED = 0,  // When there's no date and place assigned yet
-        TO_BE_CONFIRMED = 1, // When both tutor and helped need to confirm if the date and place is ok
+        NOT_ASSIGNED = 0,  // When there's no date and place assigned yet (and a tutor)
+        TO_BE_CONFIRMED = 1, // When one or both the tutor and the helped havn't confirmed yet
         CONFIRMED = 2,  // Both tutor and helped have confirmed
         FINISHED = 3, // The session is finished
         BILAN = 4 // Both reports were made

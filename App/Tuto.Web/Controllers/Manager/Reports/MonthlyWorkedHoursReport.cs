@@ -2,17 +2,17 @@
 using Tuto.DataLayer.Enums;
 using Tuto.DataLayer.Reports;
 
-namespace Tuto.Web.Controllers.Reports
+namespace Tuto.Web.Controllers.Manager.Reports
 {
     public class MonthlyWorkedHoursReportEntry : AbstractTableEntry
     {
-        [Display(Name="Prénom tuteur")]
+        [Display(ResourceType = typeof(Resources.Resources), Name = "TutorFirstName")]
         public string tutorFirstName { get; set; }
 
-        [Display(Name="Nom famille tuteur")]
+        [Display(ResourceType = typeof(Resources.Resources), Name = "TutorLastName")]
         public string tutorLastName { get; set; }
 
-        [Display(Name="Heures travaillées")]
+        [Display(ResourceType = typeof(Resources.Resources), Name = "TutorWorkedHours")]
         public int workedHours { get; set; }
     }
 

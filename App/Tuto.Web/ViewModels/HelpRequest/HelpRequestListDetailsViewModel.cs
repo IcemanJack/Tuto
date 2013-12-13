@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Tuto.DataLayer.Enums;
 using Tuto.DataLayer.Models;
 
-namespace Tuto.Web.ViewModels
+namespace Tuto.Web.ViewModels.HelpRequest
 {
     public class HelpRequestListDetailsViewModel
     {

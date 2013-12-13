@@ -16,7 +16,7 @@ namespace Tuto.Web.Controllers
                 SqlConnection.ClearAllPools();
                 Database.SetInitializer(new DatabaseInitializer());
 
-                context.Database.Initialize(true);
+                //context.Database.Initialize(true);
             }
             catch (Exception ex)
             {

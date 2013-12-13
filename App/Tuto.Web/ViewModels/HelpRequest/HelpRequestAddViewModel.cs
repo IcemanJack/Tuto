@@ -5,7 +5,7 @@ using Tuto.DataLayer.Models;
 using Tuto.DataLayer.ModelUtilities;
 using Tuto.DataLayer.Repository;
 
-namespace Tuto.Web.ViewModels
+namespace Tuto.Web.ViewModels.HelpRequest
 {
     [Validator(typeof (HelpRequestValidator))]
     public class HelpRequestAddViewModel

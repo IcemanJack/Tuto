@@ -1,5 +1,5 @@
 ﻿@{
-    Layout = null;
+    this.Layout = null;
 }
 
 <!DOCTYPE html>
@@ -31,7 +31,7 @@
 			<div class="error500"><h1>500</h1></div>
 			<p class="description">@Resources.Resources.DisplayError500Title</p>
 			<p>@Resources.Resources.DisplayError500Description</p>
-			<a href="@Url.Action("index", "Home")" class="btn btn-wuxia btn-primary btn-large" title="Retour à l'accueil">@Resources.Resources.ViewGeneralReturnHome</a>
+			<a href="@(this.Url.Action("index", "Home"))" class="btn btn-wuxia btn-primary btn-large" title="Retour à l'accueil">@Resources.Resources.ViewGeneralReturnHome</a>
 		</section>
 		<!--  content -->
 		

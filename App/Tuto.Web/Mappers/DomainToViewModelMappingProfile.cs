@@ -1,18 +1,22 @@
 ﻿using System.Linq;
 using AutoMapper;
 using Tuto.DataLayer.Models;
+using Tuto.DataLayer.Models.GroupSessions;
 using Tuto.DataLayer.Models.Notifications.Manager;
 using Tuto.DataLayer.Models.Notifications.Shared;
 using Tuto.DataLayer.Models.Notifications.Tutor;
 using Tuto.DataLayer.Models.Users;
 using Tuto.DataLayer.ModelUtilities;
-using Tuto.Web.Controllers.Reports;
-using Tuto.Web.ViewModels;
+using Tuto.Web.Controllers.Manager.Reports;
 using Tuto.Web.ViewModels.Account;
 using Tuto.Web.ViewModels.Account.Edit;
 using Tuto.Web.ViewModels.Account.Register;
+using Tuto.Web.ViewModels.GroupSession;
+using Tuto.Web.ViewModels.HelpRequest;
+using Tuto.Web.ViewModels.HelpRequestMgr;
 using Tuto.Web.ViewModels.Notifications;
 using Tuto.Web.ViewModels.Reports;
+using Tuto.Web.ViewModels.TutorsMgr;
 
 namespace Tuto.Web.Mappers
 {
@@ -131,6 +135,21 @@ namespace Tuto.Web.Mappers
                 .ForMember(t => t.workedHours, opt => opt.MapFrom(h => h.calculateMonthlyWorkedHours()))
                 .ForMember(t => t.id, opt => opt.MapFrom(h => h.id));
 
+            Mapper.CreateMap<AssignedGroupSession, GroupSessionListViewModel>()
+                .ForMember(t => t.groupSessionDate, opt => opt.MapFrom(h => h.getDate()))
+                .ForMember(t => t.weekDayStr, opt => opt.MapFrom(h => h.startScheduleBlock.weekDay.ToString()))
+                .ForMember(t => t.startTime, opt => opt.MapFrom(h => h.startScheduleBlock.startTime))
+                .ForMember(t => t.endTime, opt => opt.MapFrom(h => (h.startScheduleBlock.startTime + 2)));
+
+            Mapper.CreateMap<AssignedGroupSession, GroupSessionListViewModel.ManagerViewModel>()
+                .ForMember(t => t.groupSessionDate, opt => opt.MapFrom(h => h.getDate()))
+                .ForMember(t => t.weekDayStr, opt => opt.MapFrom(h => h.startScheduleBlock.weekDay.ToString()))
+                .ForMember(t => t.startTime, opt => opt.MapFrom(h => h.startScheduleBlock.startTime))
+                .ForMember(t => t.endTime, opt => opt.MapFrom(h => (h.startScheduleBlock.startTime + 2)))
+                .ForMember(t => t.hasAssignedTutor, opt => opt.MapFrom(h => h.tutor != null))
+                .ForMember(t => t.tutorFirstName, opt => opt.MapFrom(h => h.tutor != null ? h.tutor.name : ""))
+                .ForMember(t => t.tutorLastName, opt => opt.MapFrom(h => h.tutor != null ? h.tutor.lastName : ""));
+
             // INDIVIDUAL SESSION
             Mapper.CreateMap<IndividualSession, IndividualSessionViewModel>()
                 .ForMember(t => t.helpedLastName, opt => opt.MapFrom(h => h.helpRequest.helped.lastName))
@@ -138,7 +157,7 @@ namespace Tuto.Web.Mappers
                 .ForMember(t => t.tutorLastName, opt => opt.MapFrom(h => h.helpRequest.tutor.lastName))
                 .ForMember(t => t.tutorName, opt => opt.MapFrom(h => h.helpRequest.tutor.name));
 
-            //TUTORLIST
+            // TUTORLIST
             Mapper.CreateMap<Tutor, TutorListViewModel>()
                 .ForMember(t => t.lastName, opt => opt.MapFrom(h => h.lastName))
                 .ForMember(t => t.name, opt => opt.MapFrom(h => h.name))
@@ -159,7 +178,7 @@ namespace Tuto.Web.Mappers
                 .ForMember(t => t.helpRequests, opt => opt.MapFrom(h => h.helpRequests))
                 .ForMember(t => t.jsonSchedule, opt => opt.MapFrom(h => ScheduleUtilities.getJsonFromScheduleBlocks(h.scheduleBlocks)));
 
-            //HOME
+            // HOME
             Mapper.CreateMap<User, HomeViewModel>()
                 .ForMember(hv => hv.userFirstName, opt => opt.MapFrom(u => u.name))
                 .ForMember(hv => hv.userLastName, opt => opt.MapFrom(u => u.lastName));

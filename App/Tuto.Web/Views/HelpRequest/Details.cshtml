@@ -1,10 +1,10 @@
 ﻿@using Tuto.DataLayer.Enums
-@model Tuto.Web.ViewModels.HelpRequestListDetailsViewModel
+@model Tuto.Web.ViewModels.HelpRequest.HelpRequestListDetailsViewModel
 
 @{
-    ViewBag.Title = "Details";
-    ViewBag.Page_Id = "HelpRequest_ListDetails";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    this.ViewBag.Title = "Details";
+    this.ViewBag.Page_Id = "HelpRequest_ListDetails";
+    this.Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <!-- Page header -->
@@ -24,33 +24,33 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <th>@Html.DisplayNameFor(model => model.createdTime)</th>
-                        <td>@Html.DisplayFor(model => model.createdTime)</td>
+                        <th>@(this.Html.DisplayNameFor(model => model.createdTime))</th>
+                        <td>@(this.Html.DisplayFor(model => model.createdTime))</td>
                     </tr>
                         
                     <tr>
-                        <th>@Html.DisplayNameFor(model => model.course.courseName)</th>
-                        <td>@Html.DisplayFor(model => model.course.courseName)</td>
+                        <th>@(this.Html.DisplayNameFor(model => model.course.courseName))</th>
+                        <td>@(this.Html.DisplayFor(model => model.course.courseName))</td>
                     </tr>
                         
                     <tr>
-                        <th>@Html.DisplayNameFor(model => model.misunderstoodNotions)</th>
-                        <td>@Html.DisplayFor(model => model.misunderstoodNotions)</td>
+                        <th>@(this.Html.DisplayNameFor(model => model.misunderstoodNotions))</th>
+                        <td>@(this.Html.DisplayFor(model => model.misunderstoodNotions))</td>
                     </tr>
             
                     <tr>
-                        <th>@Html.DisplayNameFor(model => model.comment)</th>
-                        <td>@Html.DisplayFor(model => model.comment)</td>
+                        <th>@(this.Html.DisplayNameFor(model => model.comment))</th>
+                        <td>@(this.Html.DisplayFor(model => model.comment))</td>
                     </tr>
                         
                     <tr>
-                        <th>@Html.DisplayNameFor(model => model.currentState)</th>
-                        <td><span class="label label-important">@Model.currentState.getString()</span></td>
+                        <th>@(this.Html.DisplayNameFor(model => model.currentState))</th>
+                        <td><span class="label label-important">@(this.Model.currentState.getString())</span></td>
                     </tr>
                 </tbody>
             </table>
             
-            <button class="btn btn-wuxia" onclick="location.href='@Url.Action("list", "HelpRequest")'">@Resources.Resources.ViewHelpRequestDetailsReturnButton</button>
+            <button class="btn btn-wuxia" onclick=" location.href = '@(this.Url.Action("list", "HelpRequest"))' ">@Resources.Resources.ViewHelpRequestDetailsReturnButton</button>
         </article>
     </fieldset>
 </div>

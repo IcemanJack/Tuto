@@ -1,10 +1,10 @@
 ﻿@model Tuto.Web.ViewModels.Account.Register.HelpedRegisterViewModel
 
 @{
-    ViewBag.Title = "RegisterHelped";
-    ViewBag.Page_Id = "Account_Register_Helped";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.hideMenuBar = true;
+    this.ViewBag.Title = "RegisterHelped";
+    this.ViewBag.Page_Id = "Account_Register_Helped";
+    this.Layout = "~/Views/Shared/_NotLoggedLayout.cshtml";
+    this.ViewBag.hideMenuBar = true;
 }
 
 
@@ -24,17 +24,14 @@
     @Scripts.Render("~/Content/weekcalendar/libs/date.js")
     @Scripts.Render("~/Content/weekcalendar/jquery.weekcalendar.js")
     @Scripts.Render("~/Content/weekcalendar/weekcalendar.js")
-    @Scripts.Render("~/bundles/jqueryval")
-
-
 
     <script>
         $(document).ready(function () {
-
-            $("#btn_submit").click(function () {
-                
+            $("form#helpedRegisterForm").submit(function () {
                 var jsonToPost = getCalendarData();
                 $("#hid_scheduleBlocksJson").val(jsonToPost);
+
+                return true;
             });
         });
     </script> 
@@ -50,50 +47,53 @@
         
         <!-- form section -->
         <article class="span4">
-            @using (Html.BeginForm()) {
-                @Html.AntiForgeryToken()
-                @Html.ValidationSummary(true)
+            @using (this.Html.BeginForm("registerHelped", "Account", FormMethod.Post, new { @id = "helpedRegisterForm" })) {
+                @(this.Html.AntiForgeryToken())
+                @(this.Html.ValidationSummary(true))
 
-                
+
                 <div class="control-group">
                     <h4>Informations personnelles</h4>
-                    @Html.LabelFor(model => model.name)
+                    @(this.Html.LabelFor(model => model.name))
                     <div class="controls">
-                        @Html.TextBoxFor(model => model.name,  new {@placeholder = "Entrez votre prénom...", id = "txt_name"})
-                        <p class="help-block">@Html.ValidationMessageFor(model => model.name)</p>
+                        @(this.Html.TextBoxFor(model => model.name,  new {@placeholder = "Entrez votre prénom...", id = "txt_name"}))
+                        <p class="help-block">@(this.Html.ValidationMessageFor(model => model.name))</p>
                     </div>
                     
-                    @Html.LabelFor(model => model.lastName)
+                    @(this.Html.LabelFor(model => model.lastName))
                     <div class="controls">
-                        @Html.TextBoxFor(model => model.lastName,  new {@placeholder = "Entrez votre nom de famille...", id = "txt_lastName"})
-                        <p class="help-block">@Html.ValidationMessageFor(model => model.lastName)</p>
+                        @(this.Html.TextBoxFor(model => model.lastName,  new {@placeholder = "Entrez votre nom de famille...", id = "txt_lastName"}))
+                        <p class="help-block">@(this.Html.ValidationMessageFor(model => model.lastName))</p>
                     </div>
                 </div>
                     
                 <div class="control-group">
                     <h4>Compte</h4>
-                    @Html.LabelFor(model => model.mail)
+                    @(this.Html.LabelFor(model => model.mail))
                     <div class="controls">
-                        @Html.TextBoxFor(model => model.mail,  new {@placeholder = "Entrez votre adresse courriel...", id = "txt_mail"})
-                        <p class="help-block">@Html.ValidationMessageFor(model => model.mail)</p>
+                        @(this.Html.TextBoxFor(model => model.mail,  new {@placeholder = "Entrez votre adresse courriel...", id = "txt_mail"}))
+                        <p class="help-block">@(this.Html.ValidationMessageFor(model => model.mail))</p>
                     </div>
-                    @Html.LabelFor(model => model.password)
+                    @(this.Html.LabelFor(model => model.password))
                     <div class="controls">
-                        @Html.PasswordFor(model => model.password,  new {id = "txt_password"})
-                        <p class="help-block">@Html.ValidationMessageFor(model => model.password)</p>
+                        @(this.Html.PasswordFor(model => model.password,  new {id = "txt_password"}))
+                        <p class="help-block">@(this.Html.ValidationMessageFor(model => model.password))</p>
                     </div>
-                    @Html.LabelFor(model => model.confirmPassword)
+                    @(this.Html.LabelFor(model => model.confirmPassword))
                     <div class="controls">
-                        @Html.PasswordFor(model => model.confirmPassword,  new {id = "txt_confirmPassword"})
-                        <p class="help-block">@Html.ValidationMessageFor(model => model.confirmPassword)</p>
+                        @(this.Html.PasswordFor(model => model.confirmPassword,  new {id = "txt_confirmPassword"}))
+                        <p class="help-block">@(this.Html.ValidationMessageFor(model => model.confirmPassword))</p>
                     </div>
                 </div>           
                 
                 <form class="form-inline">
-                    @Html.HiddenFor(model => model.scheduleBlocksJson,  new {id = "hid_scheduleBlocksJson"})  
+                    @(this.Html.HiddenFor(model => model.scheduleBlocksJson,  new {id = "hid_scheduleBlocksJson"}))  
                     <div class="control-group"> 
                         <div class="controls">
                             <input id="btn_submit" class="btn btn-wuxia btn-large btn-primary" type="submit" value="S'inscrire" />
+                        </div>
+                        <div class="controls" style="margin-top: 30px;">
+                            <a class="btn btn-wuxia btn-large" href="/">« Retour à la connexion</a>
                         </div>
                     </div>            
                 </form>    
@@ -107,7 +107,7 @@
             <p>@Resources.Resources.ViewScheduleRdvSectionText</p>
             <div id="calendar"></div>
 
-            <p class="help-block">@Html.ValidationMessageFor(model => model.scheduleBlocksJson)</p>
+            <p class="help-block">@(this.Html.ValidationMessageFor(model => model.scheduleBlocksJson))</p>
         </article>
         
      </div>

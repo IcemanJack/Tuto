@@ -1,10 +1,8 @@
-﻿@using AutoMapper.Internal
-@using Tuto.Web.ViewModels
-@model Tuto.Web.ViewModels.ReportToDoViewModel
+﻿@model Tuto.Web.ViewModels.HelpRequest.ReportToDoViewModel
 @{
-    ViewBag.Page_Id = "Report";
-    ViewBag.Title = "Report";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    this.ViewBag.Page_Id = "Report";
+    this.ViewBag.Title = "Report";
+    this.Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <!-- Page header -->
 <div class="page-header">
@@ -14,15 +12,15 @@
 <div class="page-container">
     <div class="row-fluid">
         <article class="span4">
-            @using (Html.BeginForm("report", "HelpRequest", FormMethod.Post, new { @id = "Report" }))
+            @using (this.Html.BeginForm("report", "HelpRequest", FormMethod.Post, new { @id = "Report" }))
             {
-                @Html.Label("Message:");
-                @Html.TextAreaFor(m => m.message, new
-                {
-                    id = "txt_Message", style="width:560px; height:100px;"
-                })
-                @Html.ValidationMessageFor(m => m.message)
-                @Html.HiddenFor(model => model.helpRequestId, new { id="hidden_helpRequestId" })
+                @(this.Html.Label("Message:"));
+                @(this.Html.TextAreaFor(m => m.message, new
+                  {
+                      id = "txt_Message", style="width:560px; height:100px;"
+                  }))
+                @(this.Html.ValidationMessageFor(m => m.message))
+                @(this.Html.HiddenFor(model => model.helpRequestId, new { id="hidden_helpRequestId" }))
                 <button id="btn_submit_msg" class="btn btn-wuxia btn-small btn-primary" type="submit" >@Resources.Resources.ViewHelpRequestReportButton</button>
             }
         </article>

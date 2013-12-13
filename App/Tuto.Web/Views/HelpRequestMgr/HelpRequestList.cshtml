@@ -1,14 +1,11 @@
-﻿@using System.Web.UI.WebControls
-@using Tuto.DataLayer.Models
-@using Tuto.DataLayer.Utilities
-@using Tuto.Web.Utilities
-@using Tuto.Web.ViewModels
-@model Tuto.Web.ViewModels.ManagerHelpRequestsListViewModel
+﻿@using Tuto.Web.Utilities
+@using Tuto.Web.ViewModels.HelpRequestMgr
+@model Tuto.Web.ViewModels.HelpRequestMgr.ManagerHelpRequestsListViewModel
 
 @{
-    ViewBag.Title = "Administration des demandes d'aide";
-    ViewBag.Page_Id = "Manager_HelpRequests_List";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    this.ViewBag.Title = "Administration des demandes d'aide";
+    this.ViewBag.Page_Id = "Manager_HelpRequests_List";
+    this.Layout = "~/Views/Shared/_Layout.cshtml";
     int finishedReportRowId = 0;
 }
 
@@ -25,7 +22,7 @@
                 var hrId = $(this).data("helpRequestId");
                 var userType = $(this).data("userType");
                 
-                $.get("@(UrlUtilities.getRootUrl() + Url.Action("ajax_studentReport"))", { helpRequestId: hrId, studentType: userType }, function (data) {
+                $.get("@(UrlUtilities.getRootUrl() + this.Url.Action("ajax_studentReport"))", { helpRequestId: hrId, studentType: userType }, function (data) {
                     $("#reportToPopUpBody").html("").append($("<p/>").html(data));
                     $("#reportToPopUp").bPopup();
                 });
@@ -55,7 +52,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (ManagerHelpRequestsListViewModel.ToBeConfirmedHelpRequestViewModel hr in Model.toBeConfirmedSystemHelpRequests)
+                        @foreach (ManagerHelpRequestsListViewModel.ToBeConfirmedHelpRequestViewModel hr in this.Model.toBeConfirmedSystemHelpRequests)
                         {
                             <tr>
                                 <td style="text-align: center;">@hr.helpedFirstName @hr.helpedLastName</td>
@@ -63,8 +60,8 @@
                                 <td style="text-align: center;">@hr.courseName</td>
                                 <td class="toolbar" style="text-align: center;">
                                     <div class="btn-group">
-                                        @Html.ActionLink("Détails", "details", "HelpRequestMgr", new { id = hr.id }, new { @class = "btn" })
-                                        @Html.ActionLink("Assigner", "assign", "HelpRequestMgr", new { id = hr.id }, new { @class = "btn btn-primary" })
+                                        @(this.Html.ActionLink("Détails", "details", "HelpRequestMgr", new { id = hr.id }, new { @class = "btn" }))
+                                        @(this.Html.ActionLink("Assigner", "assign", "HelpRequestMgr", new { id = hr.id }, new { @class = "btn btn-primary" }))
                                     </div>
                                 </td>
 
@@ -89,15 +86,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (ManagerHelpRequestsListViewModel.ConfirmedHelpRequestViewModel hr in Model.confirmedSystemHelpRequests)
+                        @foreach (ManagerHelpRequestsListViewModel.ConfirmedHelpRequestViewModel hr in this.Model.confirmedSystemHelpRequests)
                         {
                             <tr>
                                 <td style="text-align: center">@hr.helpedFirstName @hr.helpedLastName</td>
                                 <td style="text-align: center">@hr.tutorFirstName @hr.tutorLastName</td>
                                 <td style="text-align: center">@hr.createdTime.ToString()</td>
                                 <td style="text-align: center"><strong>@hr.individualSessionPlace</strong> le <strong>@hr.individualSessionDate.ToString()</td>
-                                <th style="text-align: center">@Html.Raw(hr.helpedHasConfirmed ? "<span class=\"label label-success\">Présence confirmée<span>" : "<span class=\"label label-important\">Présence non confirmée<span>")</th>
-                                <th style="text-align: center">@Html.Raw(hr.tutorHasConfirmed ? "<span class=\"label label-success\">Présence confirmée<span>" : "<span class=\"label label-important\">Présence non confirmée<span>")</th>
+                                <th style="text-align: center">@(this.Html.Raw(hr.helpedHasConfirmed ? "<span class=\"label label-success\">Présence confirmée<span>" : "<span class=\"label label-important\">Présence non confirmée<span>"))</th>
+                                <th style="text-align: center">@(this.Html.Raw(hr.tutorHasConfirmed ? "<span class=\"label label-success\">Présence confirmée<span>" : "<span class=\"label label-important\">Présence non confirmée<span>"))</th>
                                 <td style="text-align: center"><em>@hr.courseName</em></td>
                             </tr>
                         }
@@ -120,7 +117,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (ManagerHelpRequestsListViewModel.FinishedHelpRequestViewModel hr in Model.finishedSystemHelpRequests)
+                        @foreach (ManagerHelpRequestsListViewModel.FinishedHelpRequestViewModel hr in this.Model.finishedSystemHelpRequests)
                         {
                             <tr>
                                 <td style="text-align: center">@hr.helpedFirstName @hr.helpedLastName</td>

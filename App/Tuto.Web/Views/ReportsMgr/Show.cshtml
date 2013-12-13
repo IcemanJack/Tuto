@@ -1,6 +1,6 @@
 ﻿@{
     // the default master layout to be used is specified into ~/Views/Shared/_Layout.cshtml
-    ViewBag.Title = "Rapports du système de tutorat";  // title of the current page passed to the master layout (in the <title /> html tag)
+    this.ViewBag.Title = "Rapports du système de tutorat";  // title of the current page passed to the master layout (in the <title /> html tag)
 }
 
 <!-- Page header -->
@@ -15,7 +15,7 @@
                 <legend>Heures travaillées par les tuteurs</legend>
                 <p style="text-align: center;">
                     Pour générer le rapports du nombre heures travaillées par tuteurs, cliquez sur le boutton suivant : <br /><br />
-                    @Html.ActionLink("Générer le rapport", "tutorsMonthlyWorkedHours", "ReportsMgr", new { @class = "btn btn-large btn-primary btn-wuxia", @target = "_blank" })
+                    @(this.Html.ActionLink("Générer le rapport", "tutorsMonthlyWorkedHours", "ReportsMgr", new { @class = "btn btn-large btn-primary btn-wuxia", @target = "_blank" }))
                 </p>
             </fieldset>
         </article>    

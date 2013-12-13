@@ -1,7 +1,7 @@
-﻿@model Tuto.Web.ViewModels.GroupSessionScheduleViewModel
+﻿@model Tuto.Web.ViewModels.GroupSession.GroupSessionScheduleViewModel
 @{
-    ViewBag.Title = "Séances de groupe";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    this.ViewBag.Title = "Séances de groupe";
+    this.Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @section stylesheets 
@@ -39,7 +39,7 @@
             groupSessionRow.remove();
             
             // loading group sessions
-            var groupSessionJson = "@Html.Raw(Model.jsonGroupSessions.Replace("\"", "\\\""))";
+            var groupSessionJson = "@(this.Html.Raw(this.Model.jsonGroupSessions.Replace("\"", "\\\"")))";
             var initialDateFormat = "DD-MM-YYYY HH";
             var eventData = new Array();
 
@@ -205,10 +205,10 @@
 </div>
 <!-- /Page header -->
 <div class="page-container">
-@using (Html.BeginForm("editDefaultSchedule", "GroupSessionMgr", FormMethod.Post, new { @id = "defaultGroupSessionsForm" }))
+@using (this.Html.BeginForm("editDefaultSchedule", "GroupSessionMgr", FormMethod.Post, new { @id = "defaultGroupSessionsForm" }))
 {
-    @Html.AntiForgeryToken()
-    @Html.HiddenFor(m => m.jsonGroupSessions, new { @id = "hid_jsonGroupSessions" })
+    @(this.Html.AntiForgeryToken())
+    @(this.Html.HiddenFor(m => m.jsonGroupSessions, new { @id = "hid_jsonGroupSessions" }))
     <div class="row-fluid">
         <article class="span4">
             <div class="alert alert-info">
@@ -237,13 +237,13 @@
                 </table>  
             </div>
             <div class="control-group">
-                <div class="btn btn-wuxia" onclick="location.href = '@Url.Action("list", "GroupSessionMgr")'">Retour</div>
+                <div class="btn btn-wuxia" onclick=" location.href = '@(this.Url.Action("list", "GroupSessionMgr"))' ">Retour</div>
                 <button id="btn_ok" class="btn btn-wuxia btn-primary">Appliquer</button>
             </div>
         </article>
         
         <article class="span8">
-            @if (ViewData["success"] != null && ViewData["success"].Equals(true))
+            @if (this.ViewData["success"] != null && this.ViewData["success"].Equals(true))
             {
                 <div class="alert alert-success">
                     <strong>Succès !</strong> @Resources.Resources.ViewScheduleAlertSuccess

@@ -5,12 +5,13 @@ using System.Linq;
 using System.Web.Mvc;
 using AutoMapper;
 using Tuto.DataLayer.Enums;
+using Tuto.DataLayer.Exceptions.HelpRequest;
 using Tuto.DataLayer.Models;
 using Tuto.DataLayer.Models.Notifications.Shared;
 using Tuto.DataLayer.Models.Users;
 using Tuto.Web.Config;
 using Tuto.Web.Controllers.Utilities;
-using Tuto.Web.ViewModels;
+using Tuto.Web.ViewModels.HelpRequestMgr;
 
 namespace Tuto.Web.Controllers.Manager
 {
@@ -28,8 +29,7 @@ namespace Tuto.Web.Controllers.Manager
         }
 
         public HelpRequestMgrController() : base(new WebAppLaunchContext())
-        {
-        }
+        { }
 
         public virtual ActionResult list()
         {
@@ -40,17 +40,17 @@ namespace Tuto.Web.Controllers.Manager
 
             var managerHelpRequests = new ManagerHelpRequestsListViewModel();
 
-            // to be confirmed requests
+            // to be assigned requests
             managerHelpRequests.toBeConfirmedSystemHelpRequests =
                 Mapper.Map<List<ManagerHelpRequestsListViewModel.ToBeConfirmedHelpRequestViewModel>>(
                     this.appContext.getRepository()
-                        .getAll<HelpRequest>(HelpRequest.TO_BE_CONFIRMED_HELPREQUESTS_FILTER).ToList());
+                        .getAll<HelpRequest>(HelpRequest.TO_BE_ASSIGNED_HELPREQUEST_FILTER).ToList());
 
             // confirmed requests
             managerHelpRequests.confirmedSystemHelpRequests =
                 Mapper.Map<List<ManagerHelpRequestsListViewModel.ConfirmedHelpRequestViewModel>>(
                     this.appContext.getRepository()
-                        .getAll<HelpRequest>(HelpRequest.CONFIRMED_HELPREQUESTS_FILTER).ToList());
+                        .getAll<HelpRequest>(HelpRequest.ASSIGNED_HELPREQUESTS_FILTER).ToList());
 
             // finished requests
             managerHelpRequests.finishedSystemHelpRequests =
@@ -71,7 +71,7 @@ namespace Tuto.Web.Controllers.Manager
             var theHelpRequest = this.appContext.getRepository().getById<HelpRequest>(id);
             if (theHelpRequest == null)
             {
-                throw new FileNotFoundException();
+                throw new HelpRequestNotFoundException();
             }
 
             var assignPageViewModel = Mapper.Map<ManagerHelpRequestTutorAssignmentViewModels.AssignHelpRequestViewModel>(theHelpRequest);
@@ -164,12 +164,12 @@ namespace Tuto.Web.Controllers.Manager
             var concernedHelpRequest = this.appContext.getRepository().getById<HelpRequest>(helpRequestId);
             if (concernedHelpRequest == null)
             {
-                throw new Exception("Invalid help request");
+                throw new HelpRequestNotFoundException();
             }
 
             if (concernedHelpRequest.getState() != HelpRequestState.FINISHED)
             {
-                throw new Exception("HelpRequest state invalid");
+                throw new InvalidHelpRequestStateException(HelpRequestState.FINISHED);
             }
 
             if (studentType == StudentType.Tutor)

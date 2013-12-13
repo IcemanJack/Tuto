@@ -1,14 +1,11 @@
-﻿@using System.Data.Entity.ModelConfiguration.Conventions
-@using System.Globalization
-@using System.Web.UI.WebControls
+﻿@Scripts.Render("~/Content/bPopUp/libs/jquery.bpopup.min.js")
 @using Tuto.DataLayer.Enums
-@Scripts.Render("~/Content/bPopUp/libs/jquery.bpopup.min.js")
-@model IEnumerable<Tuto.Web.ViewModels.TutorListViewModel>
+@model IEnumerable<Tuto.Web.ViewModels.TutorsMgr.TutorListViewModel>
 
 @{
-    ViewBag.Title = "TutorList";
-    ViewBag.Page_Id = "Manager_Tutor_List";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    this.ViewBag.Title = "TutorList";
+    this.ViewBag.Page_Id = "Manager_Tutor_List";
+    this.Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <!-- Page header -->
@@ -35,19 +32,19 @@
             <thead>
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.name)
+                        @(this.Html.DisplayNameFor(model => model.name))
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.lastName)
+                        @(this.Html.DisplayNameFor(model => model.lastName))
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.mail)
+                        @(this.Html.DisplayNameFor(model => model.mail))
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.tutorAvailableForGroupSession)
+                        @(this.Html.DisplayNameFor(model => model.tutorAvailableForGroupSession))
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.tutorAvailableForIndividualSession)
+                        @(this.Html.DisplayNameFor(model => model.tutorAvailableForIndividualSession))
                     </th>
                     <th>
                         @Resources.Resources.ListEntryActions
@@ -55,42 +52,42 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model)
+                @foreach (var item in this.Model)
                 {
                     if (item.tutorState != TutorState.INACTIVE)
                     {
-                        <tr @(item.tutorState == TutorState.CONFIRMED ? @Html.Raw("class= \"green\"") : @Html.Raw("class= \"red\""))>
+                        <tr @(item.tutorState == TutorState.CONFIRMED ? this.Html.Raw("class= \"green\"") : this.Html.Raw("class= \"red\""))>
                             <td >
-                                @Html.DisplayFor(modelItem => item.name)
+                                @(this.Html.DisplayFor(modelItem => item.name))
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.lastName)
+                                @(this.Html.DisplayFor(modelItem => item.lastName))
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.mail)
+                                @(this.Html.DisplayFor(modelItem => item.mail))
                             </td>
         
                             <td>
-                                @Html.DisplayFor(modelItem => item.tutorAvailableForGroupSession)
+                                @(this.Html.DisplayFor(modelItem => item.tutorAvailableForGroupSession))
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.tutorAvailableForIndividualSession)
+                                @(this.Html.DisplayFor(modelItem => item.tutorAvailableForIndividualSession))
                             </td>
                             <td>
                                 @if (item.tutorState == TutorState.TO_BE_CONFIRMED)
                                 {
                                     
                                     <div class="btn-group">
-                                        <button class="btn btn-primary" id="btn_@item.id" type="button" onclick=" location.href = '@Url.Action("setStateConfirmed", "TutorsMgr", new {tutorId = item.id})' ">@Resources.Resources.ViewTutorListConfirmButton</button>
+                                        <button class="btn btn-primary" id="btn_@item.id" type="button" onclick=" location.href = '@(this.Url.Action("setStateConfirmed", "TutorsMgr", new {tutorId = item.id}))' ">@Resources.Resources.ViewTutorListConfirmButton</button>
                                         <button class="btn" id="btn_@item.id" type="button" onclick=" inactivePopup(@item.id) ">@Resources.Resources.ViewTutorListRefuseButton</button>
-                                        <button class="btn"  onclick="location.href = '@Url.Action("tutorDetails", "TutorsMgr", new {id = item.id})'">@Resources.Resources.ViewDetailsButton</button>
+                                        <button class="btn"  onclick=" location.href = '@(this.Url.Action("tutorDetails", "TutorsMgr", new {id = item.id}))' ">@Resources.Resources.ViewDetailsButton</button>
 									</div>
                                 }
                                 else if (item.tutorState == TutorState.CONFIRMED)
                                 {
                                     <font color="green">Confirmé</font>
                                      <div class="btn-group">
-                                        <button class="btn"  onclick="location.href = '@Url.Action("tutorDetails", "TutorsMgr", new {id = item.id})'">@Resources.Resources.ViewDetailsButton</button>
+                                        <button class="btn"  onclick=" location.href = '@(this.Url.Action("tutorDetails", "TutorsMgr", new {id = item.id}))' ">@Resources.Resources.ViewDetailsButton</button>
 									</div>
                                 }                           
                             </td>
@@ -123,7 +120,7 @@
         var sendButton = $("#btn_sendReason");
         sendButton.click(function () {
             var message = $("#explicationsTextbox").val();
-            $.post("@Url.Action("setStateInactive", "TutorsMgr")", { tutorId: tutorId, message: message }, function (data) {
+            $.post("@(this.Url.Action("setStateInactive", "TutorsMgr"))", { tutorId: tutorId, message: message }, function (data) {
                 if (data == "error")
                 {
                     alert(@Resources.Resources.ViewInactivePopupAlert); return;

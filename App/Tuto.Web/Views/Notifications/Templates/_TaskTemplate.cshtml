@@ -1,6 +1,6 @@
-﻿<div class="alert alert-info homeNotification" data-notificationid="@ViewBag.notificationId">
+﻿<div class="alert alert-info homeNotification" data-notificationid="@(this.ViewBag.notificationId)">
     <button class="close" type="button" data-dismiss="alert">×</button>
     <p>
-        @RenderBody()
+        @(this.RenderBody())
     </p>
 </div>

@@ -67,5 +67,18 @@ namespace Tuto.Web.UnitTests.Controllers.AccountTests
             actionResult.AssertActionRedirect()
                 .ToAction<AccountController>(x => x.login());
         }
-}
+
+        [TestMethod]
+        public void post_create_with_valid_infos_should_send_confirmation_email()
+        {
+            // Arrange   
+            var helpedRegisterViewModel = this.fixture.Create<HelpedRegisterViewModel>();
+
+            // Action
+            this.controller.registerHelped(helpedRegisterViewModel);
+
+            // Assert
+            this.appContext.getConfiguration().mailSender.ReceivedWithAnyArgs();
+        }
+    }
 }

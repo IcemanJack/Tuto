@@ -1,8 +1,7 @@
-﻿@using Tuto.DataLayer.Enums
-@model Tuto.Web.ViewModels.TutorDetailsViewModel
+﻿@model Tuto.Web.ViewModels.TutorsMgr.TutorDetailsViewModel
 @{
-    ViewBag.Title = "TutorDetails";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    this.ViewBag.Title = "TutorDetails";
+    this.Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @section stylesheets 
@@ -22,7 +21,7 @@
 
     <script>
         $(document).ready(function () {
-            loadCalendarData("@Html.Raw(Model.jsonSchedule.Replace("\"", "\\\""))");
+            loadCalendarData("@(this.Html.Raw(this.Model.jsonSchedule.Replace("\"", "\\\"")))");
             $("#calendar").weekCalendar("setReadonly");
         });
     </script>
@@ -46,32 +45,32 @@
                 <tbody>
                     <tr>
                         <th>@Resources.Resources.DisplayUserMail</th>
-                        <td>@Html.DisplayFor(model => model.mail)</td>
+                        <td>@(this.Html.DisplayFor(model => model.mail))</td>
                     </tr>
                         
                     <tr>
                         <th>@Resources.Resources.DisplayUserName</th>
-                        <td>@Html.DisplayFor(model => model.name)</td>
+                        <td>@(this.Html.DisplayFor(model => model.name))</td>
                     </tr>
                         
                     <tr>
                         <th>@Resources.Resources.DisplayUserLastName</th>
-                        <td>@Html.DisplayFor(model => model.lastName)</td>
+                        <td>@(this.Html.DisplayFor(model => model.lastName))</td>
                     </tr>
             
                     <tr>
                         <th>@Resources.Resources.DisplayTutorAvailableForIndividualSession</th>
-                        <td>@(Model.tutorAvailableForIndividualSession ? @Html.Raw("Oui") : @Html.Raw("Non"))</td>
+                        <td>@(this.Model.tutorAvailableForIndividualSession ? this.Html.Raw("Oui") : this.Html.Raw("Non"))</td>
                     </tr>
                     
                     <tr>
                         <th>@Resources.Resources.DisplayTutorAvailableForGroupSession</th>
-                        <td>@(Model.tutorAvailableForGroupSession ? @Html.Raw("Oui") : @Html.Raw("Non"))</td>
+                        <td>@(this.Model.tutorAvailableForGroupSession ? this.Html.Raw("Oui") : this.Html.Raw("Non"))</td>
                     </tr>
                     
                     <tr>
                         <th>@Resources.Resources.DisplayTutorWorkedHours</th>
-                        <td>@Html.DisplayFor(model => model.workedHours)</td>
+                        <td>@(this.Html.DisplayFor(model => model.workedHours))</td>
                     </tr>
                 </tbody>
             </table>
@@ -81,7 +80,7 @@
                     <tr>
                         <th colspan="2">@Resources.Resources.ViewTutorDetailsTable2Head</th>
                     </tr>
-                    @if (Model.coursesSkills.Any())
+                    @if (this.Model.coursesSkills.Any())
                     {
                         <tr>
                             <th>@Resources.Resources.ViewTutorDetailsTable2Column1</th>
@@ -90,14 +89,14 @@
                     }
                 </thead>
                 <tbody>
-                    @if (!Model.coursesSkills.Any())
+                    @if (!this.Model.coursesSkills.Any())
                     {
                         <tr>
                             <td><span class="label">@Resources.Resources.ViewTutorDetailsTable2Row</span></td>
                         </tr>
                     }
 
-                    @foreach (var course in Model.coursesSkills)
+                    @foreach (var course in this.Model.coursesSkills)
                     {
                         <tr>
                             <td><span class="label label-success">@course.department.name</span></td>
@@ -107,14 +106,14 @@
                 </tbody>
             </table>
             
-            @if (Model.tutorAvailableForGroupSession)
+            @if (this.Model.tutorAvailableForGroupSession)
             {
                 <table class="table">
                     <thead>
                         <tr>
                             <th colspan="3">@Resources.Resources.ViewTutorDetailsTable3Column</th>
                         </tr>
-                        @if (Model.groupSessions.Any())
+                        @if (this.Model.groupSessions.Any())
                         {
                             <tr>
                                 <th>@Resources.Resources.DisplaySessionDate</th>
@@ -124,14 +123,14 @@
                         }
                     </thead>
                     <tbody>
-                        @if (!Model.groupSessions.Any())
+                        @if (!this.Model.groupSessions.Any())
                         {
                             <tr>
                                 <td><span class="label">@Resources.Resources.ViewTutorDetailsTable3Row</span></td>
                             </tr>
                         }
 
-                        @foreach (var groupSession in Model.groupSessions)
+                        @foreach (var groupSession in this.Model.groupSessions)
                         {
                             <tr>
                                 <td>@groupSession.getDate().ToLongDateString()</td>
@@ -143,14 +142,14 @@
                 </table> 
             }
             
-            @if (Model.tutorAvailableForIndividualSession)
+            @if (this.Model.tutorAvailableForIndividualSession)
             {
                 <table class="table">
                     <thead>
                         <tr>
                             <th colspan="8">@Resources.Resources.ViewTutorDetailsTable4Column1</th>
                         </tr>
-                        @if (Model.helpRequests.Any())
+                        @if (this.Model.helpRequests.Any())
                         {
                             <tr>
                                 <th>@Resources.Resources.ViewTutorDetailsTable4Column1</th>
@@ -165,14 +164,14 @@
                         }
                     </thead>
                     <tbody>
-                        @if (!Model.helpRequests.Any())
+                        @if (!this.Model.helpRequests.Any())
                         {
                             <tr>
                                 <td><span class="label">@Resources.Resources.ViewTutorDetailsTable5ColumnTitle</span></td>
                             </tr>
                         }
 
-                        @foreach (var helpRequest in Model.helpRequests)
+                        @foreach (var helpRequest in this.Model.helpRequests)
                         {
                             <tr>
                                 <td><span class="label label-success">@helpRequest.course.department.name</span></td>
@@ -182,7 +181,7 @@
                                 <td>@helpRequest.individualSession.date.TimeOfDay</td>
                                 <td>@helpRequest.individualSession.place</td>
                                 <td><span class="label label-important">@helpRequest.currentState.getString()</span></td>
-                                <td><button class="btn" onclick="location.href='@Url.Action("details", "HelpRequest", new {id = helpRequest.id})'">@Resources.Resources.ViewDetailsButton</button></td>
+                                <td><button class="btn" onclick=" location.href = '@(this.Url.Action("details", "HelpRequest", new {id = helpRequest.id}))' ">@Resources.Resources.ViewDetailsButton</button></td>
                             </tr>  
                         }
                     </tbody>
@@ -190,7 +189,7 @@
             }
 
             
-            <button class="btn btn-wuxia" onclick="location.href='@Url.Action("list", "TutorsMgr")'">@Resources.Resources.ViewTutorDetailsButtonReturn</button>
+            <button class="btn btn-wuxia" onclick=" location.href = '@(this.Url.Action("list", "TutorsMgr"))' ">@Resources.Resources.ViewTutorDetailsButtonReturn</button>
         </article>
         
        <article class="span8">

@@ -61,7 +61,7 @@ namespace Tuto.Web.Controllers
                 case PageAccessType.TYPE_TUTOR:
                     return loggedInUser.isTutor();
                 case PageAccessType.TYPE_MANAGER: // when logged in as manager, we must be the mainManager absolutely
-                    return loggedInUser.isManager() && loggedInUser == this.appContext.getConfiguration().mainManager;
+                    return loggedInUser.isManager() && loggedInUser.Equals(this.appContext.getConfiguration().mainManager);
                 case PageAccessType.TYPE_HELPED_OR_TUTOR:
                     return loggedInUser.isHelped() || loggedInUser.isTutor();
                 default:

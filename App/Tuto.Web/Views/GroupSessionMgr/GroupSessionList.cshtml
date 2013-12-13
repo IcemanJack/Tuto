@@ -1,11 +1,9 @@
-﻿@using Tuto.DataLayer.Models
-@using Tuto.DataLayer.Utilities
-@using Tuto.Web.Utilities
-@model Tuto.Web.ViewModels.GroupSessionListViewModel
+﻿@using Tuto.Web.Utilities
+@model ICollection<Tuto.Web.ViewModels.GroupSession.GroupSessionListViewModel.ManagerViewModel>
 @{
-    ViewBag.Title = "Séances de groupe";
-    ViewBag.Page_Id = "Manager_Group_Session_List";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    this.ViewBag.Title = "Séances de groupe";
+    this.ViewBag.Page_Id = "Manager_Group_Session_List";
+    this.Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @section Scripts
@@ -37,7 +35,7 @@
                     var tableBody = $("#popup-table-body");
                     tableBody.html("");
                     
-                    $.post("@(UrlUtilities.getRootUrl() + Url.Action("ajax_GetTutorsAvailableAt"))", tutorAvailableAtViewModel, function (availableTutors) {
+                    $.post("@(UrlUtilities.getRootUrl() + this.Url.Action("ajax_GetTutorsAvailableAt"))", tutorAvailableAtViewModel, function (availableTutors) {
                         if (availableTutors == "Error") {
                             errorAlert.text("Une erreur interne est survenue.");
                             errorAlert.slideDown();
@@ -62,7 +60,7 @@
                         
                             assignBtn.click(function () {
                                 
-                               $.post("@Url.Action("ajax_AssignTutor", "GroupSessionMgr")", { sessionId: sessionId, tutorId: currentTutor.id }, function (data) {
+                               $.post("@(this.Url.Action("ajax_AssignTutor", "GroupSessionMgr"))", { sessionId: sessionId, tutorId: currentTutor.id }, function (data) {
                                     if (data == "Error") {
                                         errorAlert.text("Une erreur interne est survenue.");
                                         errorAlert.slideDown();
@@ -142,7 +140,7 @@
 
 <!-- Page header -->
 <div class="page-header">
-    @if (Model.assignedGroupSessions.Count == 0)
+    @if (this.Model.Count == 0)
     {
         <h1><span class="awe-group"></span> @Resources.Resources.ViewGroupSessionList1</h1>
     }
@@ -155,21 +153,21 @@
 <!-- /Page header -->
 <form class="page-container">
     <div class="row-fluid">
-        @if (Model.assignedGroupSessions.Count == 0)
+        @if (this.Model.Count == 0)
         {
             <div class="alert alert-block">
                 <h4>@Resources.Resources.ViewScheduleAlertBlockHeader</h4>
-                <p>@Resources.Resources.ViewScheduleAlertBlockBody @Html.ActionLink("en cliquant ici.", "editDefaultSchedule", "GroupSessionMgr")</p>
+                <p>@Resources.Resources.ViewScheduleAlertBlockBody @(this.Html.ActionLink("en cliquant ici.", "editDefaultSchedule", "GroupSessionMgr"))</p>
             </div>
         }
         else
         {
             <div class="alert alert-info">
-                <strong>@Resources.Resources.ViewScheduleAlertInfo1 </strong>@Resources.Resources.ViewScheduleAlertInfo2 @Html.ActionLink("cliquez-ici.", "editDefaultSchedule", "GroupSessionMgr")
+                <strong>@Resources.Resources.ViewScheduleAlertInfo1 </strong>@Resources.Resources.ViewScheduleAlertInfo2 @(this.Html.ActionLink("cliquez-ici.", "editDefaultSchedule", "GroupSessionMgr"))
             </div>
             
             <div class="alert alert-info">
-                <strong>@Resources.Resources.ViewScheduleAlertInfo3 </strong>@Resources.Resources.ViewScheduleAlertInfo4 @Html.ActionLink("cliquez-ici.", "editCurrentSchedule", "GroupSessionMgr")
+                <strong>@Resources.Resources.ViewScheduleAlertInfo3 </strong>@Resources.Resources.ViewScheduleAlertInfo4 @(this.Html.ActionLink("cliquez-ici.", "editCurrentSchedule", "GroupSessionMgr"))
             </div>
             
             <div id="alert-error" class="alert alert-error" style="display: none;">
@@ -200,27 +198,27 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model.assignedGroupSessions) {
-                        <tr @(item.tutor == null ? @Html.Raw("class= \"red\"") : @Html.Raw("class= \"green\"")) data-session-id="@item.id">
+                    @foreach (var item in this.Model) {
+                        <tr @(!item.hasAssignedTutor ? this.Html.Raw("class= \"red\"") : this.Html.Raw("class= \"green\"")) data-session-id="@item.id">
                             <td>
-                                @if (item.tutor != null)
+                                @if (item.hasAssignedTutor)
                                 {
-                                    @Html.Raw(item.tutor.name + " " + item.tutor.lastName)  
+                                    @(this.Html.Raw(item.tutorFirstName + " " + item.tutorLastName))
                                 }
                             </td>
                             <td week-day>
-                                @Html.Raw(item.getDate().ToLongDateString())
+                                @(item.groupSessionDate)
                             </td>
                             <td start-time>
-                                @Html.DisplayFor(modelItem => item.startScheduleBlock.startTime)
+                                @(item.endTime)
                             </td>
                             <td end-time>
-                                @Html.Raw(item.startScheduleBlock.startTime + 2)
+                                @(item.startTime)
                             </td>
                             <td place>
-                                @Html.DisplayFor(modelItem => item.place)
+                                @(this.Html.DisplayFor(modelItem => item.place))
                             </td>
-                            @if (item.tutor == null)
+                            @if (!item.hasAssignedTutor)
                             {
                                  <td class="toolbar" style="text-align: center;">
                                     <div class="btn-group">

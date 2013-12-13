@@ -1,9 +1,9 @@
 ﻿@using Tuto.DataLayer
 @using Tuto.DataLayer.Models
-@model ICollection<Tuto.DataLayer.Models.GroupSessions.AssignedGroupSession>
+@model ICollection<Tuto.Web.ViewModels.GroupSession.GroupSessionListViewModel>
 @{
-    ViewBag.Title = "Tutor_List";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    this.ViewBag.Title = "Tutor_List";
+    this.Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="page-header">
@@ -37,27 +37,27 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model)
+                @foreach (var item in this.Model)
                 {
                     <tr>
                         <td>
-                            @item.getDate().ToShortDateString()
+                            @item.groupSessionDate
                         </td> 
                         <td>
-                            @item.startScheduleBlock.weekDay.toString()
+                            @item.weekDayStr
                         </td>
                         <td>
-                            @item.startScheduleBlock.startTime
+                            @item.startTime
                         </td>
                         <td>
-                            @(item.startScheduleBlock.startTime + 2)
+                            @item.endTime
                         </td>
                         <td>
                             @item.place
                         </td>
                         <td style="text-align: center">
                             <div class="btn-group">
-                                <button class="btn btn-primary" onclick="location.href = '@Url.Action("tutorRefuseGroupSession", new { id = item.id})'">@GroupSessionTutorListResources.GroupSessionRefuse</button>
+                                <button class="btn btn-primary" onclick=" location.href = '@(this.Url.Action("tutorRefuseGroupSession", new { id = item.id}))' ">@GroupSessionTutorListResources.GroupSessionRefuse</button>
                             </div>
                         </td> 
                     </tr>

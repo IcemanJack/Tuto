@@ -1,16 +1,16 @@
-﻿@model Tuto.Web.ViewModels.Notifications.AssignedToHelpRequestTaskViewModel.HelpedViewModel
+﻿@model Tuto.Web.ViewModels.HelpRequest.AssignedToHelpRequestTaskViewModel.HelpedViewModel
 @{
-    Layout = "~/Views/Notifications/Templates/_TaskTemplate.cshtml";
-    ViewBag.notificationId = Model.id;
+    this.Layout = "~/Views/Notifications/Templates/_TaskTemplate.cshtml";
+    this.ViewBag.notificationId = this.Model.id;
 }
 
 <strong>Assignation à une séance de tutorat individuelle</strong><br />
-Vous avez été assigné à une séance de tutorat individuelle le <strong>@Model.individualSessionDatetime.ToString("yyyy/MM/dd")</strong> de 
-<strong>@Model.individualSessionDatetime.ToString("HH")h</strong> à <strong>@Model.individualSessionDatetime.AddHours(2).ToString("HH")h</strong> suite à votre demande 
-d'aide effectuée le <strong>@Model.helpRequestCreatedDatetime.ToString()</strong>.
+Vous avez été assigné à une séance de tutorat individuelle le <strong>@(this.Model.individualSessionDatetime.ToString("yyyy/MM/dd"))</strong> de 
+<strong>@(this.Model.individualSessionDatetime.ToString("HH"))h</strong> à <strong>@(this.Model.individualSessionDatetime.AddHours(2).ToString("HH"))h</strong> suite à votre demande 
+d'aide effectuée le <strong>@(this.Model.helpRequestCreatedDatetime.ToString())</strong>.
 <br />
-<em>@Html.ActionLink("Voir les détails de cette demande", "details", "HelpRequest", new { id = Model.helpRequestId }, new {  }) ou confirmer votre présence pour cette séance de tutorat individuelle : </em>
+<em>@(this.Html.ActionLink("Voir les détails de cette demande", "details", "HelpRequest", new { id = this.Model.helpRequestId }, new {  })) ou confirmer votre présence pour cette séance de tutorat individuelle : </em>
 <div class="btn-group">
-    @Html.ActionLink("Confirmer ma présence", "confirm", "HelpRequest", new { id = Model.helpRequestId }, new { @class = "btn btn-wuxia btn-mini btn-primary" })
-    @Html.ActionLink("Refuser", "refuse", "HelpRequest", new { id = Model.helpRequestId }, new { @class = "btn btn-wuxia btn-mini" })
+    @(this.Html.ActionLink("Confirmer ma présence", "confirm", "HelpRequest", new { id = this.Model.helpRequestId }, new { @class = "btn btn-wuxia btn-mini btn-primary" }))
+    @(this.Html.ActionLink("Refuser", "refuse", "HelpRequest", new { id = this.Model.helpRequestId }, new { @class = "btn btn-wuxia btn-mini" }))
 </div>

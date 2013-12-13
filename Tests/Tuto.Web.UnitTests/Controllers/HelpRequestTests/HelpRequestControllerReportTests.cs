@@ -5,7 +5,7 @@ using NSubstitute;
 using Ploeh.AutoFixture;
 using Tuto.DataLayer.Models;
 using Tuto.DataLayer.Models.Users;
-using Tuto.Web.ViewModels;
+using Tuto.Web.ViewModels.HelpRequest;
 
 namespace Tuto.Web.UnitTests.Controllers.HelpRequestTests
 {

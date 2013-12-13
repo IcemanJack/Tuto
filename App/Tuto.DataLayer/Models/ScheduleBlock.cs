@@ -21,17 +21,17 @@ namespace Tuto.DataLayer.Models
             switch (weekDay)
             {
                 case WeekDay.MONDAY:
-                    return "Lundi";
+                    return Resources.Resources.Moday;
                 case WeekDay.TUESDAY:
-                    return "Mardi";
+                    return Resources.Resources.Tuesday;
                 case  WeekDay.WEDNESDAY:
-                    return "Mercredi";
+                    return Resources.Resources.Wednesday;
                 case WeekDay.THURSDAY:
-                    return "Jeudi";
+                    return Resources.Resources.Thursday;
                 case WeekDay.FRIDAY:
-                    return "Vendredi";
+                    return Resources.Resources.Friday;
                 default:
-                    return "Lundi";
+                    return Resources.Resources.Moday;
             }
         }
     }
@@ -39,9 +39,6 @@ namespace Tuto.DataLayer.Models
     [Validator(typeof(ScheduleBlockValidator))]
     public class ScheduleBlock : Entity
     {
-        public const int MINIMUM_TIME = 8;
-        public const int MAXIMUM_TIME = 18;
-        
         public WeekDay weekDay { get; set; }
         public int startTime { get; set; } // 8 to 18 (for 8h am to 6h pm)
 
@@ -73,7 +70,7 @@ namespace Tuto.DataLayer.Models
         public ScheduleBlockValidator()
         {
             // StartTime
-            this.RuleFor(x => x.startTime).GreaterThan(ScheduleBlock.MINIMUM_TIME - 1).LessThan(ScheduleBlock.MAXIMUM_TIME + 1).WithMessage(Resources.Resources.ErrorScheduleBlockLength);
+            this.RuleFor(x => x.startTime).GreaterThan(DataLayerConfig.SCHEDULE_MINIMUM_TIME - 1).LessThan(DataLayerConfig.SCHEDULE_MAXIMUM_TIME + 1).WithMessage(Resources.Resources.ErrorScheduleBlockLength);
         }
 
     }

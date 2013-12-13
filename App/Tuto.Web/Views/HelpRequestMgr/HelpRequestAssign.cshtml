@@ -1,10 +1,8 @@
-﻿@using Tuto.DataLayer.Utilities
-@using Tuto.Web.Utilities
-@using Tuto.Web.ViewModels
-@model Tuto.Web.ViewModels.ManagerHelpRequestTutorAssignmentViewModels.AssignHelpRequestViewModel
+﻿@using Tuto.Web.Utilities
+@model Tuto.Web.ViewModels.HelpRequestMgr.ManagerHelpRequestTutorAssignmentViewModels.AssignHelpRequestViewModel
 @{
-    ViewBag.Title = "Administration des demandes - Détails de la demande d'aide";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    this.ViewBag.Title = "Administration des demandes - Détails de la demande d'aide";
+    this.Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @section stylesheets 
@@ -49,7 +47,7 @@
                     getAvailableTutorViewModel.startHour = parseInt(calEvent.start.getHours());
                     getAvailableTutorViewModel.endHour = parseInt(calEvent.end.getHours());
 
-                    $.post("@(UrlUtilities.getRootUrl() + Url.Action("ajax_GetTutorsAvailableAt"))", getAvailableTutorViewModel, function(availableTutors) {
+                    $.post("@(UrlUtilities.getRootUrl() + this.Url.Action("ajax_GetTutorsAvailableAt"))", getAvailableTutorViewModel, function(availableTutors) {
                         if (availableTutors == "Error") {
                             alert("Une erreur interne est survenue.");
                             return;
@@ -81,7 +79,7 @@
                             $("#availableTutorsSelection #availableTutorsTable tbody").append(tutorTr);
                         }
 
-                        $("#availableTutorsSelection #numTutorPhrase").text(availableTutors.length < 2 ? availableTutors.length + "@Html.Raw(Resources.Resources.HelpRequestMgrAssignNumTutorsAvailableAtSingular)" : availableTutors.length + "@Html.Raw(Resources.Resources.HelpRequestMgrAssignNumTutorsAvailableAtPlural)");
+                        $("#availableTutorsSelection #numTutorPhrase").text(availableTutors.length < 2 ? availableTutors.length + "@(this.Html.Raw(Resources.Resources.HelpRequestMgrAssignNumTutorsAvailableAtSingular))" : availableTutors.length + "@(this.Html.Raw(Resources.Resources.HelpRequestMgrAssignNumTutorsAvailableAtPlural))");
                         $("#noTutorAvailable").slideUp();
                         $("#availableTutorsSelection").bPopup();
 
@@ -172,7 +170,7 @@
             function getConfirmationModal() {
                 var confirmModal = $("#confirmAssignment");
                 $(confirmModal.find("#tutorName")).text($("select[name=assignTutorId] option:selected").text());
-                $(confirmModal.find("#helpedName")).text("@Model.helpedFirstName @Model.helpedLastName");
+                $(confirmModal.find("#helpedName")).text("@(this.Model.helpedFirstName) @(this.Model.helpedLastName)");
                 $(confirmModal.find("#localName")).text($("input[name=localName]").val());
 
                 var sessionFullDate = getDateFromWeekDayAndDate(parseInt($("select[name=assignWeekDay]").val()), new Date(Date.parse($("input#weekPickStart").val())));
@@ -210,15 +208,15 @@
 </div>
 <!-- /Page header -->
 <div class="page-container">
-@using (Html.BeginForm("assign", "HelpRequestMgr", FormMethod.Post, new { @id = "assignForm" }))
+@using (this.Html.BeginForm("assign", "HelpRequestMgr", FormMethod.Post, new { @id = "assignForm" }))
 {
-    @Html.AntiForgeryToken()
-    @Html.HiddenFor(m => m.helpRequestId)
-    @Html.HiddenFor(m => m.helpRequestScheduleJson, new { @id = "helpRequestScheduleJson" })
+    @(this.Html.AntiForgeryToken())
+    @(this.Html.HiddenFor(m => m.helpRequestId))
+    @(this.Html.HiddenFor(m => m.helpRequestScheduleJson, new { @id = "helpRequestScheduleJson" }))
     <fieldset>
-        <legend>@String.Format(Resources.Resources.HelpRequestMgrAssignPageTitle, Model.helpedFirstName, Model.helpedLastName, Model.helpRequestCreatedTime)</legend>
+        <legend>@String.Format(Resources.Resources.HelpRequestMgrAssignPageTitle, this.Model.helpedFirstName, this.Model.helpedLastName, this.Model.helpRequestCreatedTime)</legend>
         
-        @if (ViewData.ModelState.ContainsKey("SessionDateValidationError"))
+        @if (this.ViewData.ModelState.ContainsKey("SessionDateValidationError"))
         {
             <p class="alert alert-error">
                 <strong>@Resources.Resources.Error</strong>
@@ -233,27 +231,27 @@
                 <div class="control-group">
                     <label class="control-label">@Resources.Resources.HelpRequestMgrAssignWeekPick</label>
                     <div class="controls">
-                        @Html.TextBoxFor(m => m.weekPickStart, new { @id = "weekPickStart", @class = "date-picker input input-small week-picker" })
+                        @(this.Html.TextBoxFor(m => m.weekPickStart, new { @id = "weekPickStart", @class = "date-picker input input-small week-picker" }))
                         au
-                        @Html.TextBoxFor(m => m.weekPickEnd, new { @id = "weekPickEnd", @class = "date-picker input input-small week-picker", @readonly = "readonly" })
-                        <p class="help-block">@Html.ValidationMessageFor(m => m.weekPickStart)</p>
+                        @(this.Html.TextBoxFor(m => m.weekPickEnd, new { @id = "weekPickEnd", @class = "date-picker input input-small week-picker", @readonly = "readonly" }))
+                        <p class="help-block">@(this.Html.ValidationMessageFor(m => m.weekPickStart))</p>
                     </div>
                 </div>
 
                 <!-- Place -->
                 <div class="control-group">
-                    @Html.LabelFor(x => x.localName, new { @class = "control-label" })
+                    @(this.Html.LabelFor(x => x.localName, new { @class = "control-label" }))
                     <div class="controls">
-                        @Html.TextBoxFor(m => m.localName, new { @class = "input-small" })
-                        <p class="help-block">@Html.ValidationMessageFor(m => m.localName)</p>
+                        @(this.Html.TextBoxFor(m => m.localName, new { @class = "input-small" }))
+                        <p class="help-block">@(this.Html.ValidationMessageFor(m => m.localName))</p>
                     </div>
                 </div>
                     
-                @if (Model.helpRequestComment != "")
+                @if (this.Model.helpRequestComment != "")
                 {
                     <div class="control-group alert alert-block">
                         <h4 class="alert-heading">@Resources.Resources.HelpRequestMgrAssignComments</h4>
-                        <p>@Model.helpRequestComment</p>
+                        <p>@(this.Model.helpRequestComment)</p>
                     </div>
                 }
 
@@ -268,18 +266,18 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <th>@Html.Label(@Resources.Resources.HelpRequestMgrAssignHelpedName)</th>
-                            <td>@Model.helpedFirstName @Model.helpedLastName</td>
+                            <th>@(this.Html.Label(@Resources.Resources.HelpRequestMgrAssignHelpedName))</th>
+                            <td>@(this.Model.helpedFirstName) @(this.Model.helpedLastName)</td>
                         </tr>
                         
                         <tr>
-                            <th>@Html.LabelFor(x => x.helpRequestCourseName)</th>
-                            <td>@Model.helpRequestCourseName</td>
+                            <th>@(this.Html.LabelFor(x => x.helpRequestCourseName))</th>
+                            <td>@(this.Model.helpRequestCourseName)</td>
                         </tr>
                         
                         <tr>
-                            <th>@Html.LabelFor(x => x.helpRequestMisunderstoodNotions)</th>
-                            <td>@Model.helpRequestMisunderstoodNotions</td>
+                            <th>@(this.Html.LabelFor(x => x.helpRequestMisunderstoodNotions))</th>
+                            <td>@(this.Model.helpRequestMisunderstoodNotions)</td>
                         </tr>
                     </tbody>
                 </table>
@@ -291,7 +289,7 @@
         <div class="row-fluid">
             <article class="span8">
                 <fieldset>
-                    <legend>@String.Format(Resources.Resources.HelpRequestMgrAssignUserDisponibilities, Model.helpedFirstName, Model.helpedLastName)</legend>
+                    <legend>@String.Format(Resources.Resources.HelpRequestMgrAssignUserDisponibilities, this.Model.helpedFirstName, this.Model.helpedLastName)</legend>
                     
                     <div class="alert alert-info">
                         <strong>@Resources.Resources.HelpRequestMgrAssignAutomaticSelection</strong>
@@ -316,18 +314,18 @@
                     </div>
 
                     <div class="control-group">
-                        @Html.LabelFor(x => x.assignTutorId, new { @class = "control-label" })
+                        @(this.Html.LabelFor(x => x.assignTutorId, new { @class = "control-label" }))
                         <div class="controls">
                             <select id="manualTutorSelection" name="assignTutorId">
                                 <option value="-1">@Resources.Resources.HelpRequestMgrAssignManualAssignedTutorSelectionDefault</option>
-                                @foreach (ManagerHelpRequestTutorAssignmentViewModels.AssignHelpRequestViewModel.TutorListEntryViewModel tutor in Model.availableTutors)
+                                @foreach (ManagerHelpRequestTutorAssignmentViewModels.AssignHelpRequestViewModel.TutorListEntryViewModel tutor in this.Model.availableTutors)
                                 {
                                     <option value="@tutor.id" data-skilledCourses="@tutor.skilledCourses" data-monthlyWorkingHours="@tutor.monthlyWorkingHours">@tutor.firstName @tutor.lastName</option>
                                 }
 
                             </select>
                         </div>
-                        <p class="help-block">@Html.ValidationMessageFor(m => m.assignTutorId)</p>
+                        <p class="help-block">@(this.Html.ValidationMessageFor(m => m.assignTutorId))</p>
                     </div>
                         
                     <div>
@@ -335,7 +333,7 @@
                         <table class="table">
                             <tbody>
                                 <tr>
-                                    <th>@Html.Label(Resources.Resources.HelpRequestMgrAssignMonthlyHours)</th>
+                                    <th>@(this.Html.Label(Resources.Resources.HelpRequestMgrAssignMonthlyHours))</th>
                                     <td id="toFill_monthyHours"><em>@Resources.Resources.HelpRequestMgrAssignManualAssignedTutorSelectionDefault</em></td>
                                 </tr>
                                 <tr>
@@ -345,18 +343,18 @@
                                 <tr>
                                     <th>Assigner le </th>
                                     <td>
-                                        @Html.DropDownListFor(m => m.assignWeekDay, ManagerHelpRequestTutorAssignmentViewModels.AssignHelpRequestViewModel.dayOfWeekHtmSelectListItems, new { @style = "display: inline; width: auto;" })
+                                        @(this.Html.DropDownListFor(m => m.assignWeekDay, ManagerHelpRequestTutorAssignmentViewModels.AssignHelpRequestViewModel.dayOfWeekHtmSelectListItems, new { @style = "display: inline; width: auto;" }))
                                                 
                                         de
                                                 
-                                        @Html.DropDownListFor(m => m.assignStartHour, ManagerHelpRequestTutorAssignmentViewModels.AssignHelpRequestViewModel.assignSessionStartHoursList, new { @style = "display: inline; width: auto;", @onchange = "$('select[name=assignEndHour]').val(parseInt($(this).val()) + 2)" })
+                                        @(this.Html.DropDownListFor(m => m.assignStartHour, ManagerHelpRequestTutorAssignmentViewModels.AssignHelpRequestViewModel.assignSessionStartHoursList, new { @style = "display: inline; width: auto;", @onchange = "$('select[name=assignEndHour]').val(parseInt($(this).val()) + 2)" }))
                                             
                                         à
                                             
-                                        @Html.DropDownListFor(m => m.assignEndHour, ManagerHelpRequestTutorAssignmentViewModels.AssignHelpRequestViewModel.assignSessionEndHoursList, new { @style = "display: inline; width: auto;", @readonly = "readonly" })
-                                        <p class="help-block">@Html.ValidationMessageFor(m => m.assignWeekDay)</p>
-                                        <p class="help-block">@Html.ValidationMessageFor(m => m.assignStartHour)</p>
-                                        <p class="help-block">@Html.ValidationMessageFor(m => m.assignEndHour)</p>
+                                        @(this.Html.DropDownListFor(m => m.assignEndHour, ManagerHelpRequestTutorAssignmentViewModels.AssignHelpRequestViewModel.assignSessionEndHoursList, new { @style = "display: inline; width: auto;", @readonly = "readonly" }))
+                                        <p class="help-block">@(this.Html.ValidationMessageFor(m => m.assignWeekDay))</p>
+                                        <p class="help-block">@(this.Html.ValidationMessageFor(m => m.assignStartHour))</p>
+                                        <p class="help-block">@(this.Html.ValidationMessageFor(m => m.assignEndHour))</p>
                                     </td>
                                 </tr>
                             </tbody>
@@ -380,7 +378,7 @@
         </div>
         <div class="modal-body">
             <div class="well confirmModalText" style="text-align: center; font-weight: 700; font-size: 16px;">
-                @Html.Raw(Resources.Resources.HelpRequestMgrAssignConfirmModalText)
+                @(this.Html.Raw(Resources.Resources.HelpRequestMgrAssignConfirmModalText))
             </div>
             <p style="text-align: center;">
                 <button class="btn btn-primary btn-large" id="btnModalConfirm">@Resources.Resources.HelpRequestMgrAssignConfirmModalBtnAccept</button>&nbsp;
@@ -395,7 +393,7 @@
         </div>
         <div class="modal-body">
             <div class="alert alert-info">
-                <strong>@Html.Raw(Resources.Resources.HelpRequestMgrAssignChooseTutorFromList)</strong>
+                <strong>@(this.Html.Raw(Resources.Resources.HelpRequestMgrAssignChooseTutorFromList))</strong>
             </div>
             
             

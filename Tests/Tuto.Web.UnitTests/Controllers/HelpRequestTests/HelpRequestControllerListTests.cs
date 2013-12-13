@@ -8,8 +8,7 @@ using Ploeh.AutoFixture;
 using Tuto.DataLayer.Models;
 using Tuto.DataLayer.Models.Users;
 using Tuto.Web.Controllers;
-using Tuto.Web.UnitTests.Generic;
-using Tuto.Web.ViewModels;
+using Tuto.Web.ViewModels.HelpRequest;
 
 namespace Tuto.Web.UnitTests.Controllers.HelpRequestTests
 {
@@ -38,7 +37,12 @@ namespace Tuto.Web.UnitTests.Controllers.HelpRequestTests
             var helpedUser = fixture.Create<Helped>();
             TestsUtilities.bypassAppAuthentification(this.appContext, helpedUser);
 
-            AssertFunctions.assertValidRenderedViewForName(controller.list(), "Helped_List");
+            // Act
+            var returnedResult = controller.list();
+
+            // Assert
+            Assert.IsNotNull(returnedResult);
+            returnedResult.AssertViewRendered().ForView("Helped_List");
         }
 
         [TestMethod]
@@ -48,7 +52,12 @@ namespace Tuto.Web.UnitTests.Controllers.HelpRequestTests
             var tutorUser = fixture.Create<Tutor>();
             TestsUtilities.bypassAppAuthentification(this.appContext, tutorUser);
 
-            AssertFunctions.assertValidRenderedViewForName(controller.list(), "Tutor_List");
+            // Act
+            var returnedResult = controller.list();
+
+            // Assert
+            Assert.IsNotNull(returnedResult);
+            returnedResult.AssertViewRendered().ForView("Tutor_List");
         }
 
         [TestMethod]

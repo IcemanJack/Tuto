@@ -3,7 +3,7 @@ using System.Linq;
 using Tuto.DataLayer.Models;
 using Tuto.DataLayer.Models.Users;
 using Tuto.DataLayer.Repository;
-using Tuto.Web.ViewModels;
+using Tuto.Web.ViewModels.TutorsMgr;
 
 namespace Tuto.Web.Controllers.Utilities
 {

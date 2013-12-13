@@ -11,9 +11,9 @@ namespace Tuto.DataLayer.Models
     public class HelpRequest : Entity
     {
         // filter used to retreive help request within different state
-        public static readonly Expression<Func<HelpRequest, bool>> TO_BE_CONFIRMED_HELPREQUESTS_FILTER = (t => t.individualSession == null);
+        public static readonly Expression<Func<HelpRequest, bool>> TO_BE_ASSIGNED_HELPREQUEST_FILTER = (t => t.tutor == null);
         public static readonly Expression<Func<HelpRequest, bool>> FINISHED_HELPREQUESTS_FILTER = (t => t.individualSession != null && t.individualSession.date.CompareTo(DateTime.Now) < 0); 
-        public static readonly Expression<Func<HelpRequest, bool>> CONFIRMED_HELPREQUESTS_FILTER = (t => t.individualSession != null && t.individualSession.date.CompareTo(DateTime.Now) > 0);
+        public static readonly Expression<Func<HelpRequest, bool>> ASSIGNED_HELPREQUESTS_FILTER = (t => t.individualSession != null && t.individualSession.date.CompareTo(DateTime.Now) > 0);
 
         public HelpRequest()
         {
@@ -40,12 +40,13 @@ namespace Tuto.DataLayer.Models
 
         public virtual IndividualSession individualSession { get; set; } // will be null if any session has been assigned
 
-        public HelpRequestState getState()
+        public virtual HelpRequestState getState()
         {
-            if (this.tutorId == null) return HelpRequestState.NOT_ASSIGNED;
-            if (!(this.tutorHasConfirmed && this.helpedHasConfirmed)) return HelpRequestState.TO_BE_CONFIRMED;
-            if (this.individualSession.date.CompareTo(DateTime.Now) < 0) return HelpRequestState.FINISHED;
-            return HelpRequestState.CONFIRMED;
+            if (this.tutor == null) { return HelpRequestState.NOT_ASSIGNED; }
+            if (!(this.tutorHasConfirmed && this.helpedHasConfirmed)) { return HelpRequestState.TO_BE_CONFIRMED; }
+
+            return this.individualSession != null && 
+                this.individualSession.date.CompareTo(DateTime.Now) < 0 ? HelpRequestState.FINISHED : HelpRequestState.CONFIRMED;
         }
 
         public bool hasTutorAssigned()

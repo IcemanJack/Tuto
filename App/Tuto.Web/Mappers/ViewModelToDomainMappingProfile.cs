@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
 using Tuto.DataLayer.Models;
 using Tuto.DataLayer.Models.Users;
-using Tuto.Web.ViewModels;
 using Tuto.Web.ViewModels.Account;
 using Tuto.Web.ViewModels.Account.Register;
+using Tuto.Web.ViewModels.HelpRequest;
+using Tuto.Web.ViewModels.TutorsMgr;
 
 namespace Tuto.Web.Mappers
 {

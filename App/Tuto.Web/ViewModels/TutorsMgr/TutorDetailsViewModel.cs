@@ -3,7 +3,7 @@ using Tuto.DataLayer.Enums;
 using Tuto.DataLayer.Models;
 using Tuto.DataLayer.Models.GroupSessions;
 
-namespace Tuto.Web.ViewModels
+namespace Tuto.Web.ViewModels.TutorsMgr
 {
     public class TutorDetailsViewModel
     {
@@ -22,7 +22,7 @@ namespace Tuto.Web.ViewModels
         public TutorState tutorState { get; set; }
         public Course[] coursesSkills { get; set; }
         public AssignedGroupSession[] groupSessions { get; set; }
-        public HelpRequest[] helpRequests { get; set; }
+        public DataLayer.Models.HelpRequest[] helpRequests { get; set; }
         public string jsonSchedule { get; set; }
     }
 }

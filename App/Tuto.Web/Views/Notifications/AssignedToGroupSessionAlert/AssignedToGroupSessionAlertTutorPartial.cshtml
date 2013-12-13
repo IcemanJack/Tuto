@@ -1,10 +1,10 @@
 ﻿@model Tuto.Web.ViewModels.Notifications.AssignedToGroupSessionAlertViewModel.TutorViewModel
 @{
-    Layout = "~/Views/Notifications/Templates/_AlertTemplate.cshtml";
-    ViewBag.notificationId = Model.id;
+    this.Layout = "~/Views/Notifications/Templates/_AlertTemplate.cshtml";
+    this.ViewBag.notificationId = this.Model.id;
 }
 
 <strong>Assignation à une séance de tutorat de groupe</strong><br />
-Vous avez été assigné à une séance de tutorat de groupe le <strong>@Model.groupSessionPlannedDate</strong> au local <strong>@Model.groupSessionPlace</strong>.
+Vous avez été assigné à une séance de tutorat de groupe le <strong>@(this.Model.groupSessionPlannedDate)</strong> au local <strong>@(this.Model.groupSessionPlace)</strong>.
 <br />
-<em>@Html.ActionLink("Voir la liste des sessions de groupe", "tutorList", "GroupSession")</em>
+<em>@(this.Html.ActionLink("Voir la liste des sessions de groupe", "tutorList", "GroupSession"))</em>

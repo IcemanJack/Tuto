@@ -3,7 +3,7 @@ using FluentValidation.Attributes;
 using Tuto.DataLayer.Models;
 using Tuto.DataLayer.Repository;
 
-namespace Tuto.Web.ViewModels
+namespace Tuto.Web.ViewModels.HelpRequest
 {
     [Validator(typeof(TutorReportToDoValidator))]
     public class ReportToDoViewModel

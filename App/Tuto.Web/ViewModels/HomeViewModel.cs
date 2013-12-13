@@ -1,4 +1,4 @@
-﻿namespace Tuto.Web.ViewModels
+﻿namespace Tuto.Web.ViewModels.HelpRequest
 {
     public class HomeViewModel
     {

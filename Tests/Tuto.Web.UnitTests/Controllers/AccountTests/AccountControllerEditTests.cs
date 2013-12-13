@@ -8,7 +8,6 @@ using Ploeh.AutoFixture;
 using Tuto.DataLayer.ModelUtilities;
 using Tuto.Web.ViewModels.Account.Edit;
 using Arg = NSubstitute.Arg;
-using Tuto.Web.UnitTests.Generic;
 
 namespace Tuto.Web.UnitTests.Controllers.AccountTests
 {
@@ -32,7 +31,12 @@ namespace Tuto.Web.UnitTests.Controllers.AccountTests
         [TestMethod]
         public void edit_action_with_logged_in_user_should_return_edit_view()
         {
-            AssertFunctions.assertValidRenderedViewForName(controller.edit(), "EditHelped");
+            // Act
+            var returnedResult = controller.edit();
+
+            // Assert
+            Assert.IsNotNull(returnedResult);
+            returnedResult.AssertViewRendered().ForView("EditHelped");
         }
 
         [TestMethod]
@@ -42,7 +46,12 @@ namespace Tuto.Web.UnitTests.Controllers.AccountTests
             var editHelpedViewModel = fixture.Create<EditHelpedViewModel>();
             controller.ModelState.AddModelError("Error", "Error");
 
-            AssertFunctions.assertValidRenderedViewForName(controller.editHelped(editHelpedViewModel), "EditHelped");
+            // Act
+            var returnedResult = controller.editHelped(editHelpedViewModel);
+
+            // Assert
+            Assert.IsNotNull(returnedResult);
+            returnedResult.AssertViewRendered().ForView("EditHelped");
         }
 
         [TestMethod]
@@ -66,8 +75,12 @@ namespace Tuto.Web.UnitTests.Controllers.AccountTests
             viewResult.AssertViewRendered().ForView("EditHelped");
         }
 
+        /*************************************
+         * Helped
+         *************************************/
+
         [TestMethod]
-        public void post_save_with_new_password_and_same_confirmed_password_should_return_edit_view_and_save_to_db()
+        public void helped_post_save_with_new_password_and_same_confirmed_password_should_return_edit_view_and_save_to_db()
         {
             // Arrange
             var editHelpedViewModel = Mapper.Map<EditHelpedViewModel>(loggedInUser);
@@ -84,7 +97,7 @@ namespace Tuto.Web.UnitTests.Controllers.AccountTests
             var viewResult = controller.editHelped(editHelpedViewModel) as ViewResult;
 
             // Assert
-            appContext.getRepository().Received().update(Arg.Is<User>(x => x.password == editHelpedViewModel.newPassword));
+            appContext.getRepository().Received().update(Arg.Is<Helped>(x => x.password == editHelpedViewModel.newPassword));
 
             Assert.IsNotNull(viewResult);
             Assert.IsNotNull(viewResult.ViewData["AccountEditSuccessMessage"]);
@@ -92,7 +105,7 @@ namespace Tuto.Web.UnitTests.Controllers.AccountTests
         }
 
         [TestMethod]
-        public void post_save_with_new_email_and_same_confirmed_email_should_return_edit_view_and_save_to_db()
+        public void helped_post_save_with_new_email_and_same_confirmed_email_should_return_edit_view_and_save_to_db()
         {
             // Arrange
             var editHelpedViewModel = Mapper.Map<EditHelpedViewModel>(loggedInUser);
@@ -117,7 +130,7 @@ namespace Tuto.Web.UnitTests.Controllers.AccountTests
         }
 
         [TestMethod]
-        public void post_save_with_new_name_should_return_edit_view_and_save_to_db()
+        public void helped_post_save_with_new_name_should_return_edit_view_and_save_to_db()
         {
             // Arrange
             var editHelpedViewModel = Mapper.Map<EditHelpedViewModel>(loggedInUser);
@@ -141,7 +154,7 @@ namespace Tuto.Web.UnitTests.Controllers.AccountTests
         }
 
         [TestMethod]
-        public void post_save_with_new_lastname_should_return_edit_view_and_save_to_db()
+        public void helped_post_save_with_new_lastname_should_return_edit_view_and_save_to_db()
         {
             // Arrange
             var editHelpedViewModel = Mapper.Map<EditHelpedViewModel>(loggedInUser);
@@ -163,5 +176,266 @@ namespace Tuto.Web.UnitTests.Controllers.AccountTests
             Assert.IsNotNull(viewResult.ViewData["AccountEditSuccessMessage"]);
             viewResult.AssertViewRendered().ForView("EditHelped");
         }
+
+        /*************************************
+         * Tutor
+         *************************************/
+        [TestMethod]
+        public void tutor_post_save_with_new_password_and_same_confirmed_password_should_return_edit_view_and_save_to_db()
+        {
+            // Arrange
+            var fakedLoggedInTutor = this.fixture.Create<Tutor>();
+            TestsUtilities.bypassAppAuthentification(this.appContext, fakedLoggedInTutor);
+
+            var editTutorViewModel = Mapper.Map<EditTutorViewModel>(fakedLoggedInTutor);
+
+            appContext.getRepository().getById<User>(fakedLoggedInTutor.id).ReturnsForAnyArgs(fakedLoggedInTutor);
+
+            editTutorViewModel.newPassword = "password2";
+            editTutorViewModel.confirmNewPassword = "password2";
+
+            editTutorViewModel.currentPassword = fakedLoggedInTutor.password;
+            editTutorViewModel.currentEmail = fakedLoggedInTutor.mail;
+
+            // Act
+            var viewResult = controller.editTutor(editTutorViewModel) as ViewResult;
+
+            // Assert
+            appContext.getRepository().Received().update(Arg.Is<Tutor>(x => x.password == editTutorViewModel.newPassword));
+
+            Assert.IsNotNull(viewResult);
+            Assert.IsNotNull(viewResult.ViewData["AccountEditSuccessMessage"]);
+            viewResult.AssertViewRendered().ForView("EditTutor");
+        }
+
+        [TestMethod]
+        public void tutor_post_save_with_new_email_and_same_confirmed_email_should_return_edit_view_and_save_to_db()
+        {
+            // Arrange
+            var fakedLoggedInTutor = this.fixture.Create<Tutor>();
+            TestsUtilities.bypassAppAuthentification(this.appContext, fakedLoggedInTutor);
+
+            var editTutorViewModel = Mapper.Map<EditTutorViewModel>(fakedLoggedInTutor);
+
+            appContext.getRepository().getById<User>(fakedLoggedInTutor.id).ReturnsForAnyArgs(fakedLoggedInTutor);
+
+            editTutorViewModel.newEmail = "thenewemail@mail.com";
+            editTutorViewModel.confirmNewEmail = "thenewemail@mail.com";
+
+            editTutorViewModel.currentPassword = fakedLoggedInTutor.password;
+            editTutorViewModel.currentEmail = fakedLoggedInTutor.mail;
+
+            // Act
+            var viewResult = controller.editTutor(editTutorViewModel) as ViewResult;
+
+            // Assert
+            appContext.getRepository().Received().update(Arg.Is<Tutor>(x => x.mail == editTutorViewModel.newEmail));
+
+            Assert.IsNotNull(viewResult);
+            Assert.IsNotNull(viewResult.ViewData["AccountEditSuccessMessage"]);
+            viewResult.AssertViewRendered().ForView("EditTutor");
+        }
+
+        [TestMethod]
+        public void tutor_post_save_with_new_name_should_return_edit_view_and_save_to_db()
+        {
+            // Arrange
+            var fakedLoggedInTutor = this.fixture.Create<Tutor>();
+            TestsUtilities.bypassAppAuthentification(this.appContext, fakedLoggedInTutor);
+
+            var editTutorViewModel = Mapper.Map<EditTutorViewModel>(fakedLoggedInTutor);
+
+            appContext.getRepository().getById<Helped>(loggedInUser.id).ReturnsForAnyArgs(loggedInUser);
+
+            editTutorViewModel.newName = "Foo";
+
+            editTutorViewModel.currentPassword = fakedLoggedInTutor.password;
+            editTutorViewModel.currentEmail = fakedLoggedInTutor.mail;
+
+            // Act
+            var viewResult = controller.editTutor(editTutorViewModel) as ViewResult;
+
+            // Assert
+            appContext.getRepository().Received().update(Arg.Is<Tutor>(x => x.name == editTutorViewModel.newName));
+
+            Assert.IsNotNull(viewResult);
+            Assert.IsNotNull(viewResult.ViewData["AccountEditSuccessMessage"]);
+            viewResult.AssertViewRendered().ForView("EditTutor");
+        }
+
+        [TestMethod]
+        public void tutor_post_save_with_new_lastname_should_return_edit_view_and_save_to_db()
+        {
+            // Arrange
+            var fakedLoggedInTutor = this.fixture.Create<Tutor>();
+            TestsUtilities.bypassAppAuthentification(this.appContext, fakedLoggedInTutor);
+
+            var editTutorViewModel = Mapper.Map<EditTutorViewModel>(fakedLoggedInTutor);
+
+            appContext.getRepository().getById<Tutor>(fakedLoggedInTutor.id).ReturnsForAnyArgs(fakedLoggedInTutor);
+
+            editTutorViewModel.newLastName = "Bar";
+
+            editTutorViewModel.currentPassword = fakedLoggedInTutor.password;
+            editTutorViewModel.currentEmail = fakedLoggedInTutor.mail;
+
+            // Act
+            var viewResult = controller.editTutor(editTutorViewModel) as ViewResult;
+
+            // Assert
+            appContext.getRepository().Received().update(Arg.Is<Tutor>(x => x.lastName == editTutorViewModel.newLastName));
+
+            Assert.IsNotNull(viewResult);
+            Assert.IsNotNull(viewResult.ViewData["AccountEditSuccessMessage"]);
+            viewResult.AssertViewRendered().ForView("EditTutor");
+        }
+
+        /*************************************
+         * Manager
+         *************************************/
+
+        [TestMethod]
+        public void manager_post_save_with_new_password_and_same_confirmed_password_should_return_edit_view_and_save_to_db()
+        {
+            // Arrange
+            var fakedLoggedInManager = this.appContext.getConfiguration().mainManager;
+            TestsUtilities.bypassAppAuthentification(this.appContext, fakedLoggedInManager);
+
+            var editManagerViewModel = Mapper.Map<EditManagerViewModel>(fakedLoggedInManager);
+
+            appContext.getRepository().getById<User>(fakedLoggedInManager.id).ReturnsForAnyArgs(fakedLoggedInManager);
+
+            editManagerViewModel.newPassword = "password2";
+            editManagerViewModel.confirmNewPassword = "password2";
+
+            editManagerViewModel.currentPassword = fakedLoggedInManager.password;
+            editManagerViewModel.currentEmail = fakedLoggedInManager.mail;
+
+            // Act
+            var viewResult = controller.editManager(editManagerViewModel) as ViewResult;
+
+            // Assert
+            appContext.getRepository().Received().update(Arg.Is<Manager>(x => x.password == editManagerViewModel.newPassword));
+
+            Assert.IsNotNull(viewResult);
+            Assert.IsNotNull(viewResult.ViewData["AccountEditSuccessMessage"]);
+            viewResult.AssertViewRendered().ForView("EditManager");
+        }
+
+        [TestMethod]
+        public void manager_post_save_with_new_email_and_same_confirmed_email_should_return_edit_view_and_save_to_db()
+        {
+            // Arrange
+            var fakedLoggedInManager = this.appContext.getConfiguration().mainManager;
+            TestsUtilities.bypassAppAuthentification(this.appContext, fakedLoggedInManager);
+
+            var editManagerViewModel = Mapper.Map<EditManagerViewModel>(fakedLoggedInManager);
+
+            appContext.getRepository().getById<User>(fakedLoggedInManager.id).ReturnsForAnyArgs(fakedLoggedInManager);
+
+            editManagerViewModel.newEmail = "thenewemail@mail.com";
+            editManagerViewModel.confirmNewEmail = "thenewemail@mail.com";
+
+            editManagerViewModel.currentPassword = fakedLoggedInManager.password;
+            editManagerViewModel.currentEmail = fakedLoggedInManager.mail;
+
+            // Act
+            var viewResult = controller.editManager(editManagerViewModel) as ViewResult;
+
+            // Assert
+            appContext.getRepository().Received().update(Arg.Is<Manager>(x => x.mail == editManagerViewModel.newEmail));
+
+            Assert.IsNotNull(viewResult);
+            Assert.IsNotNull(viewResult.ViewData["AccountEditSuccessMessage"]);
+            viewResult.AssertViewRendered().ForView("EditManager");
+        }
+
+        [TestMethod]
+        public void manager_post_save_with_new_name_should_return_edit_view_and_save_to_db()
+        {
+            // Arrange
+            var fakedLoggedInManager = this.appContext.getConfiguration().mainManager;
+            TestsUtilities.bypassAppAuthentification(this.appContext, fakedLoggedInManager);
+
+            var editManagerViewModel = Mapper.Map<EditManagerViewModel>(fakedLoggedInManager);
+
+            appContext.getRepository().getById<User>(loggedInUser.id).ReturnsForAnyArgs(fakedLoggedInManager);
+
+            editManagerViewModel.newName = "Foo";
+
+            editManagerViewModel.currentPassword = fakedLoggedInManager.password;
+            editManagerViewModel.currentEmail = fakedLoggedInManager.mail;
+
+            // Act
+            var viewResult = controller.editManager(editManagerViewModel) as ViewResult;
+
+            // Assert
+            appContext.getRepository().Received().update(Arg.Is<Manager>(x => x.name == editManagerViewModel.newName));
+
+            Assert.IsNotNull(viewResult);
+            Assert.IsNotNull(viewResult.ViewData["AccountEditSuccessMessage"]);
+            viewResult.AssertViewRendered().ForView("EditManager");
+        }
+
+        [TestMethod]
+        public void manager_post_save_with_new_lastname_should_return_edit_view_and_save_to_db()
+        {
+            // Arrange
+            var fakedLoggedInManager = this.appContext.getConfiguration().mainManager;
+            TestsUtilities.bypassAppAuthentification(this.appContext, fakedLoggedInManager);
+
+            var editManagerViewModel = Mapper.Map<EditManagerViewModel>(fakedLoggedInManager);
+
+            appContext.getRepository().getById<Manager>(fakedLoggedInManager.id).ReturnsForAnyArgs(fakedLoggedInManager);
+
+            editManagerViewModel.newLastName = "Bar";
+
+            editManagerViewModel.currentPassword = fakedLoggedInManager.password;
+            editManagerViewModel.currentEmail = fakedLoggedInManager.mail;
+
+            // Act
+            var viewResult = controller.editManager(editManagerViewModel) as ViewResult;
+
+            // Assert
+            appContext.getRepository().Received().update(Arg.Is<Manager>(x => x.lastName == editManagerViewModel.newLastName));
+
+            Assert.IsNotNull(viewResult);
+            Assert.IsNotNull(viewResult.ViewData["AccountEditSuccessMessage"]);
+            viewResult.AssertViewRendered().ForView("EditManager");
+        }
+
+        
+        //----------
+
+        [TestMethod]
+        public void edit_action_should_return_edit_tutor_edit_view_when_tutor_is_connected()
+        {
+            // Arrange
+            var fakedTutor = this.fixture.Create<Tutor>();
+            TestsUtilities.bypassAppAuthentification(this.appContext, fakedTutor);
+
+            // Act
+            var returnedView = this.controller.edit();
+
+            // Assert
+            Assert.IsNotNull(returnedView);
+            returnedView.AssertViewRendered().ForView("EditTutor");
+        }
+
+        [TestMethod]
+        public void edit_action_should_return_manager_edit_view_when_manager_is_connected()
+        {
+            // Arrange
+            var fakedManager = this.appContext.getConfiguration().mainManager;
+            TestsUtilities.bypassAppAuthentification(this.appContext, fakedManager);
+
+            // Act
+            var returnedView = this.controller.edit();
+
+            // Assert
+            Assert.IsNotNull(returnedView);
+            returnedView.AssertViewRendered().ForView("EditManager");
+        }
+
     }
 }

@@ -1,15 +1,15 @@
 ﻿@model Tuto.Web.ViewModels.Notifications.TutorHasRegisteredTaskViewModel.ManagerViewModel
 @{
-    Layout = "~/Views/Notifications/Templates/_TaskTemplate.cshtml";
-    ViewBag.notificationId = Model.id;
+    this.Layout = "~/Views/Notifications/Templates/_TaskTemplate.cshtml";
+    this.ViewBag.notificationId = this.Model.id;
 }
 
 <strong>Un tuteur s'est inscrit au système</strong><br />
-Un tuteur dénommé <strong>@Model.tutorFirstName @Model.tutorLastName</strong> s'est inscrit au système.&nbsp;
-(<em>@Html.ActionLink("Voir son profil utilisateur", "tutorDetails", "TutorsMgr", new { id = Model.tutorId }, new {})</em>)<br />
+Un tuteur dénommé <strong>@(this.Model.tutorFirstName) @(this.Model.tutorLastName)</strong> s'est inscrit au système.&nbsp;
+(<em>@(this.Html.ActionLink("Voir son profil utilisateur", "tutorDetails", "TutorsMgr", new { id = this.Model.tutorId }, new {}))</em>)<br />
 <em>Veuillez confirmer ou refuser l'inscription de ce tuteur : </em>
 <br />
 <div class="btn-group">
-    @Html.ActionLink("Confirmer", "setStateConfirmed", "TutorsMgr", new { tutorId = Model.tutorId }, new { @class = "btn btn-wuxia btn-mini btn-primary" })
-    @Html.ActionLink("Refuser", "setStateInactive", "TutorsMgr", new { tutorId = Model.tutorId }, new { @class = "btn btn-wuxia btn-mini" })
+    @(this.Html.ActionLink("Confirmer", "setStateConfirmed", "TutorsMgr", new { tutorId = this.Model.tutorId }, new { @class = "btn btn-wuxia btn-mini btn-primary" }))
+    @(this.Html.ActionLink("Refuser", "setStateInactive", "TutorsMgr", new { tutorId = this.Model.tutorId }, new { @class = "btn btn-wuxia btn-mini" }))
 </div>

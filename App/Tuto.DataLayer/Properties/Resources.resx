@@ -592,7 +592,7 @@ Si le tuteur et l'aidé confirment leur présence, la rencontre individuelle aur
   <data name="NumHoursMin" xml:space="preserve">
     <value>Nbre. heures</value>
   </data>
-  <data name="Thuesday" xml:space="preserve">
+  <data name="Tuesday" xml:space="preserve">
     <value>Mardi</value>
   </data>
   <data name="Thursday" xml:space="preserve">
@@ -608,7 +608,7 @@ Si le tuteur et l'aidé confirment leur présence, la rencontre individuelle aur
     <value>Erreur!</value>
   </data>
   <data name="HelpRequestMgrAssignNotAFutureDate" xml:space="preserve">
-    <value>Veuillez vous assurer que la date de la séance selon votre configuration est antérieure à celle d'aujourd'hui.</value>
+    <value>Veuillez vous assurer que la date de la séance selon votre configuration est postérieure à celle d'aujourd'hui.</value>
   </data>
   <data name="Test" xml:space="preserve">
     <value>test</value>
@@ -891,5 +891,23 @@ Si le tuteur et l'aidé confirment leur présence, la rencontre individuelle aur
   </data>
   <data name="ViewSendButton" xml:space="preserve">
     <value>Envoyer</value>
+  </data>
+  <data name="AM" xml:space="preserve">
+    <value>am</value>
+  </data>
+  <data name="PM" xml:space="preserve">
+    <value>pm</value>
+  </data>
+  <data name="TutorFirstName" xml:space="preserve">
+    <value>Prénom du tuteur</value>
+  </data>
+  <data name="TutorLastName" xml:space="preserve">
+    <value>Nom du tuteur</value>
+  </data>
+  <data name="TutorWorkedHours" xml:space="preserve">
+    <value>Heures travailées</value>
+  </data>
+  <data name="MonthlyWorkedHoursReportTitle" xml:space="preserve">
+    <value>Rapports des heures travaillées par tuteur</value>
   </data>
 </root>

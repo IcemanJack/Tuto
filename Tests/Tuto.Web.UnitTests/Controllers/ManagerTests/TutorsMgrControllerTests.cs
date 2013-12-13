@@ -7,7 +7,7 @@ using Ploeh.AutoFixture;
 using Tuto.DataLayer.Enums;
 using Tuto.DataLayer.Models.Users;
 using Tuto.Web.Controllers.Manager;
-using Tuto.Web.ViewModels;
+using Tuto.Web.ViewModels.TutorsMgr;
 
 namespace Tuto.Web.UnitTests.Controllers.ManagerTests
 {

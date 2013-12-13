@@ -4,7 +4,7 @@ using AutoMapper;
 using RazorPDF;
 using Tuto.DataLayer.Models.Users;
 using Tuto.Web.Config;
-using Tuto.Web.Controllers.Reports;
+using Tuto.Web.Controllers.Manager.Reports;
 using Tuto.Web.ViewModels.Reports;
 
 namespace Tuto.Web.Controllers.Manager
@@ -31,11 +31,6 @@ namespace Tuto.Web.Controllers.Manager
 
         public PdfResult tutorsMonthlyWorkedHours()
         {
-            if (!this.isUserAllowed())
-            {
-                throw new UserNotAllowedException();
-            }
-
             var finalReport = new MonthlyWorkedHoursReport();
             
             // get all tutors

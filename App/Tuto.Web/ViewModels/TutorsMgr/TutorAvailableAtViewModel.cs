@@ -1,6 +1,6 @@
 ﻿using Tuto.DataLayer.Models;
 
-namespace Tuto.Web.ViewModels
+namespace Tuto.Web.ViewModels.TutorsMgr
 {
     public class TutorAvailableAtViewModel
     {

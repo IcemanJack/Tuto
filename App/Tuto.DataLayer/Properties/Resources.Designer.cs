@@ -61,6 +61,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à am.
+        /// </summary>
+        public static string AM {
+            get {
+                return ResourceManager.GetString("AM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Disponible le ....
         /// </summary>
         public static string AvailableAt {
@@ -1268,7 +1277,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Veuillez vous assurer que la date de la séance selon votre configuration est antérieure à celle d&apos;aujourd&apos;hui..
+        ///   Recherche une chaîne localisée semblable à Veuillez vous assurer que la date de la séance selon votre configuration est postérieure à celle d&apos;aujourd&apos;hui..
         /// </summary>
         public static string HelpRequestMgrAssignNotAFutureDate {
             get {
@@ -1439,6 +1448,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Rapports des heures travaillées par tuteur.
+        /// </summary>
+        public static string MonthlyWorkedHoursReportTitle {
+            get {
+                return ResourceManager.GetString("MonthlyWorkedHoursReportTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Non.
         /// </summary>
         public static string No {
@@ -1453,6 +1471,15 @@ namespace Resources {
         public static string NumHoursMin {
             get {
                 return ResourceManager.GetString("NumHoursMin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à pm.
+        /// </summary>
+        public static string PM {
+            get {
+                return ResourceManager.GetString("PM", resourceCulture);
             }
         }
         
@@ -1619,15 +1646,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Mardi.
-        /// </summary>
-        public static string Thuesday {
-            get {
-                return ResourceManager.GetString("Thuesday", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Recherche une chaîne localisée semblable à Jeudi.
         /// </summary>
         public static string Thursday {
@@ -1637,11 +1655,47 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Mardi.
+        /// </summary>
+        public static string Tuesday {
+            get {
+                return ResourceManager.GetString("Tuesday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Prénom du tuteur.
+        /// </summary>
+        public static string TutorFirstName {
+            get {
+                return ResourceManager.GetString("TutorFirstName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Nom du tuteur.
+        /// </summary>
+        public static string TutorLastName {
+            get {
+                return ResourceManager.GetString("TutorLastName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Nom du tuteur.
         /// </summary>
         public static string TutorName {
             get {
                 return ResourceManager.GetString("TutorName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Heures travailées.
+        /// </summary>
+        public static string TutorWorkedHours {
+            get {
+                return ResourceManager.GetString("TutorWorkedHours", resourceCulture);
             }
         }
         

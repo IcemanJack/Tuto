@@ -132,6 +132,15 @@
     <Compile Include="Controllers\AccountTests\AccountControllerBaseTests.cs" />
     <Compile Include="Controllers\AccountTests\AccountControllerLoginTests.cs" />
     <Compile Include="Controllers\AccountTests\AccountControllerRegisterHelpedTests.cs" />
+    <Compile Include="Controllers\GroupSessionTests\GroupSessionBaseTests.cs" />
+    <Compile Include="Controllers\GroupSessionTests\GroupSessionControllerTests.cs" />
+    <Compile Include="Controllers\ManagerTests\GroupSessionTests\GroupSessionManagerControllerAssignTutorTests.cs" />
+    <Compile Include="Controllers\ManagerTests\GroupSessionTests\GroupSessionManagerControllerBaseTests.cs" />
+    <Compile Include="Controllers\ManagerTests\GroupSessionTests\GroupSessionManagerControllerEditCurrentScheduleTests.cs" />
+    <Compile Include="Controllers\ManagerTests\GroupSessionTests\GroupSessionManagerControllerEditDefaultScheduleTests.cs" />
+    <Compile Include="Controllers\ManagerTests\GroupSessionTests\GroupSessionManagerControllerGetTutorsAvailableAtTests.cs" />
+    <Compile Include="Controllers\ManagerTests\GroupSessionTests\GroupSessionManagerControllerListTests.cs" />
+    <Compile Include="Controllers\ManagerTests\GroupSessionTests\GroupSessionMgrControllerTests.cs" />
     <Compile Include="Controllers\NotificationsAlerts\ConcreteControllersNotificationsBaseTests.cs" />
     <Compile Include="Controllers\NotificationsAlerts\ManagerNotifications\TutorHasRegisteredTaskAccountControllerTests.cs" />
     <Compile Include="Controllers\NotificationsAlerts\ManagerNotifications\HelpRequestToAssignAlertHelpRequestControllerTests.cs" />
@@ -151,13 +160,12 @@
     <Compile Include="Controllers\HomeTests\HomeControllerBaseTests.cs" />
     <Compile Include="Controllers\HomeTests\HomeControllerTests.cs" />
     <Compile Include="Controllers\ManagerTests\TutorsMgrControllerTests.cs" />
-    <Compile Include="Controllers\ManagerTests\GroupSessionMgrControllerTests.cs" />
     <Compile Include="Controllers\ManagerTests\HelpRequestsMgrControllerTests.cs" />
     <Compile Include="Controllers\ManagerTests\ManagerComponentsBaseTest.cs" />
     <Compile Include="Controllers\NotificationsAlerts\SharedNotifications\AssignedToHelpRequestTaskHelpRequestMgrControllerTests.cs" />
     <Compile Include="Controllers\NotificationsAlerts\TutorNotifications\AssignedToGroupSessionAlertGroupSessionMgrControllerTests.cs" />
-    <Compile Include="Generic\AssertFunctions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestsConstants.cs" />
     <Compile Include="TestsUtilities.cs" />
     <Compile Include="TestWebAppLaunchContext.cs" />
   </ItemGroup>
@@ -165,9 +173,7 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controllers\GroupSessionTests\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\..\App\Tuto.DataLayer\Tuto.DataLayer.csproj">
       <Project>{ae63812e-93e6-4aa9-bf85-bda0e308319f}</Project>
